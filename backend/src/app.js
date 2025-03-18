@@ -12,7 +12,7 @@ app.use(express.json({limit:"10mb"}));
 app.use(express.urlencoded({extended:true,limit:"16kb"}));
 app.use(cookieParser());
 app.use(cors({
-    origin: " http://192.168.50.21:5173", 
+    origin: " http://192.168.88.21:5173", 
     credentials: true,               
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
     allowedHeaders: ['Content-Type', 'Authorization'], 
