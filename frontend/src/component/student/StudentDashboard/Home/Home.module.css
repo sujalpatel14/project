@@ -183,6 +183,10 @@
 }
 
 @media (max-width: 600px) {
+  .homeContainer {
+    width: 80%;
+  }
+
   .container {
     padding: 20px;
   }
@@ -193,6 +197,17 @@
 
   .button {
     padding: 12px 25px;
+  }
+
+  .featureGrid {
+    padding: 20px;
+  }
+
+  .feedbackDisplay {
+    padding: 0px 0px;
+  }
+  .feedback {
+    padding: 0px 0px;
   }
 }
 
