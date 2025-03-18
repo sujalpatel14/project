@@ -1,12 +1,10 @@
 import styles from "./Footer.module.css";
-import Logo from '../Logo.jpg';
 
 const Footer = () => {
   return (
     <footer className={styles.footer}>
       <div className={styles.container}>
         <div className={styles.logo}>
-          <img src={Logo} alt="Logo" />
           <h2>CodeVerse</h2>
         </div>
 
