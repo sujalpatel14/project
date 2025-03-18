@@ -1,0 +1,130 @@
+/*  Chat Box Container */
+.chatContainer {
+    width: 100%;
+    margin: auto;
+    padding: 20px;
+    border-radius: 10px;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  /* 🏷️ Title */
+  .chatTitle {
+    text-align: center;
+    font-size: 1.8rem;
+    color: #333;
+    margin-bottom: 15px;
+  }
+  
+  /* 📦 Chat Box */
+  .chatBox {
+    height: 300px;
+    overflow-y: auto;
+    padding: 10px;
+  }
+  
+  /* 🗣️ User & AI Messages */
+  .userMessage, .aiMessage {
+    max-width: 80%;
+    padding: 12px;
+    margin: 8px 0;
+    border-radius: 8px;
+    font-size: 1rem;
+  }
+  
+  .userMessage {
+    font-family: Georgia, 'Times New Roman', Times, serif;
+    background: #0056d2;
+    color: white;
+    align-self: flex-end;
+    text-align: right;
+    margin-left: auto;
+    width: 50%;
+  }
+  
+  .aiMessage {
+    overflow-x: auto;
+    background: #dfdcdc;
+    color: #333;
+    text-align: left;
+    align-self: flex-start;
+    margin-right: auto;
+    width: 50%;
+  }
+  
+  /* ✍️ Input Area */
+  .inputContainer {
+    display: flex;
+    gap: 10px;
+    margin-top: 15px;
+  }
+  
+  .chatInput {
+    flex-grow: 1;
+    padding: 12px;
+    border-radius: 6px;
+    border: 1px solid #ccc;
+    font-size: 1rem;
+  }
+  
+  .sendButton {
+    background: #0056d2;
+    color: white;
+    border: none;
+    padding: 12px 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    transition: background 0.3s ease-in-out;
+  }
+  
+  .sendButton:hover {
+    background: #0056b3;
+  }
+
+  /* Scrollbar Styling */
+.aiMessage::-webkit-scrollbar {
+  height: 8px;
+}
+
+.aiMessage::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 10px;
+}
+
+.aiMessage::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.aiMessage::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+  
+  /* 📱 Mobile Responsive */
+  @media (max-width: 768px) {
+    .userMessage, .aiMessage {
+      font-size: 10px;
+      width: 90%;
+    }
+    .chatContainer {
+      padding: 15px;
+      width: 90%;
+    }
+  
+    .chatTitle {
+      font-size: 1.5rem;
+    }
+  
+    .chatBox {
+      height: 250px;
+    }
+  
+    .chatInput {
+      font-size: 0.9rem;
+    }
+  
+    .sendButton {
+      padding: 10px 14px;
+      font-size: 0.9rem;
+    }
+  }
+  

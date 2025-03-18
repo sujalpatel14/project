@@ -1,0 +1,251 @@
+.container {
+    width: 90%;
+    margin: auto;
+    padding: 20px;
+    /* background-color: #fff; */
+    border-radius: 8px;
+    /* box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1); */
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  
+  .title {
+    text-align: center;
+    color: #333;
+    margin-bottom: 20px;
+  }
+  
+  .loading {
+    text-align: center;
+    color: #f44336;
+    font-size: 18px;
+  }
+  
+  .challengeList {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+  }
+  
+  .challengeCard {
+    width: 350px;
+    background: #f9f9f9;
+    border-radius: 8px;
+    padding: 15px;
+    margin: 15px;
+    box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.1);
+    text-align: center;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    
+  }
+ 
+  .challengeCard p {
+    overflow: auto;
+    height: 30%;
+  }
+
+  /* Scrollbar Styling */
+  .challengeCard p::-webkit-scrollbar {
+    height: 5px;
+    width: 5px;
+  }
+  
+  .challengeCard p::-webkit-scrollbar-track {
+    background: #ddd;
+    border-radius: 10px;
+  }
+  
+  .challengeCard p::-webkit-scrollbar-thumb {
+    background: #888;
+    border-radius: 10px;
+  }
+  
+  .challengeCard p::-webkit-scrollbar-thumb:hover {
+    background: #555;
+  }
+
+  
+  .chartContainer {
+    width: 120px;
+    height: 120px;
+    margin: auto;
+    position: relative;
+  }
+  
+  .percentage {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-size: 16px;
+    font-weight: bold;
+  }
+  
+  .joinButton {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    margin-top: 10px;
+  }
+  
+  .joinButton:disabled {
+    background-color: #026fe3;
+    cursor: not-allowed;
+  }
+  
+  .noChallenges {
+    text-align: center;
+    color: #999;
+    font-style: italic;
+  }
+  
+  .challengeDetails {
+    padding: 20px;
+    background: #fff;
+    border-radius: 8px;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+  }
+  
+  .backButton {
+    background: none;
+    border: none;
+    font-size: 16px;
+    cursor: pointer;
+    color: #4caf50;
+  }
+
+  .backButton:hover{
+    color: #026fe3;
+    background-color: transparent;
+  }
+  
+  .textarea {
+    width: 95%;
+    min-height: 150px;
+    font-size: 14px;
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #ddd;
+    resize: vertical;
+    font-family: monospace;
+    background-color: #f8f8f8;
+  }
+  
+  .submitButton {
+    background-color: #2196f3;
+    color: white;
+    border: none;
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+    font-size: 16px;
+    width: 200px;
+    margin-top: 10px;
+  }
+  
+  /* Sophisticated and Modern CSS for Course Display */
+
+/* Overall Container for Courses */
+.coursesContainer {
+    width: 90%;  
+    margin: 2rem auto; 
+    padding: 2.5rem 1.25rem; 
+    text-align: center;
+    font-family: 'Arial', sans-serif; 
+  }
+  
+ 
+  .heading {
+    font-size: 2.25rem; /* Size adjusted for better readability */
+    color: #343a40; /* Darker, professional heading color */
+    margin-bottom: 1.5rem; /* Space below the heading */
+    font-weight: 600; /* Slightly lighter weight for a modern feel */
+    letter-spacing: -0.05rem; /* Subtle letter spacing improvement */
+  }
+  
+  /* Grid Layout for Course Cards */
+  .courseGrid {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.5rem; /* Consistent gap between cards */
+    justify-content: center; /* Centers the grid items horizontally */
+  }
+  
+  /* Individual Course Card Styling */
+  .courseCard {
+    width: 300px;
+    background: #fff; /* Clean white background */
+    border-radius: 0.75rem; /* Slightly smaller, modern border radius */
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08); /* Subtler, softer shadow */
+    overflow: hidden; /* Ensures content stays within rounded borders */
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smoother, faster transitions */
+    display: flex; /* Use flexbox for vertical alignment */
+    flex-direction: column;
+    align-items: stretch; /* Stretch content to fill card vertically */
+    justify-content: flex-start; /* Align content to the top */
+  }
+
+  
+  .courseCard:hover {
+    transform: translateY(-0.25rem); /* Less aggressive hover effect */
+    box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12); /* Increased shadow on hover */
+  }
+  
+  /* Course Thumbnail Styling */
+  .courseThumbnail {
+    width: 100%; /* Occupy the full width */
+    height: 150px; /* Fixed height for consistency */
+    object-fit: cover; /* Ensures images fill the space without distortion */
+    border-radius: 0.75rem 0.75rem 0 0; /* Rounded top corners */
+    margin: 0; /* Remove default margin */
+  }
+  
+  /* Course Content Section */
+  .courseContent {
+    padding: 1.25rem;
+    text-align: left;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    justify-content: space-between; 
+    flex-grow: 1;  /* Allows content to fill available vertical space */
+  }
+  
+  .courseContent p {
+    font-size: 0.9rem; 
+    line-height: 1.4; 
+    color: #555; 
+    margin-bottom: 1rem; 
+    flex-grow: 1;  
+  }
+  
+  /* Course Title Styling */
+  .courseTitle {
+    font-size: 1.2rem; 
+    font-weight: 500; 
+    color: #212529; 
+    margin-bottom: 0.5rem; 
+  }
+  
+  /* Button Styling within Course Card */
+  .courseCard button {
+    margin-top: auto;
+    padding: 0.75rem 1.25rem;
+    background-color: #007bff;
+    color: #fff;
+    border: none;
+    border-radius: 0.375rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease-in-out;
+    font-size: 0.9rem;
+  }
+  
+  .courseCard button:hover {
+    background-color: #0056b3;
+  }

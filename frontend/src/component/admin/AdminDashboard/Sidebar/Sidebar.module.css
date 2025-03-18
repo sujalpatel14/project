@@ -1,0 +1,101 @@
+.sidebar {
+  width: 250px;
+  background: #f8f9fa;
+  color: #4b49ac;
+  padding: 20px;
+  overflow-y: auto;
+  box-shadow: 0px 5px 21px -3px #cdd1e1;
+  position: relative;
+}
+
+.sidebar h2 {
+  color: black;
+  text-align: center;
+  font-size: 1.8rem;
+  margin-bottom: 20px;
+}
+
+.sidebar ul {
+  list-style: none;
+  padding: 0;
+}
+
+.sidebar ul a {
+  text-decoration: none;
+  display: block;
+}
+
+.sidebar ul li {
+  background-color: transparent;
+  font-family: sans-serif;
+  font-size: 0.875rem;
+  margin: 10px 0;
+  padding: 10px;
+  cursor: pointer;
+  border-radius: 5px;
+  text-align: left;
+  color: #6c757d;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.sidebar ul li:hover {
+  color: white;
+  background: #4b49ac;
+}
+
+/* Active Class Styling */
+/* .active {
+  background-color: #4b49ac !important;
+  color: white !important;
+  font-weight: bold;
+} */
+
+/* Ensures NavLink applies active styling */
+.sidebar ul a.active li {
+  background-color: #4b49ac !important;
+  color: white !important;
+  font-weight: bold;
+}
+
+.close {
+  display: flex;
+  justify-content: flex-end;
+  cursor: pointer;
+  margin-right: 10px;
+  font-size: 1.5rem;
+  color: black;
+}
+
+@media (max-width: 768px) {
+  .sidebar {
+    width: 200px;
+  }
+}
+
+@media (max-width: 576px) {
+  .sidebar {
+    padding: 10px;
+    overflow-y: auto;
+  }
+
+  .sidebar ul li {
+    font-size: 0.85rem;
+    padding: 8px;
+  }
+}
+
+@media (max-width: 500px) {
+  .sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    height: 100vh;
+    z-index: 100;
+  }
+
+  .close {
+    position: absolute;
+    top: 10px;
+    right: 10px;
+  }
+}

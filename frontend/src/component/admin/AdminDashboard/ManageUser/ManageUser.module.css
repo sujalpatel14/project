@@ -1,0 +1,150 @@
+.manageUsersContainer {
+  padding: 20px;
+  border-radius: 8px;
+  /* max-width: 1200px; */
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.searchBar {
+  margin-bottom: 20px;
+}
+
+.searchInput {
+  display: flex;
+  justify-self: center;
+  width: 75%;
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.userForm {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.userForm input,
+.userForm select {
+  width: 95%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.userForm button {
+  background: #4B49Ac;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  margin: 10px;
+}
+
+.userForm button:hover {
+  background-color: #0568d2;
+}
+
+.userData{
+  width: 100%;
+  overflow-x: auto;
+}
+.userTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+}
+
+.userTable th,
+.userTable td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+}
+
+.editButton {
+  background-color: #ffc107;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.editButton:hover {
+  background-color: #e0a800;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}
+
+.deactivateButton {
+  background-color: #6c757d;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.deactivateButton:hover {
+  background-color: #5a6268;
+}
+
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .searchInput {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .userForm input,
+  .userForm select {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .userForm button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .userTable th,
+  .userTable td {
+    padding: 8px;
+    font-size: 0.60rem;
+  }
+
+  .editButton,
+  .deleteButton,
+  .deactivateButton {
+    margin: 3px 3px;
+    padding: 2px 4px;
+    font-size: 0.5rem;
+  }
+}

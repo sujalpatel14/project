@@ -1,0 +1,55 @@
+.manageQuizzes {
+    padding: 20px;
+  }
+  
+  .selectLesson select {
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+  
+  .selectCourse select {
+    padding: 10px;
+    margin-bottom: 20px;
+    width: 100%;
+  }
+
+  .quizForm {
+    margin-bottom: 40px;
+  }
+  
+  .quizForm textarea,
+  .quizForm input {
+    display: block;
+    margin-bottom: 10px;
+    padding: 10px;
+  }
+  
+  .quizList table {
+    width: 100%;
+    border-collapse: collapse;
+  }
+  
+  .quizList th,
+  .quizList td {
+    border: 1px solid #ddd;
+    padding: 10px;
+  }
+  
+  .quizList th {
+    background-color: #f4f4f4;
+  }
+  
+  button {
+    padding: 10px;
+    margin-right: 10px;
+    background-color: #4B49Ac;
+    color: #fff;
+    border: none;
+    cursor: pointer;
+  }
+  
+  button:hover {
+    background-color: #0056b3;
+  }
+  

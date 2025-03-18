@@ -1,0 +1,102 @@
+.loginContainer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh; /* Use min-height for flexible content */
+  padding: 20px; /* Add padding for mobile screens */
+  box-sizing: border-box; /* Include padding in width */
+  flex-wrap: wrap; /* Allow wrapping on smaller screens */
+}
+
+.loginContainer img {
+  width: 40%;
+  max-width: 300px; /* Limit image size */
+  margin-bottom: 20px; /* Add margin for spacing */
+}
+
+.loginBox {
+  padding: 30px;
+  border-radius: 8px;
+  width: 100%; /* Full width on smaller screens */
+  max-width: 500px; /* Limit max width */
+  text-align: center;
+  box-sizing: border-box; /* Include padding */
+}
+
+.title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 15px;
+  color: #333; /* Darker text for readability */
+}
+
+.loginContainer .form {
+  background: transparent;
+  box-shadow: none;
+  display: flex;
+  flex-direction: column;
+}
+
+.input {
+  width: 100%;
+  padding: 12px;
+  margin-bottom: 12px;
+  border: 1px solid #ccc;
+  border-radius: 6px;
+  font-size: 16px;
+  box-sizing: border-box; /* Include padding */
+  background-color: white; /* Add white background to inputs */
+}
+
+.input:focus {
+  border-color: #007bff;
+  outline: none;
+  box-shadow: 0 0 0 2px rgba(0, 123, 255, 0.25); /* Add focus shadow */
+}
+
+.loginButton {
+  background: #4B49Ac;
+  color: white;
+  padding: 12px;
+  border: none;
+  border-radius: 6px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+  font-weight: 600; /* Add font-weight */
+}
+
+.loginButton:hover {
+  background: #0056b3;
+}
+
+.error {
+  color: red;
+  margin-bottom: 10px;
+  font-size: 14px; /* Adjust error message size */
+}
+
+@media (max-width: 768px) {
+  .loginContainer {
+      flex-direction: column;
+      justify-content: flex-start; /* Align to top on small screens */
+      align-items: center; /* Center horizontally */
+      min-height: auto; /* Remove fixed height */
+  }
+
+  .loginContainer img {
+      width: 60%;
+      max-width: 250px; /* Adjust image size for smaller screens */
+      margin-bottom: 20px;
+  }
+}
+
+@media (min-width: 769px) {
+  .loginContainer {
+      flex-wrap: nowrap; /* Prevent wrapping on larger screens */
+  }
+  .loginContainer img{
+      margin-bottom: -50px; /* Remove margin for larger screens */
+  }
+}

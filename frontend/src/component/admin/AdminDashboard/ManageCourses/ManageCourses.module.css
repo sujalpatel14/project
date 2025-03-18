@@ -1,0 +1,167 @@
+.manageCoursesContainer {
+  padding: 20px;
+  border-radius: 8px;
+  /* max-width: 1200px; */
+  width: 100%;
+  margin: 0 auto;
+  box-sizing: border-box;
+}
+
+.title {
+  font-size: 2rem;
+  color: #333;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.courseForm {
+  background: #fff;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  margin-bottom: 20px;
+}
+
+.courseForm h2 {
+  margin-bottom: 15px;
+}
+
+.courseForm input,
+.courseForm textarea {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 10px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.courseForm button {
+  background: #4B49Ac;
+  color: #fff;
+  border: none;
+  padding: 10px 15px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  margin: 10px;
+}
+
+.courseForm button:hover {
+  background-color: #0568d2;
+}
+
+.courseData {
+  width: 100%;
+  overflow-x: auto;
+}
+
+.courseTable {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  margin-top: 20px;
+  font-size: 1rem;
+  overflow-x: auto;
+}
+
+.courseTable th,
+.courseTable td {
+  padding: 10px;
+  border: 1px solid #ccc;
+  text-align: left;
+  box-sizing: border-box;
+}
+
+.editButton {
+  background-color: #ffc107;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.editButton:hover {
+  background-color: #e0a800;
+}
+
+.deleteButton {
+  background-color: #dc3545;
+  color: #fff;
+  padding: 5px 10px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 0.9rem;
+}
+
+.deleteButton:hover {
+  background-color: #c82333;
+}
+
+/* Responsive styles */
+@media (max-width: 768px) {
+  .title {
+    font-size: 1.5rem;
+  }
+
+  .courseForm {
+    padding: 15px;
+  }
+
+  .courseForm input,
+  .courseForm textarea {
+    font-size: 0.9rem;
+    padding: 8px;
+  }
+
+  .courseForm button {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .courseTable th,
+  .courseTable td {
+    padding: 8px;
+    font-size: 0.85rem;
+  }
+
+  .editButton,
+  .deleteButton {
+    padding: 2px 4px;
+    font-size: 0.8rem;
+    margin: 4px 2px;
+  }
+}
+
+@media (max-width: 480px) {
+  .title {
+    font-size: 1.25rem;
+  }
+
+  .courseForm input,
+  .courseForm textarea {
+    font-size: 0.8rem;
+    padding: 6px;
+  }
+
+  .courseForm button {
+    padding: 6px 10px;
+    font-size: 0.8rem;
+  }
+
+  .courseTable th,
+  .courseTable td {
+    padding: 6px;
+    font-size: 0.75rem;
+  }
+
+  .editButton,
+  .deleteButton {
+    padding: 4px 6px;
+    font-size: 0.7rem;
+  }
+}

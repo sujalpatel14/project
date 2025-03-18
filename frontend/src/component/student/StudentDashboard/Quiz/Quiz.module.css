@@ -1,0 +1,188 @@
+/* Container */
+.quizContainer {
+    display: flex;
+    flex-direction: column; /* Stack vertically for better mobile experience */
+    width: 100%;
+    min-height: 100vh;
+    /* background-color: #e9ecef; Light, modern background */
+    font-family: "Roboto", sans-serif; /* Professional, readable font */
+    color: #343a40; /* Dark gray for good readability */
+    align-items: center; /* Center horizontally */
+    justify-content: center; /* Center vertically */
+    padding: 20px; /* Added padding to the container */
+    box-sizing: border-box; /* Ensures padding doesn't affect width calculation */
+  }
+  
+  /* Quiz Content */
+  .quizContent {
+    width: 100%; /* Take up full width by default */
+    padding: 30px;
+    /* background: #fff; Clean white background */
+    /* box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.05); Subtle shadow for depth */
+    border-radius: 12px; /* More rounded corners */
+    margin-bottom: 20px; /* Spacing below the quiz */
+  }
+  
+  .quizContent h1 {
+    font-size: 2.25rem; /* Slightly larger heading */
+    margin-bottom: 15px;
+    font-weight: 600; /* Semi-bold for emphasis */
+    color: #212529; /* Darker heading color */
+    text-align: center; /* Center the main heading */
+  }
+  
+  .quizContent h3 {
+    font-size: 1.5rem; /* Adjusted h3 size */
+    text-align: left;
+    font-weight: 500;
+    margin-bottom: 10px;
+  }
+  
+  .quizContent p {
+    font-size: 1.125rem; /* Slightly larger paragraph text */
+    color: #495057; /* More professional text color */
+    line-height: 1.6; /* Improved line height for readability */
+  }
+  
+  /* Questions */
+  .questionsList {
+    list-style: none;
+    padding: 0;
+  }
+  
+  .questionItem {
+    margin-bottom: 20px;
+    padding: 20px; /* Increased padding */
+    background: #ffff; /* Lighter background for question items */
+    border-radius: 10px; /* Rounded corners */
+    border: 1px solid #dee2e6; /* Subtle border */
+  }
+  
+  .option {
+    display: flex;
+    align-items: center; /* Vertically center the radio button and label */
+    margin: 10px 0; /* Increased margin for spacing */
+    cursor: pointer;
+    font-size: 1.125rem; /* Readable font size */
+    color: #495057;
+  }
+  
+  .option input[type="radio"] {
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    appearance: none; /* Remove default styling */
+    border: 1px solid #ced4da; /* Custom border */
+    border-radius: 50%; /* Make it round */
+    outline: none; /* Remove outline */
+    cursor: pointer;
+    transition: border-color 0.2s ease-in-out; /* Smooth transition */
+  }
+  
+  .option input[type="radio"]:checked {
+    border-color: #007bff; /* Highlighted border color when checked */
+    background-color: #007bff; /* Fill with color */
+  }
+  
+  .option input[type="radio"]:checked::before {
+    content: ""; /* Create a pseudo-element to act as the dot */
+    display: block;
+    width: 8px; /* Adjust dot size as needed */
+    height: 8px; /* Adjust dot size as needed */
+    border-radius: 50%;
+    background-color: white; /* Color of the dot */
+    margin: auto; /* Center the dot */
+  }
+  
+  /* Submit Button */
+  .submitBtn {
+    display: block;
+    width: 100%;
+    background: #007bff;
+    color: white;
+    padding: 14px 24px; /* Increased padding */
+    border: none;
+    font-size: 1.125rem;
+    cursor: pointer;
+    border-radius: 8px; /* Rounded corners */
+    transition: background 0.3s ease-in-out; /* Smooth transition */
+    font-weight: 500; /* Semi-bold font */
+    text-transform: uppercase; /* Uppercase text */
+    letter-spacing: 0.5px; /* Slight letter spacing */
+  }
+  
+  .submitBtn:hover {
+    background: #0056b3; /* Darker shade on hover */
+  }
+  
+  .submitBtn:focus {
+    outline: none; /* Remove default focus outline */
+    box-shadow: 0 0 0 0.2rem rgba(0, 123, 255, 0.5); /* Add a subtle focus shadow */
+  }
+  
+  /* Message */
+  .message {
+    margin-top: 20px;
+    font-size: 1.125rem;
+    color: #28a745; /* Green for success */
+    font-weight: 500;
+    text-align: center; /* Center the message */
+  }
+  
+  /* Error Message */
+  .errorMessage {
+      margin-top: 20px;
+      font-size: 1.125rem;
+      color: #dc3545; /* Red for error */
+      font-weight: 500;
+      text-align: center;
+  }
+  
+  /* Responsive Design */
+  @media screen and (max-width: 768px) {
+    .quizContainer {
+      padding: 10px; /* Reduce padding on smaller screens */
+    }
+  
+    .quizContent {
+      width: 95%; /* Take up more width on smaller screens */
+      padding: 20px; /* Adjust padding */
+    }
+  
+    .quizContent h1 {
+      font-size: 1.75rem; /* Smaller heading on mobile */
+    }
+  
+    .quizContent p {
+      font-size: 1rem; /* Adjusted paragraph size for mobile */
+    }
+  
+    .submitBtn {
+      font-size: 1rem;
+    }
+  
+    .option {
+      font-size: 1rem;
+    }
+  }
+  
+  /* Loading spinner */
+  .loading {
+    border: 5px solid #f3f3f3; /* Light grey border */
+    border-top: 5px solid #3498db; /* Blue border top */
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 2s linear infinite;
+    margin: 20px auto; /* Center the spinner */
+  }
+  
+  @keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+  }
+  
+  /* Hide quiz while loading */
+  .hidden {
+    display: none;
+  }

@@ -1,0 +1,185 @@
+/* General Container Styling */
+.container {
+  width: 95%;
+  max-width: 1200px;
+  margin: 0 auto;
+  /* padding: 2rem; */
+  text-align: center;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
+  color: #333; /* Darker, more readable text */
+}
+
+/* Course Grid Layout */
+.courseGrid {
+  display: flex;
+  gap: 1.5rem; /* Enhanced spacing */
+  margin-top: 2.5rem; /* Increased margin */
+  justify-content: center;
+  flex-wrap: wrap;
+}
+
+/* Course Card Styling */
+.courseCard {
+  width: 400px;
+  background: #fff;
+    border-radius: 0.75rem;
+    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
+    overflow: hidden;
+    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;
+    justify-content: flex-start;
+}
+
+.courseCard:hover {
+  transform: translateY(-0.5rem); /* Greater elevation on hover */
+  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15); /* Even more pronounced shadow */
+}
+
+.courseCard img {
+  width: 100%;
+  /* border-radius: 0.5rem; Rounded image corners */
+  margin-bottom: 1rem; /* Space below the image */
+  object-fit: cover; /* Ensure images fit properly */
+  height: 200px;  /* Standardize the height */
+}
+
+/* Course Title Styling */
+.courseCard h3 {
+    font-size: 1.2rem; /* Larger course title */
+    font-weight: 600; /* Bolder weight */
+    margin-bottom: 0.5rem; /* Spacing below the title */
+    color: #2c3e50; /* More sophisticated title color */
+}
+
+/* Course Description Styling */
+.courseCard p {
+    font-size: 0.9rem; /* Adjusted size for descriptions */
+    color: #777; /* Muted color for descriptions */
+    line-height: 1.5; /* Improved line height for readability */
+}
+
+
+/* Course Details Section */
+.courseDetails {
+  margin-top: 3rem; /* Increased margin */
+  text-align: left;
+}
+
+/* Lesson List Styling */
+.lessonList {
+  list-style-type: none;
+  padding: 0;
+}
+
+/* Lesson Card Styling */
+.lessonCard {
+  border: 1px solid #d0d0d0; /* Refined border */
+  background-color: #f8f9fa; /* Very subtle background */
+  margin: 0.8rem 0;
+  padding: 1.25rem; /* Increased padding */
+  border-radius: 0.5rem; /* More rounded corners */
+  text-align: left;
+  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+}
+
+.lessonCard:hover {
+  background-color: #edf2f7; /* Subtle hover effect */
+  border-color: #c0c0c0; /* Darker border on hover */
+}
+
+/* Lesson Title Styling */
+.lessonCard h4 {
+    font-size: 1rem; /* Adjusted lesson title size */
+    font-weight: 500; /* Semibold weight */
+    color: #34495e; /* Refined color */
+    margin-bottom: 0.25rem; /* Small margin below title */
+}
+
+/* Lesson Description Styling */
+.lessonCard p {
+    font-size: 0.85rem; /* Smaller size for description */
+    color: #555; /* Subtler color */
+    line-height: 1.4; /* Improved line height */
+}
+
+/* Quiz Styling */
+.quiz {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: #e9ecef; /* Light gray background */
+  padding: 1rem; /* Increased padding */
+  border-left: 0.375rem solid #3498db; /* Different border color */
+  margin-top: 1rem;
+  border-radius: 0.375rem; /* More rounded corners */
+}
+
+/* Quiz Text Styling */
+.quiz p {
+    font-size: 0.95rem; /* Adjusted quiz description size */
+    color: #444; /* Refined color */
+}
+
+/* Button Styling (Shared between Quiz and Video) */
+.startQuizBtn,
+.startVideoBtn {
+  background-color: #3498db; /* Refined blue color */
+  color: white;
+  border: none;
+  padding: 0.8rem 1.5rem; /* Further increased padding */
+  border-radius: 0.5rem; /* Even more rounded corners */
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Added transform */
+  font-size: 0.95rem; /* Slightly larger */
+  font-weight: 600; /* Bolder weight */
+  text-transform: uppercase;
+  letter-spacing: 0.05em; /* Slight letter spacing */
+  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* Slight shadow */
+}
+
+.startQuizBtn:hover,
+.startVideoBtn:hover {
+  background-color: #2980b9; /* Darker blue on hover */
+  transform: translateY(-0.125rem); /* Slight lift on hover */
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
+}
+
+/* No Quiz Message */
+.noQuiz {
+  color: #e74c3c; /* Refined red error color */
+  font-style: italic;
+  font-size: 0.85rem; /* Smaller font size */
+}
+
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+  .container {
+    width: 95%;
+  }
+
+  .courseGrid {
+    grid-template-columns: 1fr; /* Stack cards */
+    gap: 1.5rem;
+  }
+
+  .courseCard {
+    padding: 1.25rem;
+  }
+
+  .courseCard img {
+      height: auto; /* Adjust image height automatically */
+  }
+}
+
+@media (max-width: 576px) {
+    .quiz {
+        flex-direction: column; /* Stack quiz content vertically */
+        align-items: flex-start; /* Align to the left */
+    }
+
+    .startQuizBtn, .startVideoBtn {
+        margin-top: 0.5rem; /* Add some space between text and button */
+    }
+}

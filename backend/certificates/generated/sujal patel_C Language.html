@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Certificate of Completion</title>
+    <style>
+        /* Reset and Base Styles */
+        *,
+        *::before,
+        *::after {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Georgia', serif;
+            background-color: #f0f0f0;
+            /* Light off-white background */
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            min-height: 100vh;
+        }
+
+        .certificate {
+          display: flex;
+          flex-direction: column;
+          height: 500px;
+            width: 100%;
+            max-width: 900px;
+            background-color: #fff;
+            border: 1px solid #ddd;
+            /* Lighter border */
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+            /* Stronger shadow */
+            padding: 60px;
+            text-align: center;
+            position: relative;
+            background-image: url("https://static.vecteezy.com/system/resources/previews/029/167/356/original/elegant-modern-blank-blue-gold-graduation-certificate-border-frame-png.png");
+            background-size: cover;
+            background-repeat: no-repeat;
+            /* For background image positioning */
+        }
+
+        /* Background Image */
+        .certificate::before {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background-image: url('your-background-image.jpg');
+            /* Replace with your image URL */
+            background-size: cover;
+            background-position: center;
+            opacity: 0.1;
+            /* Very subtle opacity */
+            z-index: -1;
+            /* Behind the content */
+        }
+
+        /* Header and Title */
+        .header {
+            margin-bottom: 40px;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+            color: #444;
+            /* Darker gray logo */
+        }
+
+        .title {
+            font-size: 36px;
+            /* Larger title */
+            font-weight: bold;
+            color: #333;
+            /* Very dark gray */
+            margin-bottom: 20px;
+            text-shadow: 1px 1px 1px #eee;
+            /* Subtle text shadow */
+        }
+
+        /* Content Styling */
+        .certify-text {
+            font-size: 18px;
+            color: #666;
+            /* Medium gray */
+            margin-bottom: 20px;
+        }
+
+        .name {
+            font-size: 28px;
+            /* Larger name */
+            font-weight: bold;
+            color: #222;
+            /* Near black */
+            margin-bottom: 10px;
+        }
+
+        .course-details {
+            font-size: 16px;
+            color: #555;
+        }
+
+        .course-title {
+            font-style: italic;
+            font-weight: bold;
+            color: #444;
+        }
+
+        .percentage {
+            font-weight: bold;
+            color: #444;
+        }
+
+        /* Footer and Signature */
+        .footer {
+            margin-top: 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-top: 1px solid #eee;
+            padding-top: 20px;
+        }
+
+        .date {
+            font-size: 14px;
+            color: #777;
+        }
+
+        .signature {
+            font-style: italic;
+            font-weight: bold;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="certificate">
+        <div class="header">
+            <div class="logo">
+                Codeverse
+                </div>
+            <div class="title">CERTIFICATE OF COMPLETION</div>
+        </div>
+
+        <div class="content">
+            <p class="certify-text">This is to certify that</p>
+            <p class="name">
+                sujal patel
+            </p>
+            <div class="course-details">
+                has successfully completed the <span class="course-title">
+                        C Language
+                    </span> course
+                with a score of <span class="percentage">
+                        60
+                    </span>.
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Get the current date and format it
+        const today = new Date();
+        const options = {
+            year: 'numeric',
+            month: 'long',
+            day: 'numeric'
+        };
+        const formattedDate = today.toLocaleDateString('en-US', options);
+
+        // Pass the date to the EJS template
+        document.querySelector('.date').textContent = `Issued on: ${formattedDate}`;
+    </script>
+</body>
+
+</html>

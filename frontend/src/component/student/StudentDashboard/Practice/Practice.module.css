@@ -1,0 +1,59 @@
+.container {
+  width: 90%;
+  margin: auto;
+  padding: 20px;
+  border-radius: 8px;
+  font-family: "Arial", sans-serif;
+  border: 1px solid black;
+}
+
+.light {
+  background: #f8f9fa;
+  color: #333;
+}
+
+.dark {
+  background: #2c3e50;
+  color: #fff;
+}
+
+h1 {
+  text-align: center;
+  font-size: 24px;
+}
+
+.controls {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.editor {
+  border-radius: 5px;
+  width: 100%; /* Make editor take full width */
+  min-height: 300px; /* Prevents too small editors */
+  max-height: 600px; /* Ensures it doesn't take too much space */
+  overflow: hidden;
+}
+
+/* Ensure the text area does not overlap */
+.container textarea {
+  width: 93%;
+  min-height: 80px;
+  resize: vertical;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  gap: 15px;
+  flex-wrap: wrap;
+}
+
+.status {
+  font-weight: bold;
+  color: blue;
+}
+

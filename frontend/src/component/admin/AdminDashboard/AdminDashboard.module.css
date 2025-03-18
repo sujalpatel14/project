@@ -1,0 +1,26 @@
+.dashboardContainer {
+    display: flex;
+    height: 100vh;
+    width: 100%;
+    /* background: #f5f7ff; */
+    font-family: sans-serif;
+   
+  }
+  
+  .mainContent {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    overflow-y: auto;
+  }
+
+  .content{
+    margin: 10px;
+  }
+  @media (max-width: 500px) {
+    .mainContent {
+      position: absolute;
+      width: 100%;
+    }
+  }
+  

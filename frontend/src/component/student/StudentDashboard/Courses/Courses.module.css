@@ -1,0 +1,98 @@
+/* Sophisticated and Modern CSS for Course Display */
+
+/* Overall Container for Courses */
+.coursesContainer {
+  width: 90%;  /* Responsive width, adapts to different screen sizes */
+  margin: 2rem auto; /* Centered with top/bottom margin for spacing */
+  padding: 2.5rem 1.25rem; /* Vertical and horizontal padding for comfortable spacing */
+  text-align: center;
+  font-family: 'Arial', sans-serif; /* Modern and clean font choice */
+}
+
+/* Main Heading Styling */
+.heading {
+  font-size: 2.25rem; /* Size adjusted for better readability */
+  color: #343a40; /* Darker, professional heading color */
+  margin-bottom: 1.5rem; /* Space below the heading */
+  font-weight: 600; /* Slightly lighter weight for a modern feel */
+  letter-spacing: -0.05rem; /* Subtle letter spacing improvement */
+}
+
+/* Grid Layout for Course Cards */
+.courseGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Cards adjust to fit available space */
+  gap: 1.5rem; /* Consistent gap between cards */
+  justify-content: center; /* Centers the grid items horizontally */
+}
+
+/* Individual Course Card Styling */
+.courseCard {
+  background: #fff; /* Clean white background */
+  border-radius: 0.75rem; /* Slightly smaller, modern border radius */
+  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08); /* Subtler, softer shadow */
+  overflow: hidden; /* Ensures content stays within rounded borders */
+  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smoother, faster transitions */
+  display: flex; /* Use flexbox for vertical alignment */
+  flex-direction: column;
+  align-items: stretch; /* Stretch content to fill card vertically */
+  justify-content: flex-start; /* Align content to the top */
+}
+
+.courseCard:hover {
+  transform: translateY(-0.25rem); /* Less aggressive hover effect */
+  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12); /* Increased shadow on hover */
+}
+
+/* Course Thumbnail Styling */
+.courseThumbnail {
+  width: 100%; /* Occupy the full width */
+  height: 150px; /* Fixed height for consistency */
+  object-fit: cover; /* Ensures images fill the space without distortion */
+  border-radius: 0.75rem 0.75rem 0 0; /* Rounded top corners */
+  margin: 0; /* Remove default margin */
+}
+
+/* Course Content Section */
+.courseContent {
+  padding: 1.25rem; /* Consistent padding around content */
+  text-align: left; /* Left-align text within the card */
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Align items to the left */
+  justify-content: space-between; /* Distribute space between title, description, and button */
+  flex-grow: 1;  /* Allows content to fill available vertical space */
+}
+
+.courseContent p {
+  font-size: 0.9rem;  /* Slightly smaller, readable font size */
+  line-height: 1.4; /* Improved line height for readability */
+  color: #555; /* Muted text color */
+  margin-bottom: 1rem; /* Space below description */
+  flex-grow: 1;  /* Push the button to the bottom */
+}
+
+/* Course Title Styling */
+.courseTitle {
+  font-size: 1.2rem; /* Size adjusted for better readability */
+  font-weight: 500; /* Slightly lighter weight for a modern feel */
+  color: #212529; /* Darker, professional heading color */
+  margin-bottom: 0.5rem; /* Spacing below the title */
+}
+
+/* Button Styling within Course Card */
+.courseCard button {
+  margin-top: auto; /* Align to the bottom */
+  padding: 0.75rem 1.25rem;
+  background-color: #007bff; /* Bootstrap primary color */
+  color: #fff;
+  border: none;
+  border-radius: 0.375rem;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+  font-size: 0.9rem;
+}
+
+.courseCard button:hover {
+  background-color: #0056b3;
+}

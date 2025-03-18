@@ -1,0 +1,332 @@
+/* Home.module.css */
+.homeContainer {
+  font-family: "Arial", sans-serif;
+  color: #333;
+  padding: 20px;
+  text-align: center;
+  width: 90%;
+}
+
+/* Hero Section */
+.hero {
+  background: linear-gradient(to right, #2962FF, #00A2E8);;
+  color: #FFFFFF;
+  padding: 50px 20px;
+  border-radius: 8px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15); /* Increased shadow for depth */
+  margin-bottom: 40px;
+
+}
+
+.hero h1 {
+  font-size: 2.5rem;
+  margin-bottom: 10px;
+}
+
+.hero p {
+  font-size: 1.2rem;
+}
+
+/* Features Section */
+.features {
+  margin: 40px 0;
+}
+
+.features h2 {
+  font-size: 2rem;
+  color: #1e90ff;
+  margin-bottom: 20px;
+}
+
+.featureGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.featureItem {
+  background: #f9f9f9;
+  padding: 20px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.featureItem:hover {
+  box-shadow: 0px 6px 10px rgba(0, 0, 0, 0.5);
+}
+
+.featureItem h3 {
+  color: #007acc;
+  font-size: 1.5rem;
+  margin-bottom: 10px;
+}
+
+/* Feedback Section */
+.feedback {
+  padding: 40px 20px;
+  border-radius: 8px;
+}
+
+.feedback h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.feedbackForm {
+  display: flex;
+  flex-direction: column;
+  gap: 15px;
+  max-width: 400px;
+  margin: auto;
+}
+
+.feedbackForm input,
+.feedbackForm textarea {
+  padding: 10px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  font-size: 1rem;
+}
+
+.feedbackForm button {
+  background: #1e90ff;
+  color: white;
+  border: none;
+  padding: 10px;
+  font-size: 1.2rem;
+  cursor: pointer;
+  border-radius: 5px;
+  transition: background 0.3s ease;
+}
+
+.feedbackForm button:hover {
+  background: #007acc;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .hero h1 {
+    font-size: 2rem;
+  }
+
+  .hero p {
+    font-size: 1rem;
+  }
+
+  .features h2,
+  .feedback h2 {
+    font-size: 1.8rem;
+  }
+
+  .featureItem h3 {
+    font-size: 1.3rem;
+  }
+}
+
+.container {
+  margin: 10px;
+  padding: 40px;
+  background-color: white;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  border-radius: 12px;
+  box-shadow: 0px 8px 16px rgba(0, 0, 0, 0.15);
+}
+
+.container h1 {
+  font-size: 2.5em;
+  margin-bottom: 20px;
+}
+
+.container p {
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 30px;
+}
+
+.buttons {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px;
+}
+
+.button {
+  padding: 15px 30px;
+  border: none;
+  border-radius: 5px;
+  font-size: 1em;
+  cursor: pointer;
+  text-decoration: none;
+  color: white;
+}
+
+.joinbutton {
+  background-color: #2a73cc;
+  align-items: center;
+  justify-content: center;
+  display: flex;
+  height: 50px;
+  width: 200px;
+  color: #0056d2;
+  background-color: #f5f5f5;
+  border: 2px solid #0056d2;
+  border-radius: 2px;
+}
+
+.joinbutton:hover {
+  background-color: #0056d2;
+  color: #f5f5f5;
+}
+
+@media (max-width: 600px) {
+  .container {
+    padding: 20px;
+  }
+
+  .container h1 {
+    font-size: 2em;
+  }
+
+  .button {
+    padding: 12px 25px;
+  }
+}
+
+/* Star Rating */
+.ratingContainer {
+  text-align: center;
+  margin: 10px 0;
+}
+
+.ratingContainer p {
+  font-size: 1.2rem;
+  color: #333;
+  margin-bottom: 5px;
+}
+
+.stars {
+  display: flex;
+  justify-content: center;
+  gap: 5px;
+}
+
+.star {
+  font-size: 2rem;
+  cursor: pointer;
+  color: #ccc;
+  transition: color 0.3s ease;
+}
+
+.star.filled {
+  color: #ffcc00;
+}
+
+/* Feedback Display */
+.feedbackDisplay {
+  width: 100%;
+  padding: 40px 20px;
+  border-radius: 8px;
+  text-align: center;
+  overflow: hidden;
+}
+
+.feedbackDisplay h2 {
+  font-size: 2rem;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+/* Updated feedback list for horizontal scrolling */
+.feedbackList {
+  display: flex;
+  flex-direction: row; /* Horizontal layout */
+  overflow-x: auto; /* Enable horizontal scroll */
+  overflow-y: hidden;
+  align-items: center;
+  gap: 15px;
+  width: 100%;
+  padding-bottom: 10px; /* Prevent scrollbar overlap */
+  scroll-snap-type: x mandatory; /* Smooth scrolling */
+}
+
+/* Scrollbar Styling */
+.feedbackList::-webkit-scrollbar {
+  height: 8px;
+}
+
+.feedbackList::-webkit-scrollbar-track {
+  background: #ddd;
+  border-radius: 10px;
+}
+
+.feedbackList::-webkit-scrollbar-thumb {
+  background: #888;
+  border-radius: 10px;
+}
+
+.feedbackList::-webkit-scrollbar-thumb:hover {
+  background: #555;
+}
+
+/* Individual Feedback Card */
+.feedbackItem {
+  background: white;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+  text-align: left;
+  width: 400px; /* Fixed width for each card */
+  height: 200px;
+  scroll-snap-align: start; /* Smooth scrolling stops */
+  flex-shrink: 0; /* Prevents items from shrinking */
+}
+
+/* User Info */
+.userInfo {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.profilePic {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  object-fit: cover;
+}
+
+.defaultProfile {
+  font-size: 2rem;
+  color: #555;
+}
+
+.starDisplay {
+  display: flex;
+  gap: 2px;
+  font-size: 20px;
+}
+
+/* Filled Star (Gold) */
+.filledStar {
+  color: #ffcc00;
+}
+
+/* Empty Star (Gray) */
+.emptyStar {
+  color: #ccc;
+}
+.feedbackMessage {
+  font-size: 1rem;
+  color: #444;
+}
+
+@media (max-width: 768px) {
+  .feedbackItem {
+    width: 200px;
+    height: 300px;
+  }
+}

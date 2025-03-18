@@ -1,0 +1,24 @@
+.header {
+    height: 30px;
+    background: #f8f9fa;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    box-shadow: 0px 5px 21px -5px #cdd1e1;
+  }
+  
+  
+  .profile {
+    display: flex;
+    align-items: center;
+  }
+  
+  .profileImage {
+    border-radius: 50%;
+  }
+  
+  .HamBurger{
+    cursor: pointer;
+  }
+  

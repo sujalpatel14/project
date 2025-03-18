@@ -1,0 +1,136 @@
+/* Navbar Styles */
+.navbar {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background-color: white;
+  padding: 5px 20px;
+  color: white;
+  top: 0;
+  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+  border-bottom: 1px solid black;
+}
+
+/* Logo */
+
+.logo {
+  display: flex;
+  align-items: center;
+  font-size: clamp(1.5rem, 2vw, 1.8rem);
+  font-weight: bold;
+  text-transform: uppercase;
+
+}
+
+.logo a {
+  text-decoration: none;
+  color: #0056d2;
+  transition: color 0.3s ease-in-out;
+}
+
+.logo a:hover {
+  color: #f39c12;
+}
+
+.logo img {
+  height: 70px;
+  width: 70px;
+}
+
+/* Navigation Links */
+.navLinks {
+  display: flex;
+  list-style: none;
+}
+
+.navLinks li {
+  justify-content: center;
+  display: flex;
+  margin: 0;
+}
+
+.navLinks a {
+  display: flex;
+  align-items: center;
+  font-family: sans-serif;
+  text-decoration: none;
+  color: black;
+  font-size: clamp(0.9rem, 1vw, 1rem);
+  font-weight: 500;
+  padding: 10px 15px;
+  transition: all 0.3s ease-in-out;
+  border-radius: 5px;
+}
+
+.navLinks a:hover {
+  color: #0056d2;
+}
+
+/* Profile Link */
+.profileLink a {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.userIcon {
+  font-size: 1.2rem;
+}
+
+/* Hamburger Menu */
+.hamburger {
+  display: none;
+  font-size: 1.8rem;
+  cursor: pointer;
+  transition: color 0.3s ease-in-out;
+  color: black;
+}
+
+.hamburger:hover {
+  color: #0056d2;
+}
+
+.profileLink img {
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+  border: 2px solid black;
+  padding: 1px;
+}
+
+.profileLink img:hover{
+  border: 2px solid #0056d2;
+}
+
+/* Mobile Navigation */
+@media screen and (max-width: 1024px) {
+  .navLinks {
+    border-top: 2px solid black;
+    border-bottom: 2px solid black;
+    position: absolute;
+    top: 60px;
+    right: 0;
+    width: 100%;
+    background: #ffff;
+    flex-direction: column;
+    align-items: center;
+    padding: 20px 0;
+    transform: translateY(-200%);
+    transition: transform 0.3s ease-in-out;
+  }
+
+  .navLinks.open {
+    transform: translateY(0);
+  }
+
+  .navLinks a {
+    padding: 12px 20px;
+    width: 100%;
+    /* text-align: center; */
+    display: block;
+  }
+
+  .hamburger {
+    display: block;
+  }
+}

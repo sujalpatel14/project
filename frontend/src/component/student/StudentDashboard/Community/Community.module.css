@@ -1,0 +1,114 @@
+.community {
+  /* max-width: 600px; Reduced max-width for a chat-like feel */
+  width: 90%;
+  margin: 2rem auto;
+  font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+  background-color: transparent; /* WhatsApp background color */
+  border-radius: 0.5rem;
+  display: flex;
+  flex-direction: column;
+  height: 80vh; /* Adjust height as needed */
+  overflow-y: auto;
+}
+
+.posts {
+  flex-grow: 1; /* Allow posts to take up available space */
+  overflow-y: auto; /* Enable vertical scrolling */
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+}
+
+.post {
+  background-color: #fff;
+  border-radius: 0.5rem;
+  padding: 0.8rem;
+  margin-bottom: 0.5rem;
+  align-self: flex-start;
+  max-width: 80%;
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+}
+
+.post:last-child {
+  margin-bottom: 0;
+}
+
+.postContentWrapper {
+  flex-grow: 1;
+}
+
+.postTitle {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 0.2rem;
+}
+
+.postContent {
+  font-size: 0.9rem;
+  margin: 0;
+  line-height: 1.4;
+  word-wrap: break-word; /* Allow long words to break */
+}
+
+.likeButton {
+  background: none;
+  border: none;
+  font-size: 1rem;
+  cursor: pointer;
+  color: #dc3545;
+  margin-left: 0.5rem;
+}
+
+.likeButton:hover {
+  background-color: transparent;
+}
+
+.postForm {
+  display: flex;
+  padding: 0.5rem;
+  background-color: #e9e9eb; /* Slightly darker background */
+  border-top: 1px solid #d1d7db; /* Subtle border */
+}
+
+.input,
+.textarea {
+  flex-grow: 1;
+  padding: 0.7rem;
+  border: none;
+  border-radius: 0.3rem;
+  margin-right: 0.5rem;
+  font-size: 0.9rem;
+  resize: none;
+  outline: none;
+}
+
+.textarea {
+  height: auto;
+  overflow-y: auto; /* Allow vertical scrolling in textarea */
+}
+
+.button {
+  background-color: #0056d2; /* WhatsApp send button color */
+  color: white;
+  padding: 0.7rem 1rem;
+  border: none;
+  border-radius: 0.3rem;
+  cursor: pointer;
+  font-size: 0.9rem;
+  white-space: nowrap;
+}
+
+/* Adjust post alignment for user's own posts */
+.post.own {
+  align-self: flex-end;
+  background-color: #dcf8c6; /* WhatsApp user post background color */
+}
+
+@media (max-width: 768px) {
+  .postForm {
+    flex-direction: column;
+  }
+}
