@@ -155,8 +155,8 @@ export const AdminLogin = async(req,res)=>{
     //Set secure HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "Lax",
+      secure: true,
+      sameSite: "None",
     });
 
     res.json({ success: true , message: "Login successful", token });

@@ -154,8 +154,8 @@ export const loginStudent = async (req, res) => {
     // Set token in a cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: false,
-      sameSite: "Lax",
+      secure: true,
+      sameSite: "None",
     });
 
     res.status(200).json({ message: "Login successful", token });
