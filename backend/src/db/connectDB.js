@@ -3,6 +3,7 @@ import mongoose from "mongoose"
 
 const connectDB = async()=>{
     try{
+        console.log("")
         const con = await mongoose.connect(`${process.env.MONODB_NAME}/${DB_NAME}`)
         console.log(`DataBase connected`);
     }catch(err){

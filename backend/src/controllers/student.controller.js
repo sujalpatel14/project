@@ -1,5 +1,5 @@
 import { User } from "../models/user.models.js";
-import bcrypt from "bcrypt";
+import bcrypt from "bcryptjs";
 import { OTP } from "../models/otp.models.js";
 import jwt from "jsonwebtoken";
 import { sendOTPEmail } from "../utils/email.js";
