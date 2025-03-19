@@ -55,6 +55,7 @@ const Login = () => {
           </button>
           <p className={styles.link}><NavLink to="/ForgetPassword">Forgot Password?</NavLink></p>
           <p className={styles.link}><NavLink to="/Sign-Up">Create An Account?</NavLink></p>
+          <p className={styles.link}><NavLink to="/admin">Create An Account?</NavLink></p>
         </div>
     </div>
   );
