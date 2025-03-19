@@ -1,69 +1,123 @@
+/* Modern CSS with Custom Properties and Contemporary Design */
+:root {
+  /* Color Palette */
+  --color-primary: #3498db;
+  --color-primary-dark: #2980b9;
+  --color-text: #333;
+  --color-text-secondary: #555;
+  --color-text-muted: #777;
+  --color-background: #fff;
+  --color-background-alt: #f8f9fa;
+  --color-background-hover: #edf2f7;
+  --color-border: #d0d0d0;
+  --color-border-hover: #c0c0c0;
+  --color-error: #e74c3c;
+  
+  /* Spacing */
+  --space-xs: 0.25rem;
+  --space-sm: 0.5rem;
+  --space-md: 1rem;
+  --space-lg: 1.5rem;
+  --space-xl: 2rem;
+  --space-xxl: 2.5rem;
+  
+  /* Shadows */
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.05);
+  --shadow-md: 0 4px 8px rgba(0, 0, 0, 0.08);
+  --shadow-lg: 0 8px 16px rgba(0, 0, 0, 0.12);
+  
+  /* Border Radius */
+  --radius-sm: 0.375rem;
+  --radius-md: 0.5rem;
+  --radius-lg: 0.75rem;
+  
+  /* Transitions */
+  --transition-fast: 200ms cubic-bezier(0.4, 0, 0.2, 1);
+  --transition-normal: 300ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 /* General Container Styling */
 .container {
-  width: 95%;
-  max-width: 1200px;
-  margin: 0 auto;
-  /* padding: 2rem; */
+  width: min(95%, 1200px); /* Modern responsive width approach */
+  margin-inline: auto; /* Logical property for centering */
+  margin-block: var(--space-xl);
   text-align: center;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Modern, clean font */
-  color: #333; /* Darker, more readable text */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; /* Modern system font stack */
+  color: var(--color-text);
+  box-sizing: border-box;
 }
 
 /* Course Grid Layout */
 .courseGrid {
   display: flex;
-  gap: 1.5rem; /* Enhanced spacing */
-  margin-top: 2.5rem; /* Increased margin */
-  justify-content: center;
   flex-wrap: wrap;
+  gap: var(--space-lg); /* Modern gap property */
+  margin-top: var(--space-xxl);
+  justify-content: center;
 }
 
 /* Course Card Styling */
 .courseCard {
-  width: 400px;
-  background: #fff;
-    border-radius: 0.75rem;
-    box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08);
-    overflow: hidden;
-    transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out;
-    display: flex;
-    flex-direction: column;
-    align-items: stretch;
-    justify-content: flex-start;
+  width: 100%;
+  max-width: 350px;
+  background: var(--color-background);
+  border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--transition-fast), box-shadow var(--transition-fast);
+  display: flex;
+  flex-direction: column;
+  height: 100%; /* Ensure uniform height */
+  /* position: relative; */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+  cursor: pointer;
 }
 
 .courseCard:hover {
-  transform: translateY(-0.5rem); /* Greater elevation on hover */
-  box-shadow: 0 0.75rem 1.5rem rgba(0, 0, 0, 0.15); /* Even more pronounced shadow */
+  transform: translateY(-8px);
+  box-shadow: var(--shadow-lg);
 }
 
 .courseCard img {
   width: 100%;
-  /* border-radius: 0.5rem; Rounded image corners */
-  margin-bottom: 1rem; /* Space below the image */
-  object-fit: cover; /* Ensure images fit properly */
-  height: 200px;  /* Standardize the height */
+  aspect-ratio: 16 / 9; /* Modern aspect ratio control */
+  object-fit: cover;
+  display: block; /* Remove inline image gaps */
+}
+
+/* Course Content Area */
+.courseContent {
+  padding: var(--space-lg);
+  display: flex;
+  flex-direction: column;
+  flex-grow: 1; /* Fill remaining space */
+  gap: var(--space-sm);
 }
 
 /* Course Title Styling */
 .courseCard h3 {
-    font-size: 1.2rem; /* Larger course title */
-    font-weight: 600; /* Bolder weight */
-    margin-bottom: 0.5rem; /* Spacing below the title */
-    color: #2c3e50; /* More sophisticated title color */
+  font-size: clamp(1.1rem, 2vw, 1.3rem); /* Fluid typography */
+  font-weight: 600;
+  margin-bottom: var(--space-xs);
+  color: #2c3e50;
+  line-height: 1.3;
 }
 
 /* Course Description Styling */
 .courseCard p {
-    font-size: 0.9rem; /* Adjusted size for descriptions */
-    color: #777; /* Muted color for descriptions */
-    line-height: 1.5; /* Improved line height for readability */
+  font-size: 0.95rem;
+  color: var(--color-text-muted);
+  line-height: 1.6;
+  margin-bottom: var(--space-md);
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
-
 
 /* Course Details Section */
 .courseDetails {
-  margin-top: 3rem; /* Increased margin */
+  margin-top: var(--space-xl);
   text-align: left;
 }
 
@@ -71,37 +125,40 @@
 .lessonList {
   list-style-type: none;
   padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: var(--space-md);
 }
 
 /* Lesson Card Styling */
 .lessonCard {
-  border: 1px solid #d0d0d0; /* Refined border */
-  background-color: #f8f9fa; /* Very subtle background */
-  margin: 0.8rem 0;
-  padding: 1.25rem; /* Increased padding */
-  border-radius: 0.5rem; /* More rounded corners */
+  border: 1px solid var(--color-border);
+  background-color: var(--color-background-alt);
+  padding: var(--space-lg);
+  border-radius: var(--radius-md);
   text-align: left;
-  transition: background-color 0.2s ease-in-out, border-color 0.2s ease-in-out;
+  transition: background-color var(--transition-fast), border-color var(--transition-fast);
 }
 
 .lessonCard:hover {
-  background-color: #edf2f7; /* Subtle hover effect */
-  border-color: #c0c0c0; /* Darker border on hover */
+  background-color: var(--color-background-hover);
+  border-color: var(--color-border-hover);
 }
 
 /* Lesson Title Styling */
 .lessonCard h4 {
-    font-size: 1rem; /* Adjusted lesson title size */
-    font-weight: 500; /* Semibold weight */
-    color: #34495e; /* Refined color */
-    margin-bottom: 0.25rem; /* Small margin below title */
+  font-size: 1.05rem;
+  font-weight: 500;
+  color: #34495e;
+  margin-bottom: var(--space-xs);
 }
 
 /* Lesson Description Styling */
 .lessonCard p {
-    font-size: 0.85rem; /* Smaller size for description */
-    color: #555; /* Subtler color */
-    line-height: 1.4; /* Improved line height */
+  font-size: 0.9rem;
+  color: var(--color-text-secondary);
+  line-height: 1.5;
+  margin: 0;
 }
 
 /* Quiz Styling */
@@ -109,77 +166,119 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  background-color: #e9ecef; /* Light gray background */
-  padding: 1rem; /* Increased padding */
-  border-left: 0.375rem solid #3498db; /* Different border color */
-  margin-top: 1rem;
-  border-radius: 0.375rem; /* More rounded corners */
+  background-color: var(--color-background-alt);
+  padding: var(--space-md);
+  border-left: 4px solid var(--color-primary);
+  margin-top: var(--space-md);
+  border-radius: var(--radius-sm);
+  gap: var(--space-md);
 }
 
 /* Quiz Text Styling */
 .quiz p {
-    font-size: 0.95rem; /* Adjusted quiz description size */
-    color: #444; /* Refined color */
+  font-size: 0.95rem;
+  color: var(--color-text);
+  margin: 0;
 }
 
-/* Button Styling (Shared between Quiz and Video) */
-.startQuizBtn,
-.startVideoBtn {
-  background-color: #3498db; /* Refined blue color */
+/* Button Base Styling */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  background-color: var(--color-primary);
   color: white;
   border: none;
-  padding: 0.8rem 1.5rem; /* Further increased padding */
-  border-radius: 0.5rem; /* Even more rounded corners */
+  padding: 0.75rem 1.25rem;
+  border-radius: var(--radius-md);
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out, transform 0.2s ease-in-out; /* Added transform */
-  font-size: 0.95rem; /* Slightly larger */
-  font-weight: 600; /* Bolder weight */
+  transition: all var(--transition-fast);
+  font-size: 0.9rem;
+  font-weight: 500;
   text-transform: uppercase;
-  letter-spacing: 0.05em; /* Slight letter spacing */
-  box-shadow: 0 0.125rem 0.25rem rgba(0, 0, 0, 0.1); /* Slight shadow */
+  letter-spacing: 0.05em;
+  box-shadow: var(--shadow-sm);
+  white-space: nowrap;
 }
 
-.startQuizBtn:hover,
-.startVideoBtn:hover {
-  background-color: #2980b9; /* Darker blue on hover */
-  transform: translateY(-0.125rem); /* Slight lift on hover */
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.15); /* More prominent shadow on hover */
+.btn:hover {
+  background-color: var(--color-primary-dark);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+
+.btn:focus-visible {
+  outline: 2px solid var(--color-primary);
+  outline-offset: 2px;
+}
+
+/* Apply button base class to specific buttons */
+.startQuizBtn,
+.startVideoBtn {
+  composes: btn;
 }
 
 /* No Quiz Message */
 .noQuiz {
-  color: #e74c3c; /* Refined red error color */
+  color: var(--color-error);
   font-style: italic;
-  font-size: 0.85rem; /* Smaller font size */
+  font-size: 0.85rem;
 }
 
-/* Responsive Adjustments */
+/* Modern Responsive Design */
 @media (max-width: 768px) {
   .container {
-    width: 95%;
+    width: min(95%, 100%);
+    padding-inline: var(--space-md);
   }
 
   .courseGrid {
-    grid-template-columns: 1fr; /* Stack cards */
-    gap: 1.5rem;
-  }
-
-  .courseCard {
-    padding: 1.25rem;
-  }
-
-  .courseCard img {
-      height: auto; /* Adjust image height automatically */
+    gap: var(--space-md);
   }
 }
 
 @media (max-width: 576px) {
-    .quiz {
-        flex-direction: column; /* Stack quiz content vertically */
-        align-items: flex-start; /* Align to the left */
-    }
+  .quiz {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: var(--space-sm);
+  }
 
-    .startQuizBtn, .startVideoBtn {
-        margin-top: 0.5rem; /* Add some space between text and button */
-    }
+  .courseContent {
+    padding: var(--space-md);
+  }
+  
+  .lessonCard {
+    padding: var(--space-md);
+  }
+}
+
+/* Utility classes for modern layouts */
+.flex {
+  display: flex;
+}
+
+.flex-col {
+  flex-direction: column;
+}
+
+.items-center {
+  align-items: center;
+}
+
+.justify-between {
+  justify-content: space-between;
+}
+
+.gap-sm {
+  gap: var(--space-sm);
+}
+
+.gap-md {
+  gap: var(--space-md);
+}
+
+.mt-auto {
+  margin-top: auto;
 }

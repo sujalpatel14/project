@@ -154,8 +154,8 @@ export const loginStudent = async (req, res) => {
     // Set token in a cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: process.env.NODE_ENV === "production", // true in production, false in development
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Cross-origin for production
     });
 
     res.status(200).json({ message: "Login successful", token });

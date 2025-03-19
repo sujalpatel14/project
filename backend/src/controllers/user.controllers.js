@@ -155,8 +155,8 @@ export const AdminLogin = async(req,res)=>{
     //Set secure HTTP-only cookie
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "None",
+      secure: process.env.NODE_ENV === "production", // true in production, false in development
+      sameSite: process.env.NODE_ENV === "production" ? "None" : "Lax", // Cross-origin for production
     });
 
     res.json({ success: true , message: "Login successful", token });

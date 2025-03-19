@@ -1,98 +1,163 @@
-/* Sophisticated and Modern CSS for Course Display */
+/* Modern CSS for Course Display with enhanced styling and overflow fix */
 
-/* Overall Container for Courses */
+/* Overall Container using CSS Custom Properties (variables) */
+:root {
+  --primary: #3a86ff;
+  --primary-hover: #2667e0;
+  --text-dark: #1a202c;
+  --text-light: #4a5568;
+  --bg-light: #ffffff;
+  --shadow-sm: 0 2px 4px rgba(0, 0, 0, 0.04), 0 1px 2px rgba(0, 0, 0, 0.06);
+  --shadow-md: 0 4px 6px rgba(0, 0, 0, 0.05), 0 2px 4px rgba(0, 0, 0, 0.06);
+  --radius: 12px;
+  --transition: 220ms cubic-bezier(0.4, 0, 0.2, 1);
+}
+
 .coursesContainer {
-  width: 90%;  /* Responsive width, adapts to different screen sizes */
-  margin: 2rem auto; /* Centered with top/bottom margin for spacing */
-  padding: 2.5rem 1.25rem; /* Vertical and horizontal padding for comfortable spacing */
+  width: 100%; /* Changed to 100% to prevent overflow */
+  max-width: 1200px; /* Max width for larger screens */
+  margin-inline: auto; /* Logical property for horizontal centering */
+  margin-block: 3rem; /* Logical property for vertical spacing */
+  padding-block: 2rem;
+  padding-inline: 1rem; /* Simplified padding */
   text-align: center;
-  font-family: 'Arial', sans-serif; /* Modern and clean font choice */
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, sans-serif; /* Modern system font stack */
+  box-sizing: border-box; /* Ensure padding doesn't cause overflow */
+  margin-top: 0;
 }
 
-/* Main Heading Styling */
+/* Main Heading with more refined typography */
 .heading {
-  font-size: 2.25rem; /* Size adjusted for better readability */
-  color: #343a40; /* Darker, professional heading color */
-  margin-bottom: 1.5rem; /* Space below the heading */
-  font-weight: 600; /* Slightly lighter weight for a modern feel */
-  letter-spacing: -0.05rem; /* Subtle letter spacing improvement */
+  font-size: clamp(1.5rem, 5vw, 2.5rem); /* Adjusted fluid typography */
+  color: var(--text-dark);
+  margin-bottom: 2rem;
+  font-weight: 700;
+  letter-spacing: -0.03em;
+  line-height: 1.2;
 }
 
-/* Grid Layout for Course Cards */
+/* Modern Grid with auto-placement and responsive design */
 .courseGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); /* Cards adjust to fit available space */
-  gap: 1.5rem; /* Consistent gap between cards */
-  justify-content: center; /* Centers the grid items horizontally */
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr)); /* Reduced minimum width */
+  gap: 1rem; /* Fixed gap to prevent overflow */
+  justify-content: center;
 }
 
-/* Individual Course Card Styling */
+/* Enhanced Card Design */
 .courseCard {
-  background: #fff; /* Clean white background */
-  border-radius: 0.75rem; /* Slightly smaller, modern border radius */
-  box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.08); /* Subtler, softer shadow */
-  overflow: hidden; /* Ensures content stays within rounded borders */
-  transition: transform 0.2s ease-in-out, box-shadow 0.2s ease-in-out; /* Smoother, faster transitions */
-  display: flex; /* Use flexbox for vertical alignment */
+  background: var(--bg-light);
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-sm);
+  overflow: hidden;
+  transition: transform var(--transition), box-shadow var(--transition);
+  display: flex;
   flex-direction: column;
-  align-items: stretch; /* Stretch content to fill card vertically */
-  justify-content: flex-start; /* Align content to the top */
+  height: 100%; /* Ensure consistent heights */
+  /* isolation: isolate;  */
+  /* position: relative; */
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+  width: 100%; /* Ensure card doesn't overflow its container */
+  max-width: 100%; /* Prevent horizontal overflow */
 }
 
 .courseCard:hover {
-  transform: translateY(-0.25rem); /* Less aggressive hover effect */
-  box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.12); /* Increased shadow on hover */
+  transform: translateY(-4px);
+  box-shadow: var(--shadow-md);
 }
 
-/* Course Thumbnail Styling */
+/* Modern image handling */
 .courseThumbnail {
-  width: 100%; /* Occupy the full width */
-  height: 150px; /* Fixed height for consistency */
-  object-fit: cover; /* Ensures images fill the space without distortion */
-  border-radius: 0.75rem 0.75rem 0 0; /* Rounded top corners */
-  margin: 0; /* Remove default margin */
+  width: 100%;
+  aspect-ratio: 16 / 9; /* Modern way to maintain image proportions */
+  object-fit: cover;
+  object-position: center;
+  border-radius: var(--radius) var(--radius) 0 0;
+  display: block; /* Remove any potential inline spacing */
 }
 
-/* Course Content Section */
+/* Enhanced Content Layout */
 .courseContent {
-  padding: 1.25rem; /* Consistent padding around content */
-  text-align: left; /* Left-align text within the card */
+  padding: 1.25rem; /* Reduced padding for small screens */
+  text-align: left;
   display: flex;
   flex-direction: column;
-  align-items: flex-start; /* Align items to the left */
-  justify-content: space-between; /* Distribute space between title, description, and button */
-  flex-grow: 1;  /* Allows content to fill available vertical space */
+  gap: 0.75rem; /* Modern gap property instead of margins */
+  flex: 1; /* Take remaining space */
+  width: 100%; /* Ensure content doesn't overflow */
+  box-sizing: border-box; /* Include padding in width calculation */
 }
 
 .courseContent p {
-  font-size: 0.9rem;  /* Slightly smaller, readable font size */
-  line-height: 1.4; /* Improved line height for readability */
-  color: #555; /* Muted text color */
-  margin-bottom: 1rem; /* Space below description */
-  flex-grow: 1;  /* Push the button to the bottom */
+  font-size: 0.95rem;
+  line-height: 1.6;
+  color: var(--text-light);
+  margin-bottom: 1rem;
+  display: -webkit-box;
+  -webkit-line-clamp: 3; /* Limit to 3 lines */
+  -webkit-box-orient: vertical;
+  overflow: hidden; /* Truncate overflow text */
+  word-wrap: break-word; /* Handle long words */
 }
 
-/* Course Title Styling */
+/* Modern Title Typography */
 .courseTitle {
-  font-size: 1.2rem; /* Size adjusted for better readability */
-  font-weight: 500; /* Slightly lighter weight for a modern feel */
-  color: #212529; /* Darker, professional heading color */
-  margin-bottom: 0.5rem; /* Spacing below the title */
+  font-size: 1.1rem; /* Reduced for small screens */
+  font-weight: 600;
+  color: var(--text-dark);
+  margin-bottom: 0.5rem;
+  line-height: 1.3;
+  word-wrap: break-word; /* Handle long titles */
 }
 
-/* Button Styling within Course Card */
+/* Contemporary Button Design */
 .courseCard button {
-  margin-top: auto; /* Align to the bottom */
-  padding: 0.75rem 1.25rem;
-  background-color: #007bff; /* Bootstrap primary color */
-  color: #fff;
+  margin-top: auto; /* Push to bottom */
+  padding: 0.75rem 1rem; /* Reduced horizontal padding */
+  background-color: var(--primary);
+  color: white;
   border: none;
-  border-radius: 0.375rem;
+  border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.2s ease-in-out;
-  font-size: 0.9rem;
+  transition: background-color var(--transition), transform var(--transition);
+  font-size: 0.9rem; /* Slightly smaller */
+  font-weight: 500;
+  text-transform: capitalize;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.5rem;
+  width: fit-content; /* Only take needed space */
+  max-width: 100%; /* Prevent overflow */
 }
 
 .courseCard button:hover {
-  background-color: #0056b3;
+  background-color: var(--primary-hover);
+  transform: translateY(-2px);
+}
+
+/* Add focus states for accessibility */
+.courseCard button:focus-visible {
+  outline: 2px solid var(--primary);
+  outline-offset: 2px;
+}
+
+/* More specific responsive adjustments */
+@media (max-width: 350px) {
+  .courseGrid {
+    grid-template-columns: 1fr; /* Single column for very small screens */
+  }
+  
+  .courseContent {
+    padding: 1rem;
+  }
+  
+  .courseTitle {
+    font-size: 1rem;
+  }
+  
+  .courseCard button {
+    padding: 0.6rem 0.8rem;
+    font-size: 0.85rem;
+  }
 }

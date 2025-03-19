@@ -11,7 +11,7 @@ const MyCourses = () => {
   const [loadingLessons, setLoadingLessons] = useState(false);
   const PORT = API_PORT;
   const navigate = useNavigate();
-  const lessonsRef = useRef(null); // Ref for scrolling
+  const lessonsRef = useRef(null);
 
   useEffect(() => {
     const fetchEnrolledCourses = async () => {
@@ -38,7 +38,7 @@ const MyCourses = () => {
     } finally {
       setLoadingLessons(false);
     }
-    // Scroll to Lessons & Quizzes section smoothly
+
     setTimeout(() => {
       lessonsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
     }, 300);
@@ -49,30 +49,42 @@ const MyCourses = () => {
   };
 
   const handleStartQuiz = (quizId) => {
-    navigate(`/quiz/${quizId}`); // Navigate to Quiz Component with lessonId
+    navigate(`/quiz/${quizId}`);
+  };
+
+  const handleExploreCourses = () => {
+    navigate("/courses"); // Adjust the route based on your project setup
   };
 
   return (
     <div className={styles.container}>
       <h1>My Courses</h1>
 
-      {/* Course Cards */}
-      <div className={styles.courseGrid}>
-        {enrolledCourses.map((course) => (
-          <div 
-            key={course._id} 
-            className={styles.courseCard} 
-            onClick={() => handleCourseClick(course._id)}
-          >
-            <img src={course.thumbnail} alt="Course Thumbnail" />
-            <h2>{course.title}</h2>
-            <p>{course.description}</p>
-          </div>
-        ))}
-      </div>
+      {enrolledCourses.length === 0 ? (
+        <div className={styles.noCourses}>
+          <p>You have no enrolled courses.</p>
+          <button className={styles.exploreBtn} onClick={handleExploreCourses}>
+            Explore Courses
+          </button>
+        </div>
+      ) : (
+        <div className={styles.courseGrid}>
+          {enrolledCourses.map((course) => (
+            <div 
+              key={course._id} 
+              className={styles.courseCard} 
+              onClick={() => handleCourseClick(course._id)}
+            >
+              <img src={course.thumbnail} alt="Course Thumbnail" />
+              <h2>{course.title}</h2>
+              <p>{course.description}</p>
+            </div>
+          ))}
+        </div>
+      )}
+      
       <hr />
 
-      {/* Lessons & Quizzes Section */}
       {selectedCourse && (
         <div className={styles.courseDetails} ref={lessonsRef}>
           <h2>Lessons & Quizzes</h2>
@@ -103,7 +115,7 @@ const MyCourses = () => {
                         <h4>Quiz: {lesson.quiz.title}</h4>
                         <p>{lesson.quiz.description}</p>
                         {lesson.isUnlocked ? (
-                          <button className={styles.startQuizBtn}onClick={() => handleStartQuiz(lesson.quiz._id)}> Start Quiz</button>
+                          <button className={styles.startQuizBtn} onClick={() => handleStartQuiz(lesson.quiz._id)}> Start Quiz</button>
                         ) : (
                           <button className={styles.lockedBtn} disabled>Locked</button>
                         )}

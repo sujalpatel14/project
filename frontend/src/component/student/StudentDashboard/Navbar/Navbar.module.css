@@ -1,5 +1,6 @@
 /* Navbar Styles */
 .navbar {
+  height: 70px;
   display: flex;
   justify-content: space-between;
   align-items: center;
@@ -108,7 +109,7 @@
     border-top: 2px solid black;
     border-bottom: 2px solid black;
     position: absolute;
-    top: 60px;
+    top: 50px;
     right: 0;
     width: 100%;
     background: #ffff;
@@ -116,7 +117,7 @@
     align-items: center;
     padding: 20px 0;
     transform: translateY(-200%);
-    transition: transform 0.3s ease-in-out;
+    transition: transform 1.0s ease-in-out;
   }
 
   .navLinks.open {

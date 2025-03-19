@@ -15,6 +15,7 @@ const StudentProfile = () => {
   const [certificates, setCertificates] = useState([]); // ✅ Certificate state
   const PORT = API_PORT;
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
 
   useEffect(() => {
     fetchStudentProfile();
@@ -67,6 +68,8 @@ const StudentProfile = () => {
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
+    if (isLoading) return;
+    setIsLoading(true);
     try {
       await axios.put(
         `${PORT}/api/student/updateProfile`,
@@ -78,15 +81,15 @@ const StudentProfile = () => {
     } catch (error) {
       console.error("Error updating profile:", error);
       alert("Failed to update profile name.");
+    } finally {
+      setIsLoading(false);
     }
   };
 
   const handleProfilePicChange = async (e) => {
     e.preventDefault();
-    if (!newProfilePic) {
-      alert("Please select a profile picture.");
-      return;
-    }
+    if (!newProfilePic || isLoading) return;
+    setIsLoading(true);
 
     const formData = new FormData();
     formData.append("profilePic", newProfilePic);
@@ -102,6 +105,50 @@ const StudentProfile = () => {
     } catch (error) {
       console.error("Error updating profile picture:", error);
       alert("Failed to update profile picture.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handlePasswordChange = async (e) => {
+    e.preventDefault();
+    if (isLoading || password !== confirmPassword) {
+      alert("Passwords do not match!");
+      return;
+    }
+    setIsLoading(true);
+    try {
+      await axios.put(
+        `${PORT}/api/student/updatePassword`,
+        { password },
+        { withCredentials: true }
+      );
+      setPassword("");
+      setConfirmPassword("");
+      alert("Password updated successfully!");
+    } catch (error) {
+      console.error("Error updating password:", error);
+      alert("Failed to update password.");
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleLogout = async () => {
+    if (isLoading) return;
+    setIsLoading(true);
+    try {
+      await axios.post(
+        `${API_PORT}/api/student/logout`,
+        {},
+        { withCredentials: true }
+      );
+      alert("Logout successful!");
+      navigate("/login");
+    } catch (error) {
+      console.error("Logout failed", error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -137,43 +184,15 @@ const StudentProfile = () => {
     ],
   };
 
-  const handlePasswordChange = async (e) => {
-    e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
-      return;
-    }
-
-    try {
-      await axios.put(
-        `${PORT}/api/student/updatePassword`,
-        { password },
-        { withCredentials: true }
-      );
-      setPassword("");
-      setConfirmPassword("");
-      alert("Password updated successfully!");
-    } catch (error) {
-      console.error("Error updating password:", error);
-      alert("Failed to update password.");
-    }
-  };
-
-  const handleLogout = async () => {
-    try {
-      await axios.post(`${API_PORT}/api/student/logout`, {}, { withCredentials: true });
-      alert("Logout successful!"); 
-      navigate("/login"); // Redirect to Login Page
-    } catch (error) {
-      console.error("Logout failed", error);
-    }
-  }
-
   return (
     <div className={styles.profileContainer}>
       <div className={styles.logout}>
-        <button onClick={handleLogout} className={styles.logoutButton}>
-          Logout
+        <button
+          onClick={handleLogout}
+          className={styles.logoutButton}
+          disabled={isLoading}
+        >
+          {isLoading ? "Logging out..." : "Logout"}
         </button>
       </div>
       {student ? (
@@ -198,8 +217,12 @@ const StudentProfile = () => {
               onChange={(e) => setName(e.target.value)}
               className={styles.input}
             />
-            <button type="submit" className={styles.updateButton}>
-              Update Name
+            <button
+              type="submit"
+              className={styles.updateButton}
+              disabled={isLoading}
+            >
+              {isLoading ? "Updating..." : "Update Name"}
             </button>
           </form>
 
@@ -211,8 +234,12 @@ const StudentProfile = () => {
               onChange={(e) => setNewProfilePic(e.target.files[0])}
               className={styles.fileInput}
             />
-            <button type="submit" className={styles.updateButton}>
-              Update Profile Picture
+            <button
+              type="submit"
+              className={styles.updateButton}
+              disabled={isLoading}
+            >
+              {isLoading ? "Updating..." : "Update Profile Picture"}
             </button>
           </form>
 
@@ -235,12 +262,16 @@ const StudentProfile = () => {
               className={styles.input}
               required
             />
-            <button type="submit" className={styles.updateButton}>
-              Update Password
+            <button
+              type="submit"
+              className={styles.updateButton}
+              disabled={isLoading}
+            >
+              {isLoading ? "Updating..." : "Update Password"}
             </button>
           </form>
 
-          {/* ✅ Certificate Download Section */}
+          {/* Certificate Download Section */}
           <div className={styles.certificateSection}>
             <h3 className={styles.sectionTitle}>Download Your Certificates</h3>
             {certificates.length > 0 ? (

@@ -9,7 +9,8 @@ const StudentChallenges = () => {
   const [selectedChallenge, setSelectedChallenge] = useState(null);
   const [userCode, setUserCode] = useState("");
   const [loading, setLoading] = useState(false);
-  const [responseMessage, setResponseMessage] = useState(""); // 📌 State for response message
+  const [responseMessage, setResponseMessage] = useState(""); 
+  const [submitting, setSubmitting] = useState(false); // 🚀 Prevent multiple clicks
   const challengeRef = useRef(null);
   const [courseTitle, setCourseTitle] = useState(null);
   const PORT = API_PORT;
@@ -37,7 +38,7 @@ const StudentChallenges = () => {
     try {
       const { data } = await axios.get(`${PORT}/api/student/challenges`, {
         withCredentials: true,
-        params: { courseId }, // Pass courseId as a query parameter
+        params: { courseId }, 
       });
       setChallenges(data);
     } catch (error) {
@@ -45,7 +46,7 @@ const StudentChallenges = () => {
     }
     setLoading(false);
 
-    // Scroll to the challenge list after loading
+    // Smooth scroll to challenge list
     setTimeout(() => {
       challengeRef.current?.scrollIntoView({
         behavior: "smooth",
@@ -58,33 +59,42 @@ const StudentChallenges = () => {
   const handleSelectChallenge = (challenge) => {
     setSelectedChallenge(challenge);
     setUserCode(challenge.starterCode || "");
-    setResponseMessage(""); // Reset response message on challenge selection
+    setResponseMessage(""); // Reset response message
   };
 
   // Submit code for a challenge
   const handleSubmitCode = async () => {
+    if (submitting) return; // 🚀 Prevent multiple clicks
+
+    setSubmitting(true); // Disable button while submitting
+    setResponseMessage(""); // Reset previous message
+
     try {
-        console.log(selectedChallenge.title,selectedChallenge.description,courseTitle);
+      console.log(selectedChallenge.title, selectedChallenge.description, courseTitle);
       const response = await axios.post(
         `${PORT}/api/student/submit-challenge/${selectedChallenge._id}`,
-        { code: userCode , title:selectedChallenge.title , description: selectedChallenge.description , language: courseTitle },
+        {
+          code: userCode,
+          title: selectedChallenge.title,
+          description: selectedChallenge.description,
+          language: courseTitle,
+        },
         { withCredentials: true }
       );
-  
-      setResponseMessage(response.data.message); // Success message
-      fetchChallenges(selectedChallenge.courseId); // Refresh challenges after submission
+
+      setResponseMessage(response.data.message); // Show success message
+      fetchChallenges(selectedChallenge.courseId); // Refresh challenges
     } catch (error) {
       if (error.response) {
-        // 📌 Handle server response (including 400 Bad Request)
         alert(error.response.data.message || "Error submitting code!");
       } else {
-        // 📌 Handle network errors
         console.error("Error submitting challenge:", error);
         alert("Something went wrong. Please try again later.");
       }
     }
+
+    setSubmitting(false); // Re-enable button
   };
-  
 
   return (
     <div className={styles.container}>
@@ -161,8 +171,13 @@ const StudentChallenges = () => {
             placeholder="Write your code here..."
           ></textarea>
 
-          <button onClick={handleSubmitCode} className={styles.submitButton}>
-            Submit Code
+          {/* 🚀 Prevent multiple clicks with disabled state */}
+          <button 
+            onClick={handleSubmitCode} 
+            className={styles.submitButton} 
+            disabled={submitting}
+          >
+            {submitting ? "Submitting..." : "Submit Code"}
           </button>
 
           {/* 📌 Show response message */}

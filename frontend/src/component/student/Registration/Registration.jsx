@@ -103,7 +103,8 @@ const Registration = () => {
       
       {step === 1 && (
         <div className={styles.formBox}>
-          <h2>Email Verification</h2>
+          <h1>Registration</h1>
+          <h3>Email Verification</h3>
           <input
             type="email"
             placeholder="Enter email"
@@ -121,7 +122,8 @@ const Registration = () => {
 
       {step === 2 && (
         <div className={styles.formBox}>
-          <h2>Enter OTP</h2>
+          <h1>Registration</h1>
+          <h3>Enter OTP</h3>
           <input
             type="text"
             placeholder="Enter OTP"
@@ -139,7 +141,8 @@ const Registration = () => {
 
       {step === 3 && verified && (
         <div className={styles.formBox}>
-          <h2>Register</h2>
+          <h1>Registration</h1>
+          <h3>Register</h3>
           <input type="text" placeholder="Full Name" ref={nameRef} className={styles.input} />
           <input type="email" value={email} className={styles.input} disabled />
           <input type="password" placeholder="Password" ref={passwordRef} className={styles.input} />

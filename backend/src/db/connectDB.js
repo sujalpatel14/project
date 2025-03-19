@@ -3,8 +3,10 @@ import mongoose from "mongoose"
 
 const connectDB = async()=>{
     try{
-        console.log("")
-        const con = await mongoose.connect(`${process.env.MONODB_NAME}/${DB_NAME}`)
+        const con = await mongoose.connect(`${process.env.MONODB_NAME}/${DB_NAME}`,{
+            useNewUrlParser: true,
+            useUnifiedTopology: true,
+        })
         console.log(`DataBase connected`);
     }catch(err){
         console.log(`DataBase Connection Failed ${err}`);

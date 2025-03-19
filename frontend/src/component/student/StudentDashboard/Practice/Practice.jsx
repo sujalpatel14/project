@@ -81,10 +81,10 @@ const Practice = () => {
       const endTime = performance.now();
       setExecutionTime((endTime - startTime).toFixed(2));
       setOutput(response.data.output);
-      setStatus("✅ Success");
+      setStatus("Success");
     } catch (error) {
       setOutput("Error executing code: " + error.message);
-      setStatus("❌ Error");
+      setStatus("Error");
     } finally {
       setIsRunning(false);
     }
