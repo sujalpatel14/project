@@ -13,7 +13,7 @@ const MonitorStudentProgress = () => {
 
   const fetchStudentProgress = async () => {
     if (!searchTerm.trim()) {
-      alert("Please enter an email or name.");
+      window.customAlert("Please enter an email or name.");
       return;
     }
 
@@ -26,7 +26,7 @@ const MonitorStudentProgress = () => {
       setStudent(data);
     } catch (error) {
       console.error("Error fetching student progress:", error);
-      alert("Student not found or an error occurred.");
+      window.customAlert("Student not found or an error occurred.");
       setStudent(null);
     }
     setLoading(false);

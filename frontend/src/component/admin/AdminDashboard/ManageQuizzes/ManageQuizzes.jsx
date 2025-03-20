@@ -139,6 +139,7 @@ const ManageQuizzes = () => {
             quiz._id === editingQuizId ? { ...quiz, ...quizForm } : quiz
           )
         );
+        window.customAlert("Quizz updated successfully.");
       } else {
         // Add new quiz
         const { data } = await axios.post(`${PORT}/api/admin/addQuiz`, {
@@ -146,6 +147,7 @@ const ManageQuizzes = () => {
           lessonId: selectedLesson,
         });
         setQuizzes([...quizzes, data]);
+        window.customAlert("Quizz Added successfully.");
         fetchLessons();
       }
       setQuizForm({
@@ -171,16 +173,24 @@ const ManageQuizzes = () => {
 
   // Delete quiz
   const handleDelete = async (quizId) => {
-    if (window.confirm("Are you sure you want to delete this quiz?")) {
+    window.customConfirm("Are you sure you want to delete this quiz?", async (isConfirmed) => {
+      if (!isConfirmed) return; // User clicked "No"
+  
       try {
-        await axios.delete(`${PORT}/api/admin/deleteQuiz/${quizId}`);
+        await axios.delete(`${PORT}/api/admin/deleteQuiz/${quizId}`, { withCredentials: true });
+  
         setQuizzes((prev) => prev.filter((quiz) => quiz._id !== quizId));
-        fetchLessons();
+        window.customAlert("Quiz deleted successfully!", () => {
+          fetchLessons(); // Reload lessons after deletion
+        });
+  
       } catch (err) {
         console.error("Error deleting quiz:", err);
+        window.customAlert("Failed to delete quiz.");
       }
-    }
+    });
   };
+  
 
   return (
     <div className={styles.manageQuizzes}>

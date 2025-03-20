@@ -11,7 +11,7 @@ const Header = ({ SlideToggle, toggle }) => {
   const handleLogout = async () => {
     try {
       await axios.post(`${API_PORT}/api/admin/logout`, {}, { withCredentials: true });
-      alert("Logout successful!"); 
+      window.customAlert("Logout successful!"); 
       navigate("/admin-login"); // Redirect to Admin Login
     } catch (error) {
       console.error("Logout failed", error);

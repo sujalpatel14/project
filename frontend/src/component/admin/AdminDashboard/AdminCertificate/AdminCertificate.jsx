@@ -33,7 +33,7 @@ const AdminCertificate = () => {
   const handleCreateOrUpdateCertificate = async (e) => {
     e.preventDefault();
     if (!selectedCourse || !minLectures) {
-      alert("Please select a course and enter required lectures.");
+      window.customAlert("Please select a course and enter required lectures.");
       return;
     }
 
@@ -43,30 +43,34 @@ const AdminCertificate = () => {
         { courseId: selectedCourse, minLecturesRequired: minLectures },
         { withCredentials: true }
       );
-      alert("Certificate saved successfully!");
+      window.customAlert("Certificate saved successfully!");
       fetchCourses();
       resetForm();
     } catch (error) {
       console.error("Error saving certificate:", error);
-      alert("Failed to save certificate.");
+      window.customAlert("Failed to save certificate.");
     }
   };
 
   const handleDeleteCertificate = async (id) => {
-    if (!window.confirm("Are you sure you want to delete this certificate?"))
-      return;
-
-    try {
-      await axios.delete(`${API_PORT}/api/admin/delete-certificate/${id}`, {
-        withCredentials: true,
-      });
-      alert("Certificate deleted successfully!");
-      fetchCourses();
-    } catch (error) {
-      console.error("Error deleting certificate:", error);
-      alert("Failed to delete certificate.");
-    }
+    window.customConfirm("Are you sure you want to delete this certificate?", async (isConfirmed) => {
+      if (!isConfirmed) return; // If user cancels, exit function
+  
+      try {
+        await axios.delete(`${API_PORT}/api/admin/delete-certificate/${id}`, {
+          withCredentials: true,
+        });
+  
+        window.customAlert("Certificate deleted successfully!");
+        fetchCourses(); // Refresh courses after deletion
+      } catch (error) {
+        console.error("Error deleting certificate:", error);
+        window.customAlert("Failed to delete certificate.");
+      }
+    });
   };
+  
+  
 
   // 📌 Reset Form (For Cancel Button)
   const resetForm = () => {

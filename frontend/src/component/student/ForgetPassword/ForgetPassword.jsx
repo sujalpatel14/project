@@ -59,7 +59,7 @@ const ForgetPassword = () => {
       setLoader(true);
       setError("");
       await axios.post(`${PORT}/api/student/resetPassword`, { email, password });
-      alert("Password reset successful!");
+      window.customAlert("Password reset successful!");
       setStep(1);
       setEmail("");
       setOtp("");

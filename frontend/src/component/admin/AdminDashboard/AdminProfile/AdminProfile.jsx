@@ -8,7 +8,7 @@ const AdminProfile = () => {
   const [name, setName] = useState("");
   const [newProfilePic, setNewProfilePic] = useState(null);
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState(""); // ✅ Corrected variable name
   const PORT = API_PORT;
   
   useEffect(() => {
@@ -22,7 +22,7 @@ const AdminProfile = () => {
       setName(data.name);
     } catch (error) {
       console.error("Error fetching profile:", error);
-      alert("Failed to load profile.");
+      window.customAlert("Failed to load profile.");
     }
   };
 
@@ -31,17 +31,17 @@ const AdminProfile = () => {
     try {
       await axios.put(`${API_PORT}/api/admin/updateProfile`, { name }, { withCredentials: true });
       fetchAdminProfile();
-      alert("Profile updated successfully!");
+      window.customAlert("Profile updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile.");
+      window.customAlert("Failed to update profile.");
     }
   };
 
   const handleProfilePicChange = async (e) => {
     e.preventDefault();
     if (!newProfilePic) {
-      alert("Please select a profile picture.");
+      window.customAlert("Please select a profile picture.");
       return;
     }
 
@@ -55,28 +55,28 @@ const AdminProfile = () => {
       });
       fetchAdminProfile();
       setNewProfilePic(null);
-      alert("Profile picture updated successfully!");
+      window.customAlert("Profile picture updated successfully!");
     } catch (error) {
       console.error("Error updating profile picture:", error);
-      alert("Failed to update profile picture.");
+      window.customAlert("Failed to update profile picture.");
     }
   };
 
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) {
-      alert("Passwords do not match!");
+    if (password !== confirmPassword) { // ✅ Use the corrected variable
+      window.customAlert("Passwords do not match!");
       return;
     }
 
     try {
       await axios.put(`${API_PORT}/api/admin/updatePassword`, { password }, { withCredentials: true });
       setPassword("");
-      setConfirmPassword("");
-      alert("Password updated successfully!");
+      setConfirmPassword(""); // ✅ Use the corrected variable
+      window.customAlert("Password updated successfully!");
     } catch (error) {
       console.error("Error updating password:", error);
-      alert("Failed to update password.");
+      window.customAlert("Failed to update password.");
     }
   };
 

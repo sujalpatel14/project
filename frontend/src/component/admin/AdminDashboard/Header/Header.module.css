@@ -1,5 +1,5 @@
 .header {
-    height: 30px;
+    /* height: 30px; */
     background: #f8f9fa;
     display: flex;
     justify-content: space-between;
@@ -20,5 +20,17 @@
   
   .HamBurger{
     cursor: pointer;
+    font-size: 15y0%;
+  }
+
+  .profile button {
+    background: transparent;
+    color: #4B49Ac;
+    margin: 0;
+  }
+
+  .profile button:hover {
+    background: none;
+    color: none;
   }
   

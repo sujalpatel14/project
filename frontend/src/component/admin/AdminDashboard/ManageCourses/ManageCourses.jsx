@@ -66,20 +66,20 @@ const ManageCourses = () => {
           withCredentials: true,
         });
         setEditingCourse(null);
-        alert("Course updated successfully!");
+        window.customAlert("Course updated successfully!");
       } else {
         const response = await axios.post(`${PORT}/api/admin/addCourse`, formData, {
           headers: { "Content-Type": "multipart/form-data" },
           withCredentials: true,
         });
         setCourses([...courses, response.data]);
-        alert("Course added successfully!");
+        window.customAlert("Course added successfully!");
       }
       resetForm();
       fetchCourses();
     } catch (error) {
       console.error("Error submitting course:", error);
-      alert("Failed to submit course.");
+      window.customAlert("Failed to submit course.");
     } finally {
       setLoading(false);
     }
@@ -116,22 +116,30 @@ const ManageCourses = () => {
   };
 
   const handleDeleteCourse = async (courseId) => {
-    if (!window.confirm("Are you sure you want to delete this course?")) return;
-    setLoading(true);
-
-    try {
-      await axios.delete(`${PORT}/api/admin/deleteCourse/${courseId}`, {
-        withCredentials: true,
-      });
-      setCourses(courses.filter((course) => course._id !== courseId));
-      alert("Course deleted successfully!");
-    } catch (error) {
-      console.error("Error deleting course:", error);
-      alert("Failed to delete course.");
-    } finally {
-      setLoading(false);
-    }
+    window.customConfirm("Are you sure you want to delete this course?", async (isConfirmed) => {
+      if (!isConfirmed) return; // User clicked "No"
+  
+      setLoading(true);
+  
+      try {
+        await axios.delete(`${PORT}/api/admin/deleteCourse/${courseId}`, {
+          withCredentials: true,
+        });
+  
+        setCourses((prevCourses) => prevCourses.filter((course) => course._id !== courseId));
+  
+        //Wait until user clicks OK before continuing
+        window.customAlert("Course deleted successfully!");
+  
+      } catch (error) {
+        console.error("Error deleting course:", error);
+        window.customAlert("Failed to delete course.");
+      } finally {
+        setLoading(false);
+      }
+    });
   };
+  
 
   return (
     <div className={styles.manageCoursesContainer}>

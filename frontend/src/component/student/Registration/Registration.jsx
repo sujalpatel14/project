@@ -88,7 +88,7 @@ const Registration = () => {
       setLoder(true);
       setError("");
       await axios.post(`${PORT}/api/student/register`, { email, name, password });
-      alert("Registration successful!");
+      window.customAlert("Registration successful!");
       navigate("/login");
     } catch (error) {
       setError(error.response?.data?.message || "Registration failed");

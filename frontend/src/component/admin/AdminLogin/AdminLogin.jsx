@@ -29,7 +29,7 @@ const AdminLogin = () => {
       );
 
       if (response.data.success) {
-        alert("Login Successful! 🎉");
+        window.customAlert("Login Successful! 🎉");
         navigate("/admin");
       }
     } catch (err) {

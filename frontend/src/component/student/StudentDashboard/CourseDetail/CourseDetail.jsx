@@ -66,16 +66,16 @@ const CourseDetails = () => {
         { withCredentials: true }
       );
       setIsEnrolled(true);
-      alert("You have successfully enrolled in this course!");
+      window.customAlert("You have successfully enrolled in this course!");
     } catch (error) {
       console.error("Error enrolling in course:", error);
-      alert("Failed to enroll in the course.");
+      window.customAlert("Failed to enroll in the course.");
     }
   };
 
   const handleSubmitFeedback = async () => {
     if (rating === 0) {
-      alert("Please select a star rating!");
+      window.customAlert("Please select a star rating!");
       return;
     }
 
@@ -86,7 +86,7 @@ const CourseDetails = () => {
         { withCredentials: true }
       );
 
-      alert("Feedback submitted successfully!");
+      window.customAlert("Feedback submitted successfully!");
       setRating(0);
       setComment("");
 
@@ -94,7 +94,7 @@ const CourseDetails = () => {
       fetchFeedback();
     } catch (error) {
       console.error("Error submitting feedback:", error);
-      alert("Failed to submit feedback.");
+      window.customAlert("Failed to submit feedback.");
     }
   };
 
@@ -114,7 +114,7 @@ const CourseDetails = () => {
         <p>{course.description}</p>
 
         {isEnrolled ? (
-          <p className={styles.enrolledMessage}>✅ You are already enrolled in this course.</p>
+          <p className={styles.enrolledMessage}> You are already enrolled in this course.</p>
         ) : (
           <button className={styles.enrollBtn} onClick={handleEnroll}>
             Enroll Free Now

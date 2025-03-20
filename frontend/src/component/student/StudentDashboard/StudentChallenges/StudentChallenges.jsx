@@ -86,10 +86,10 @@ const StudentChallenges = () => {
       fetchChallenges(selectedChallenge.courseId); // Refresh challenges
     } catch (error) {
       if (error.response) {
-        alert(error.response.data.message || "Error submitting code!");
+        window.customAlert(error.response.data.message || "Error submitting code!");
       } else {
         console.error("Error submitting challenge:", error);
-        alert("Something went wrong. Please try again later.");
+        window.customAlert("Something went wrong. Please try again later.");
       }
     }
 

@@ -15,8 +15,12 @@ const ManageUsers = () => {
     password: "",
   });
   const [editUserId, setEditUserId] = useState(null);
-  const [loading, setLoading] = useState(false); 
+  const [loading, setLoading] = useState(false);
   const searchTimeout = useRef(null);
+
+  useEffect(() => {
+    fetchUsers();
+  }, []);
 
   useEffect(() => {
     if (searchTimeout.current) clearTimeout(searchTimeout.current);
@@ -24,6 +28,8 @@ const ManageUsers = () => {
     searchTimeout.current = setTimeout(() => {
       if (searchTerm.trim() !== "") {
         fetchUsersBySearch(searchTerm);
+      } else {
+        fetchUsers();
       }
     }, 500);
 
@@ -38,7 +44,7 @@ const ManageUsers = () => {
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
-      alert("Failed to fetch users. Please try again.");
+      window.customAlert("Failed to fetch users. Please try again.");
     }
   };
 
@@ -51,7 +57,7 @@ const ManageUsers = () => {
       setUsers(response.data);
     } catch (error) {
       console.error("Error fetching users:", error);
-      alert("Failed to fetch users. Please try again.");
+      window.customAlert("Failed to fetch users. Please try again.");
     }
   };
 
@@ -61,7 +67,7 @@ const ManageUsers = () => {
 
   const handleAddOrEditUser = async () => {
     if (!formData.name || !formData.email || !formData.role) {
-      alert("Please fill in all required fields.");
+      window.customAlert("Please fill in all required fields.");
       return;
     }
 
@@ -75,21 +81,21 @@ const ManageUsers = () => {
           formData,
           { withCredentials: true }
         );
-        alert("User updated successfully!");
+        window.customAlert("User updated successfully!");
       } else {
         await axios.post(`${PORT}/api/admin/addUser`, formData, {
           withCredentials: true,
         });
-        alert("User added successfully!");
+        window.customAlert("User added successfully!");
       }
       setFormData({ name: "", email: "", role: "", password: "" });
       setEditUserId(null);
-      fetchUsers(); // ✅ Refresh user list after update
+      fetchUsers();
     } catch (error) {
       console.error("Error adding/updating user:", error);
-      alert("Failed to add/update user. Please try again.");
+      window.customAlert("Failed to add/update user. Please try again.");
     } finally {
-      setLoading(false); // ✅ Enable button after request completes
+      setLoading(false);
     }
   };
 
@@ -104,20 +110,27 @@ const ManageUsers = () => {
   };
 
   const handleDelete = async (userId) => {
-    const isConfirmed = window.confirm("Are you sure you want to delete this user?");
-    if (!isConfirmed) return;
-
-    try {
-      await axios.delete(`${PORT}/api/admin/deleteUser/${userId}`, {
-        withCredentials: true,
-      });
-      alert("User deleted successfully!");
-      fetchUsers(); // ✅ Refresh list after delete
-    } catch (error) {
-      console.error("Error deleting user:", error);
-      alert("Failed to delete user. Please try again.");
-    }
+    window.customConfirm("Are you sure you want to delete this user?", async (isConfirmed) => {
+  
+      if (!isConfirmed) return;
+  
+      try {
+        await axios.delete(`${PORT}/api/admin/deleteUser/${userId}`, {
+          withCredentials: true,
+        });
+  
+        window.customAlert("User deleted successfully!", () => {
+          fetchUsers();
+        });
+  
+  
+      } catch (error) {
+        console.error("Error deleting user:", error);
+        window.customAlert("Failed to delete user. Please try again.");
+      }
+    });
   };
+  
 
   const handleCancel = () => {
     setFormData({ name: "", email: "", role: "", password: "" });

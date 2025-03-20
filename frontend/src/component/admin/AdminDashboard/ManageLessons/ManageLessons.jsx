@@ -107,17 +107,19 @@ const ManageLessons = () => {
             lesson._id === editingLessonId ? { ...lesson, ...form } : lesson
           )
         );
+        window.customAlert("lesson updated successfully.");
       } else {
         // Add new lesson
         const { data } = await axios.post(`${PORT}/api/admin/addLesson`, form, {
           withCredentials: true,
         });
         setLessons([...lessons, data]);
+        window.customAlert("lesson Added successfully.");
       }
       resetForm();
     } catch (err) {
       console.error("Error submitting lesson:", err);
-      alert("Failed to submit lesson.");
+      window.customAlert("Failed to submit lesson.");
     } finally {
       setLoading(false);
     }
@@ -143,21 +145,29 @@ const ManageLessons = () => {
 
   // Delete a Lesson
   const handleDelete = async (lessonId) => {
-    if (!window.confirm("Are you sure you want to delete this lesson?")) return;
-
-    setLoading(true);
-    try {
-      await axios.delete(`${PORT}/api/admin/lessons/${lessonId}`, {
-        withCredentials: true,
-      });
-      setLessons((prev) => prev.filter((lesson) => lesson._id !== lessonId));
-    } catch (err) {
-      console.error("Error deleting lesson:", err);
-      alert("Failed to delete lesson.");
-    } finally {
-      setLoading(false);
-    }
+    window.customConfirm("Are you sure you want to delete this lesson?", async (isConfirmed) => {
+      if (!isConfirmed) return; // User clicked "No"
+  
+      setLoading(true);
+      try {
+        await axios.delete(`${PORT}/api/admin/lessons/${lessonId}`, {
+          withCredentials: true,
+        });
+  
+        setLessons((prev) => prev.filter((lesson) => lesson._id !== lessonId));
+  
+        // Show success alert and ensure user acknowledges it
+        window.customAlert("Lesson deleted successfully!");
+  
+      } catch (err) {
+        console.error("Error deleting lesson:", err);
+        window.customAlert("Failed to delete lesson.");
+      } finally {
+        setLoading(false);
+      }
+    });
   };
+  
 
   const resetForm = () => {
     setForm({ courseId: "", title: "", content: "", videoUrl: "" });

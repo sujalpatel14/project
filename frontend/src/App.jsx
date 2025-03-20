@@ -8,6 +8,7 @@ import Login from './component/student/Login/Login';
 import ForgetPassword from './component/student/ForgetPassword/ForgetPassword';
 import StudentDashboard from './component/student/StudentDashboard/StudentDashboard';
 import AdminProtectedRoute from './component/admin/AdminProtectedRoute';
+import AlertBox from './component/AlertBox/AlertBox';
 // import StudentProtectedRoute from './component/student/StudentProtectedRoute';
 
 
@@ -15,6 +16,7 @@ function App() {
   return (
     <Router>
       <div className="app">
+        <AlertBox /> {/* Include this in your main component */}
         <Routes>
           {/* Admin Route */}
           <Route element={<AdminProtectedRoute />}>

@@ -31,7 +31,7 @@ const StudentProfile = () => {
       fetchCertificates(); // ✅ Fetch certificates
     } catch (error) {
       console.error("Error fetching profile:", error);
-      alert("Failed to load profile. Please try again.");
+      window.customAlert("Failed to load profile. Please try again.");
     }
   };
 
@@ -62,7 +62,7 @@ const StudentProfile = () => {
       document.body.removeChild(link);
     } catch (error) {
       console.error("Error downloading certificate:", error);
-      alert("Failed to download certificate.");
+      window.customAlert("Failed to download certificate.");
     }
   };
 
@@ -77,10 +77,10 @@ const StudentProfile = () => {
         { withCredentials: true }
       );
       fetchStudentProfile();
-      alert("Profile name updated successfully!");
+      window.customAlert("Profile name updated successfully!");
     } catch (error) {
       console.error("Error updating profile:", error);
-      alert("Failed to update profile name.");
+      window.customAlert("Failed to update profile name.");
     } finally {
       setIsLoading(false);
     }
@@ -101,10 +101,10 @@ const StudentProfile = () => {
       });
       fetchStudentProfile();
       setNewProfilePic(null);
-      alert("Profile picture updated successfully!");
+      window.customAlert("Profile picture updated successfully!");
     } catch (error) {
       console.error("Error updating profile picture:", error);
-      alert("Failed to update profile picture.");
+      window.customAlert("Failed to update profile picture.");
     } finally {
       setIsLoading(false);
     }
@@ -113,7 +113,7 @@ const StudentProfile = () => {
   const handlePasswordChange = async (e) => {
     e.preventDefault();
     if (isLoading || password !== confirmPassword) {
-      alert("Passwords do not match!");
+      window.customAlert("Passwords do not match!");
       return;
     }
     setIsLoading(true);
@@ -125,10 +125,10 @@ const StudentProfile = () => {
       );
       setPassword("");
       setConfirmPassword("");
-      alert("Password updated successfully!");
+      window.customAlert("Password updated successfully!");
     } catch (error) {
       console.error("Error updating password:", error);
-      alert("Failed to update password.");
+      window.customAlert("Failed to update password.");
     } finally {
       setIsLoading(false);
     }
@@ -143,7 +143,7 @@ const StudentProfile = () => {
         {},
         { withCredentials: true }
       );
-      alert("Logout successful!");
+      window.customAlert("Logout successful!");
       navigate("/login");
     } catch (error) {
       console.error("Logout failed", error);

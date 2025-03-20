@@ -83,12 +83,12 @@ const ManageChallenges = () => {
       if (editingId) {
         // Update challenge
         await axios.put(`${PORT}/api/admin/updateChallenges/${editingId}`, formData);
-        alert("Challenge updated successfully!");
+        window.customAlert("Challenge updated successfully!");
   
       } else {
         //Add challenge
         await axios.post(`${PORT}/api/admin/challenges`, formData);
-        alert("Challenge added successfully!");
+        window.customAlert("Challenge added successfully!");
       }
   
       fetchChallenges();
@@ -103,7 +103,7 @@ const ManageChallenges = () => {
       });
     } catch (error) {
       console.error("Error saving challenge", error);
-      alert("Error saving challenge");
+      window.customAlert("Error saving challenge");
     }
   };
   
@@ -124,20 +124,34 @@ const ManageChallenges = () => {
 
   // Delete Challenge
   const handleDelete = async (id) => {
-    const isConfirmed = window.confirm(
-      "Are you sure you want to delete this challenge?"
-    );
-    if (isConfirmed) {
-      try {
-        await axios.delete(`${PORT}/api/admin/deleteChallenge/${id}`);
-        setChallenges(challenges.filter((challenge) => challenge._id !== id));
-        alert("Challenge deleted successfully!");
-      } catch (error) {
-        console.error("Error deleting challenge", error);
-        alert("Error deleting challenge");
+    window.customConfirm(
+      "Are you sure you want to delete this challenge?",
+      async (isConfirmed) => {
+        if (!isConfirmed) return; // If user clicks "No", exit
+  
+        try {
+          await axios.delete(`${PORT}/api/admin/deleteChallenge/${id}`, {
+            withCredentials: true,
+          });
+  
+          setChallenges((prevChallenges) =>
+            prevChallenges.filter((challenge) => challenge._id !== id)
+          );
+  
+          // Ensure user sees alert before proceeding
+          window.customAlert("Challenge deleted successfully!", () => {
+            console.log("User acknowledged the alert");
+          });
+  
+        } catch (error) {
+          console.error("Error deleting challenge", error);
+          window.customAlert("Error deleting challenge");
+        }
       }
-    }
+    );
   };
+  
+  
 
   const cancel = () => {
     setEdit(false);
