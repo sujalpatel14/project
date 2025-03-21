@@ -16,9 +16,10 @@ const ManageChallenges = () => {
     difficulty: "Easy",
   });
   const [editingId, setEditingId] = useState(null);
-  const [edit , setEdit] = useState(false);
+  const [edit, setEdit] = useState(false);
+  const [loading, setLoading] = useState(false); // Prevent multiple clicks
 
-  // Fetch challenges & courses
+  // Fetch courses
   useEffect(() => {
     const fetchData = async () => {
       try {
@@ -31,6 +32,7 @@ const ManageChallenges = () => {
     fetchData();
   }, []);
 
+  // Fetch challenges when course is selected
   useEffect(() => {
     if (formData.courseId) {
       fetchChallenges();
@@ -79,20 +81,40 @@ const ManageChallenges = () => {
   // Add or Update Challenge
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    // Prevent multiple clicks
+    if (loading) return;
+
+    // Validations
+    if (!formData.courseId || !formData.title || !formData.description || !formData.starterCode) {
+      window.customAlert("All fields are required!");
+      return;
+    }
+    if (formData.testCases.length === 0) {
+      window.customAlert("At least one test case is required!");
+      return;
+    }
+    for (let testCase of formData.testCases) {
+      if (!testCase.input.trim() || !testCase.expectedOutput.trim()) {
+        window.customAlert("Test cases must have input and expected output!");
+        return;
+      }
+    }
+
+    setLoading(true);
+
     try {
       if (editingId) {
-        // Update challenge
         await axios.put(`${PORT}/api/admin/updateChallenges/${editingId}`, formData);
         window.customAlert("Challenge updated successfully!");
-  
       } else {
-        //Add challenge
         await axios.post(`${PORT}/api/admin/challenges`, formData);
         window.customAlert("Challenge added successfully!");
       }
-  
+
       fetchChallenges();
-      setEditingId(null); // Reset editingId for new challenge creation
+      setEditingId(null);
+      setEdit(false);
       setFormData({
         courseId: formData.courseId,
         title: "",
@@ -104,16 +126,17 @@ const ManageChallenges = () => {
     } catch (error) {
       console.error("Error saving challenge", error);
       window.customAlert("Error saving challenge");
+    } finally {
+      setLoading(false);
     }
   };
-  
 
   // Edit Challenge
   const handleEdit = (challenge) => {
     setEdit(true);
     setEditingId(challenge._id);
     setFormData({
-      courseId: challenge.courseId._id, 
+      courseId: challenge.courseId._id,
       title: challenge.title,
       description: challenge.description,
       starterCode: challenge.starterCode,
@@ -124,35 +147,25 @@ const ManageChallenges = () => {
 
   // Delete Challenge
   const handleDelete = async (id) => {
-    window.customConfirm(
-      "Are you sure you want to delete this challenge?",
-      async (isConfirmed) => {
-        if (!isConfirmed) return; // If user clicks "No", exit
-  
-        try {
-          await axios.delete(`${PORT}/api/admin/deleteChallenge/${id}`, {
-            withCredentials: true,
-          });
-  
-          setChallenges((prevChallenges) =>
-            prevChallenges.filter((challenge) => challenge._id !== id)
-          );
-  
-          // Ensure user sees alert before proceeding
-          window.customAlert("Challenge deleted successfully!", () => {
-            console.log("User acknowledged the alert");
-          });
-  
-        } catch (error) {
-          console.error("Error deleting challenge", error);
-          window.customAlert("Error deleting challenge");
-        }
-      }
-    );
-  };
-  
-  
+    window.customConfirm("Are you sure you want to delete this challenge?", async (isConfirmed) => {
+      if (!isConfirmed) return;
 
+      try {
+        await axios.delete(`${PORT}/api/admin/deleteChallenge/${id}`, { withCredentials: true });
+
+        setChallenges((prevChallenges) =>
+          prevChallenges.filter((challenge) => challenge._id !== id)
+        );
+
+        window.customAlert("Challenge deleted successfully!");
+      } catch (error) {
+        console.error("Error deleting challenge", error);
+        window.customAlert("Error deleting challenge");
+      }
+    });
+  };
+
+  // Cancel Editing
   const cancel = () => {
     setEdit(false);
     setEditingId(null);
@@ -165,18 +178,20 @@ const ManageChallenges = () => {
       difficulty: "Easy",
     });
   };
+
   return (
     <div className={styles.container}>
       <h1>Manage Challenges</h1>
 
       {/* Challenge Form */}
       <form onSubmit={handleSubmit}>
-        <h2>{!edit?"Add":"Edit"} Challenges</h2>
+        <h2>{!edit ? "Add" : "Edit"} Challenge</h2>
         <select
           name="courseId"
           value={formData.courseId}
           onChange={handleChange}
           required
+          disabled={edit} // Lock course selection when editing
         >
           <option value="">Select Course</option>
           {courses.map((course) => (
@@ -185,33 +200,10 @@ const ManageChallenges = () => {
             </option>
           ))}
         </select>
-        <input
-          type="text"
-          name="title"
-          placeholder="Title"
-          value={formData.title}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="description"
-          placeholder="Description"
-          value={formData.description}
-          onChange={handleChange}
-          required
-        />
-        <textarea
-          name="starterCode"
-          placeholder="Starter Code"
-          value={formData.starterCode}
-          onChange={handleChange}
-          required
-        />
-        <select
-          name="difficulty"
-          value={formData.difficulty}
-          onChange={handleChange}
-        >
+        <input type="text" name="title" placeholder="Title" value={formData.title} onChange={handleChange} required />
+        <textarea name="description" placeholder="Description" value={formData.description} onChange={handleChange} required />
+        <textarea name="starterCode" placeholder="Starter Code" value={formData.starterCode} onChange={handleChange} required />
+        <select name="difficulty" value={formData.difficulty} onChange={handleChange}>
           <option value="Easy">Easy</option>
           <option value="Medium">Medium</option>
           <option value="Hard">Hard</option>
@@ -221,86 +213,57 @@ const ManageChallenges = () => {
         <h3>Test Cases</h3>
         {formData.testCases.map((testCase, index) => (
           <div key={index} className={styles.testCase}>
-            <input
-              type="text"
-              placeholder="Input"
-              value={testCase.input}
-              onChange={(e) =>
-                handleTestCaseChange(index, "input", e.target.value)
-              }
-            />
-            <input
-              type="text"
-              placeholder="Expected Output"
-              value={testCase.expectedOutput}
-              onChange={(e) =>
-                handleTestCaseChange(index, "expectedOutput", e.target.value)
-              }
-            />
-            <button
-              type="button"
-              onClick={() => removeTestCase(index)}
-              className={styles.button}
-              style={{ background: "red" }}
-            >
-              Remove
-            </button>
+            <input type="text" placeholder="Input" value={testCase.input} onChange={(e) => handleTestCaseChange(index, "input", e.target.value)} />
+            <input type="text" placeholder="Expected Output" value={testCase.expectedOutput} onChange={(e) => handleTestCaseChange(index, "expectedOutput", e.target.value)} />
+            <button type="button" onClick={() => removeTestCase(index)}>Remove</button>
           </div>
         ))}
-        <button type="button" onClick={addTestCase} className={styles.button}>
-          Add Test Case
-        </button>
+        <button type="button" onClick={addTestCase}>Add Test Case</button>
 
-        <button type="submit" className={styles.button}>
-          {editingId ? "Update Challenge" : "Add Challenge"}
-        </button>
-
-        <button type="button" onClick={cancel} className={styles.button}>
-          Cancel
-        </button>
+        <button type="submit" disabled={loading}>{editingId ? "Update Challenge" : "Add Challenge"}</button>
+        <button type="button" onClick={cancel}>Cancel</button>
       </form>
-
       {/* Challenge List (Table Format) */}
-      {challenges.length > 0 ? (
-        <div className={styles.data}>
-          <table>
-            <thead>
-              <tr>
-                <th>Title</th>
-                <th>Course</th>
-                <th>Difficulty</th>
-                <th>Actions</th>
-              </tr>
-            </thead>
-            <tbody>
-              {challenges.map((challenge) => (
-                <tr key={challenge._id}>
-                  <td>{challenge.title}</td>
-                  <td>{challenge.courseId.title}</td>
-                  <td>{challenge.difficulty}</td>
-                  <td>
-                    <button
-                      onClick={() => handleEdit(challenge)}
-                      className={styles.button}
-                    >
-                      Edit
-                    </button>
-                    <button
-                      onClick={() => handleDelete(challenge._id)}
-                      className={styles.button}
-                      style={{ background: "#dc3545" }}
-                    >
-                      Delete
-                    </button>
-                  </td>
-                </tr>
-              ))}
-            </tbody>
-          </table>
-        </div>
-      ) : (
-        <p>No Data Found</p>
-      )}
+{challenges.length > 0 ? (
+  <div className={styles.data}>
+    <table>
+      <thead>
+        <tr>
+          <th>Title</th>
+          <th>Course</th>
+          <th>Difficulty</th>
+          <th>Actions</th>
+        </tr>
+      </thead>
+      <tbody>
+        {challenges.map((challenge) => (
+          <tr key={challenge._id}>
+            <td>{challenge.title}</td>
+            <td>{challenge.courseId.title}</td>
+            <td>{challenge.difficulty}</td>
+            <td>
+              <button
+                onClick={() => handleEdit(challenge)}
+                className={styles.button}
+              >
+                Edit
+              </button>
+              <button
+                onClick={() => handleDelete(challenge._id)}
+                className={styles.button}
+                style={{ background: "#dc3545" }}
+              >
+                Delete
+              </button>
+            </td>
+          </tr>
+        ))}
+      </tbody>
+    </table>
+  </div>
+) : (
+  <p>No Data Found</p>
+)}
     </div>
   );
 };

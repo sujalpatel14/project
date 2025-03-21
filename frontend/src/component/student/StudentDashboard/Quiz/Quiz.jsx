@@ -45,14 +45,27 @@ const Quiz = () => {
   };
 
   const handleSubmitQuiz = async () => {
+    // **Validation: Ensure all questions are answered**
+    if (quiz.questions.length !== Object.keys(selectedAnswers).length) {
+      window.customAlert("Please answer all questions before submitting.");
+      return;
+    }
+
     try {
       const response = await axios.post(
         `${PORT}/api/student/submitQuiz`,
         { quizId, selectedAnswers },
         { withCredentials: true }
       );
+
       setMessage(response.data.message);
-      setScore(response.data.score)
+      setScore(response.data.score);
+
+      // Show marks in alert box
+      window.customAlert(`You scored ${response.data.score}%`);
+
+      // Navigate to "My Courses" after alert
+      navigate("/my-courses");
     } catch (error) {
       console.error("Error submitting quiz:", error);
       setMessage("Failed to submit quiz. Try again.");
@@ -68,6 +81,7 @@ const Quiz = () => {
         <h2>{courseTitle}</h2>
         <h2>{lessonTitle}</h2>
       </div>
+
       {/* Quiz Section */}
       <div className={styles.quizContent}>
         <ul className={styles.questionsList}>
@@ -87,6 +101,7 @@ const Quiz = () => {
                     name={`question-${index}`}
                     value={option}
                     onChange={() => handleOptionChange(index, option)}
+                    checked={selectedAnswers[index] === option}
                   />
                   {option}
                 </label>
@@ -96,7 +111,7 @@ const Quiz = () => {
         </ul>
 
         {message && <p className={styles.message}>{message}</p>}
-        {score && <p className={styles.message}>{`You Have scored ${score}%`}</p>}
+        {score !== null && <p className={styles.message}>{`You scored ${score}%`}</p>}
         <button className={styles.submitBtn} onClick={handleSubmitQuiz}>
           Submit Quiz
         </button>

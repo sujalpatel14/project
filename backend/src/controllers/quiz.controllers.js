@@ -192,6 +192,14 @@ export const submitQuiz = async (req, res) => {
     const lessonId = quiz.lessonId._id.toString();
     const courseId = quiz.lessonId.courseId._id.toString();
 
+    // **Only proceed if score is 60% or above**
+    if (score < 60) {
+      return res.status(200).json({
+        message: "Quiz submitted, but score below 60%. Not stored.",
+        score,
+      });
+    }
+
     // Find or create student progress
     let progress = await Progress.findOne({ userId, courseId });
 
@@ -238,7 +246,7 @@ export const submitQuiz = async (req, res) => {
 
     await progress.save();
 
-    // **🟢 Update User Progress in Users Collection**
+    // **Update User Progress in Users Collection**
     const user = await User.findById(userId);
 
     if (user) {
@@ -264,7 +272,7 @@ export const submitQuiz = async (req, res) => {
     }
 
     res.json({
-      message: "Quiz submitted successfully!",
+      message: "Quiz submitted successfully! Score stored.",
       score,
       progress,
     });

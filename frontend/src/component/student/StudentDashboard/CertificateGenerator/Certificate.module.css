@@ -1,10 +1,19 @@
 .container {
     text-align: center;
     margin: 20px;
+    overflow-y: auto;
+    width: 100%;
+    margin: 10px;
+  }
+
+  .cover {
+    width: 90%;
+    display: flex;
+    flex-direction: column;
   }
   
   .certificate {
-    width: 800px;
+    width: 900px;
     height: 600px;
     margin: auto;
     padding: 20px;
@@ -23,6 +32,7 @@
   .certificate h1 {
     font-size: 32px;
     font-weight: bold;
+    margin: 0;
   }
   
   .certificate h2 {
@@ -34,7 +44,15 @@
     font-size: 24px;
     color: darkgreen;
   }
+  .certificate p {
+    margin: 10px;
+    font-size: 20px;
+  }
   
+  .downaload{
+    display: flex;
+    justify-content: center;
+  }
   .downloadButton {
     margin-top: 20px;
     padding: 10px 20px;
@@ -42,6 +60,7 @@
     color: white;
     border: none;
     cursor: pointer;
+    width: 200px;
   }
   
   .downloadButton:hover {
