@@ -138,6 +138,10 @@ export const loginStudent = async (req, res) => {
       return res.status(404).json({ message: "Student not found." });
     }
 
+    if (student.role == "Admin") {
+      return res.status(403).json({ message: "Admins are not allowed to log in here." });
+    }
+
     // Compare passwords
     const isMatch = await bcrypt.compare(password, student.password);
     if (!isMatch) {

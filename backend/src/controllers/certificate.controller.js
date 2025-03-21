@@ -104,23 +104,23 @@ export const getStudentCertificates = async (req, res) => {
 
 export const downloadCertificate = async (req, res) => {
   try {
-    // ✅ Extract JWT token from cookies
+    //Extract JWT token from cookies
     const token = req.cookies.token;
     if (!token) return res.status(401).json({ message: "Unauthorized access" });
 
-    // ✅ Decode JWT to get user ID
+    //Decode JWT to get user ID
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     const userId = decoded.id;
 
     const { courseId } = req.params;
 
-    // ✅ Validate certificate existence
+    //Validate certificate existence
     const certificate = await Certificate.findOne({ courseId });
     if (!certificate) {
       return res.status(404).json({ message: "Certificate not found" });
     }
 
-    // ✅ Validate student progress
+    // Validate student progress
     const progress = await Progress.findOne({ userId, courseId });
     if (!progress || progress.completedLessons.length < certificate.minLecturesRequired) {
       return res.status(403).json({
@@ -135,26 +135,9 @@ export const downloadCertificate = async (req, res) => {
       return res.status(404).json({ message: "Student or course not found" });
     }
 
-    // ✅ Generate HTML Certificate
-    const htmlContent = generateCertificate(student, course, progress.completionPercentage);
+    const Percentage = progress.completionPercentage;
 
-    // ✅ Convert HTML to PDF
-    const pdfPath = await convertHtmlToPdf(htmlContent, student.name, course.title);
-
-    // ✅ Send the PDF file for download
-    res.download(pdfPath, path.basename(pdfPath), (err) => {
-      if (err) {
-        console.error("Error sending certificate:", err);
-        return res.status(500).json({ message: "Error sending certificate" });
-      }
-
-      // ✅ Clean up: Remove the file after download
-      setTimeout(() => {
-        fs.unlink(pdfPath, (unlinkErr) => {
-          if (unlinkErr) console.error("Error deleting certificate file:", unlinkErr);
-        });
-      }, 30000); // 30 seconds delay before deletion
-    });
+    return res.status(200).json({student, course, Percentage})
   } catch (error) {
     console.error("Error generating certificate:", error);
     res.status(500).json({ message: "Server error" });

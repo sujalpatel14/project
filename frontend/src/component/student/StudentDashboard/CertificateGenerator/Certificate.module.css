@@ -1,0 +1,50 @@
+.container {
+    text-align: center;
+    margin: 20px;
+  }
+  
+  .certificate {
+    width: 800px;
+    height: 600px;
+    margin: auto;
+    padding: 20px;
+    border: 5px solid #000;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    font-family: "Arial", sans-serif;
+    background: url("../../../../assets/image.png") no-repeat center center;
+    background-size: cover; /* Ensures the image covers the entire certificate */
+    position: relative;
+}
+
+  
+  .certificate h1 {
+    font-size: 32px;
+    font-weight: bold;
+  }
+  
+  .certificate h2 {
+    font-size: 28px;
+    color: darkblue;
+  }
+  
+  .certificate h3 {
+    font-size: 24px;
+    color: darkgreen;
+  }
+  
+  .downloadButton {
+    margin-top: 20px;
+    padding: 10px 20px;
+    background-color: blue;
+    color: white;
+    border: none;
+    cursor: pointer;
+  }
+  
+  .downloadButton:hover {
+    background-color: darkblue;
+  }
+  

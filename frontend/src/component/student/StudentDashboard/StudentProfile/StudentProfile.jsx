@@ -12,7 +12,7 @@ const StudentProfile = () => {
   const [newProfilePic, setNewProfilePic] = useState(null);
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
-  const [certificates, setCertificates] = useState([]); // ✅ Certificate state
+  const [certificates, setCertificates] = useState([]); //Certificate state
   const PORT = API_PORT;
   const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
@@ -46,24 +46,11 @@ const StudentProfile = () => {
     }
   };
 
-  const handleDownloadCertificate = async (courseId) => {
-    try {
-      const response = await axios.get(
-        `${PORT}/api/student/download-certificate/${courseId}`,
-        { withCredentials: true, responseType: "blob" }
-      );
 
-      const blob = new Blob([response.data], { type: "application/pdf" });
-      const link = document.createElement("a");
-      link.href = window.URL.createObjectURL(blob);
-      link.download = `Certificate_${courseId}.pdf`;
-      document.body.appendChild(link);
-      link.click();
-      document.body.removeChild(link);
-    } catch (error) {
-      console.error("Error downloading certificate:", error);
-      window.customAlert("Failed to download certificate.");
-    }
+  const handleDownloadCertificate = (courseId) => {
+    navigate("/certificate", {
+      state: { courseId }, // Pass data
+    });
   };
 
   const handleProfileUpdate = async (e) => {
@@ -299,7 +286,7 @@ const StudentProfile = () => {
               </p>
             )}
           </div>
-          {/* ✅ End of Certificate Download Section */}
+          {/*End of Certificate Download Section */}
 
           <div className={styles.progressWrapper}>
             <div className={styles.chartContainer}>

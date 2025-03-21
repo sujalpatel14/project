@@ -17,6 +17,7 @@ import Quiz from "./Quiz/Quiz.jsx";
 import Community from "./Community/Community.jsx";
 import StudentProfile from "./StudentProfile/StudentProfile.jsx";
 import StudentChallenges from "./StudentChallenges/StudentChallenges.jsx";
+import CertificateGenerator from "./CertificateGenerator/CertificateGenerator.jsx";
 
 const StudentDashboard = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(null);
@@ -59,6 +60,7 @@ const StudentDashboard = () => {
             <Route path="/community" element={<Community />} />
             <Route path="/profile" element={<StudentProfile />} />
             <Route path="/challenges" element={<StudentChallenges />} />
+            <Route path="/certificate" element={<CertificateGenerator />} />
           </Route>
         </Routes>
       </main>
