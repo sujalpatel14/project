@@ -19,7 +19,6 @@ const Quiz = () => {
   useEffect(() => {
     const fetchQuizAndCourses = async () => {
       try {
-        // Fetch quiz data
         const quizResponse = await axios.get(
           `${PORT}/api/student/quiz/${quizId}`,
           { withCredentials: true }
@@ -35,7 +34,36 @@ const Quiz = () => {
     };
 
     fetchQuizAndCourses();
+
+    // **Prevent Copy, Cut, Paste, Right Click**
+    document.addEventListener("copy", preventAction);
+    document.addEventListener("cut", preventAction);
+    document.addEventListener("paste", preventAction);
+    document.addEventListener("contextmenu", preventAction);
+
+    // **Detect Tab Change (Loss of Focus)**
+    document.addEventListener("visibilitychange", handleTabChange);
+
+    return () => {
+      document.removeEventListener("copy", preventAction);
+      document.removeEventListener("cut", preventAction);
+      document.removeEventListener("paste", preventAction);
+      document.removeEventListener("contextmenu", preventAction);
+      document.removeEventListener("visibilitychange", handleTabChange);
+    };
   }, [quizId]);
+
+  const preventAction = (e) => {
+    e.preventDefault();
+    window.customAlert("Copying, cutting, or pasting is not allowed!");
+  };
+
+  const handleTabChange = () => {
+    if (document.hidden) {
+      window.customAlert("Tab switching is not allowed! Redirecting...");
+      navigate("/my-courses");
+    }
+  };
 
   const handleOptionChange = (questionIndex, selectedOption) => {
     setSelectedAnswers((prev) => ({
@@ -45,7 +73,6 @@ const Quiz = () => {
   };
 
   const handleSubmitQuiz = async () => {
-    // **Validation: Ensure all questions are answered**
     if (quiz.questions.length !== Object.keys(selectedAnswers).length) {
       window.customAlert("Please answer all questions before submitting.");
       return;
@@ -60,11 +87,7 @@ const Quiz = () => {
 
       setMessage(response.data.message);
       setScore(response.data.score);
-
-      // Show marks in alert box
       window.customAlert(`You scored ${response.data.score}%`);
-
-      // Navigate to "My Courses" after alert
       navigate("/my-courses");
     } catch (error) {
       console.error("Error submitting quiz:", error);
@@ -82,12 +105,10 @@ const Quiz = () => {
         <h2>{lessonTitle}</h2>
       </div>
 
-      {/* Quiz Section */}
       <div className={styles.quizContent}>
         <ul className={styles.questionsList}>
           {quiz.questions.map((q, index) => (
             <li key={index} className={styles.questionItem}>
-              {/* Preserve line breaks in questions */}
               <h3
                 dangerouslySetInnerHTML={{
                   __html: q.questionText.replace(/\n/g, "<br />"),

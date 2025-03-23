@@ -1,142 +1,171 @@
-import React, { useEffect } from "react";
-import {
-  Chart,
-  ArcElement,
-  CategoryScale,
-  LinearScale,
-  Tooltip,
-  Legend,
-  BarElement,
-  LineElement,
-  PointElement,
-  RadialLinearScale,
-} from "chart.js";
-import { Pie, Bar, Line, Radar } from "react-chartjs-2";
+import { useEffect, useState } from "react";
+import { Pie, Bar, Radar } from "react-chartjs-2";
+import axios from "axios";
 import styles from "./AdminDashboardCharts.module.css";
+import { API_PORT } from "../../../../../const";
 
-// Register required Chart.js components
-Chart.register(
+// Register necessary Chart.js components
+import {
+  Chart as ChartJS,
+  RadialLinearScale,
   ArcElement,
   Tooltip,
   Legend,
   CategoryScale,
   LinearScale,
   BarElement,
-  LineElement,
   PointElement,
-  RadialLinearScale
+  LineElement,
+  Filler,
+} from "chart.js";
+
+ChartJS.register(
+  RadialLinearScale,
+  ArcElement,
+  Tooltip,
+  Legend,
+  CategoryScale,
+  LinearScale,
+  BarElement,
+  PointElement,
+  LineElement,
+  Filler
 );
 
 const DashboardHome = () => {
-  // Dummy data for charts
-  const userRoleData = {
-    labels: ["Students", "Admins"],
-    datasets: [
-      {
-        data: [120, 15],
-        backgroundColor: ["#36A2EB", "#FF6384"],
-        hoverBackgroundColor: ["#36A2EB", "#FF6384"],
-      },
-    ],
-  };
+  const PORT = API_PORT;
+  const [userRoleData, setUserRoleData] = useState(null);
+  const [courseDifficultyData, setCourseDifficultyData] = useState(null);
+  const [studentProgressData, setStudentProgressData] = useState(null);
+  const [quizPerformanceData, setQuizPerformanceData] = useState(null);
+  
 
-  const courseDifficultyData = {
-    labels: ["Beginner", "Intermediate", "Advanced"],
-    datasets: [
-      {
-        label: "Courses by Difficulty",
-        data: [40, 25, 10],
-        backgroundColor: ["#4BC0C0", "#FF9F40", "#9966FF"],
-      },
-    ],
-  };
+  useEffect(() => {
+    const fetchChartData = async () => {
+      try {
+        // Fetch User Role Distribution Data
+        const userRoleRes = await axios.get(`${PORT}/api/admin/user-role-distribution`);
+        setUserRoleData(userRoleRes.data);
 
-  const studentProgressData = {
-    labels: ["Course 1", "Course 2", "Course 3", "Course 4"],
-    datasets: [
-      {
-        label: "Average Completion (%)",
-        data: [75, 60, 80, 90],
-        backgroundColor: "#FF6384",
-        borderColor: "#FF6384",
-        borderWidth: 1,
-      },
-    ],
-  };
+        // Fetch Course Difficulty Data
+        const courseDifficultyRes = await axios.get(`${PORT}/api/admin/course-difficulty`);
+        setCourseDifficultyData(courseDifficultyRes.data);
 
-  // const newUsersOverTimeData = {
-  //   labels: ["Jan", "Feb", "Mar", "Apr", "May"],
-  //   datasets: [
-  //     {
-  //       label: "New Users",
-  //       data: [10, 20, 30, 40, 50],
-  //       fill: false,
-  //       backgroundColor: "#36A2EB",
-  //       borderColor: "#36A2EB",
-  //     },
-  //   ],
-  // };
+        // Fetch Quiz Performance Data
+        const quizPerformanceRes = await axios.get(`${PORT}/api/admin/quiz-performance`);
 
-  const quizPerformanceData = {
-    labels: ["Lesson 1", "Lesson 2", "Lesson 3", "Lesson 4"],
-    datasets: [
-      {
-        label: "Quizzes Completed",
-        data: [5, 8, 10, 6],
-        backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56", "#4BC0C0"],
-      },
-    ],
-  };
+        if (!quizPerformanceRes.data?.lessonNames || !quizPerformanceRes.data?.quizData) {
+          console.error("Invalid Quiz Performance Data:", quizPerformanceRes.data);
+        } else {
+          const formattedQuizPerformance = {
+            labels: quizPerformanceRes.data.lessonNames.map((name, index) => `Lesson ${index + 1}: ${name}`),
+            datasets: [
+              {
+                label: "Number of Questions",
+                data: quizPerformanceRes.data.quizData.map((quiz) => quiz.questionCount),
+                backgroundColor: [
+                  "rgba(255, 99, 132, 0.5)",
+                  "rgba(54, 162, 235, 0.5)",
+                  "rgba(255, 206, 86, 0.5)",
+                  "rgba(75, 192, 192, 0.5)",
+                  "rgba(153, 102, 255, 0.5)",
+                  "rgba(255, 159, 64, 0.5)",
+                  "rgba(0, 128, 0, 0.5)",
+                  "rgba(128, 0, 128, 0.5)",
+                  "rgba(255, 0, 0, 0.5)",
+                  "rgba(0, 0, 255, 0.5)",
+                ],
+                borderColor: "rgba(75, 192, 192, 1)",
+                borderWidth: 2,
+              },
+            ],
+          };
 
-  // Component JSX
+          setQuizPerformanceData(formattedQuizPerformance);
+        }
+
+        // Fetch Student Progress Data
+        const studentProgressRes = await axios.get(`${PORT}/api/admin/student-progress`);
+        setStudentProgressData(studentProgressRes.data);
+      } catch (error) {
+        console.error("Error fetching dashboard data", error);
+      }
+    };
+
+    fetchChartData();
+  }, []);
+
   return (
     <div className={styles.container}>
-      {/* User Role Distribution (Pie Chart) */}
-      <div className={styles.chart}>
-        <h3>User Role Distribution</h3>
-        <Pie data={userRoleData} />
-      </div>
+      {/* User Role Distribution */}
+      {userRoleData && userRoleData.datasets?.length > 0 ? (
+        <div className={styles.chart}>
+          <h3>User Role Distribution</h3>
+          <Pie
+            data={{
+              labels: userRoleData.labels,
+              datasets: userRoleData.datasets,
+            }}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+            }}
+          />
+        </div>
+      ) : (
+        <p>No User Role Data Available!</p>
+      )}
 
-      {/* Courses by Difficulty Level (Bar Chart) */}
-      <div className={styles.chart}>
-        <h3>Courses by Difficulty Level</h3>
-        <Bar data={courseDifficultyData} />
-      </div>
+      {/* Courses by Difficulty Level */}
+      {courseDifficultyData ? (
+        <div className={styles.chart}>
+          <h3>Courses by Difficulty Level</h3>
+          <Bar data={courseDifficultyData} />
+        </div>
+      ) : (
+        <p>No Course Difficulty Data Available!</p>
+      )}
 
-      {/* Student Progress (Horizontal Bar Chart) */}
-      <div className={styles.chart}>
-        <h3>Student Progress</h3>
-        <Bar
-          data={studentProgressData}
-          options={{
-            indexAxis: "y",
-            responsive: true,
-          }}
-        />
-      </div>
+      {/* Student Progress */}
+      {studentProgressData ? (
+        <div className={styles.chart}>
+          <h3>Student Progress</h3>
+          <Bar
+            data={studentProgressData}
+            options={{
+              indexAxis: "y",
+              responsive: true,
+            }}
+          />
+        </div>
+      ) : (
+        <p>No Student Progress Data Available!</p>
+      )}
 
-      {/* New Users Over Time (Line Chart) */}
-      {/* <div className={styles.chart}>
-        <h3>New Users Over Time</h3>
-        <Line
-          data={newUsersOverTimeData}
-          options={{
-            responsive: true,
-            maintainAspectRatio: false,
-          }}
-        />
-      </div> */}
-
-      {/* Quiz Performance (Radar Chart) */}
-      <div className={styles.chart}>
-        <h3>Quiz Performance</h3>
-        <Radar
-          data={quizPerformanceData}
-          options={{
-            responsive: true,
-          }}
-        />
-      </div>
+      {/* Quiz Performance Chart
+      {quizPerformanceData && quizPerformanceData.labels.length > 0 ? (
+        <div className={styles.chart}>
+          <h3>Quiz Performance</h3>
+          <Radar
+            data={quizPerformanceData}
+            options={{
+              responsive: true,
+              maintainAspectRatio: false,
+              scales: {
+                r: {
+                  beginAtZero: true,
+                  suggestedMax: Math.max(...quizPerformanceData.datasets[0].data, 10) + 5,
+                  ticks: {
+                    stepSize: 1,
+                  },
+                },
+              },
+            }}
+          />
+        </div>
+      ) : (
+        <p>No Quiz Performance Data Available!</p>
+      )} */}
     </div>
   );
 };

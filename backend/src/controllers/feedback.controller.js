@@ -39,3 +39,23 @@ export const getFeedback = async (req, res) => {
     res.status(500).json({ message: "Internal Server Error" });
   }
 };
+
+export const getFeedbackByDate = async (req, res) => {
+  try {
+    const { date } = req.query;
+    const selectedDate = date || new Date().toISOString().split("T")[0]; // Default: today's date
+
+    // Fetch feedback created on the selected date
+    const feedback = await Feedback.find({
+      createdAt: {
+        $gte: new Date(`${selectedDate}T00:00:00.000Z`),
+        $lt: new Date(`${selectedDate}T23:59:59.999Z`),
+      },
+    }).sort({ createdAt: -1 });
+
+    res.status(200).json(feedback);
+  } catch (error) {
+    console.error("Error fetching feedback:", error);
+    res.status(500).json({ message: "Internal Server Error" });
+  }
+};

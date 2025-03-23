@@ -9,8 +9,18 @@ import { profile, studentProgress, updateProfilePic } from "../controllers/stude
 import { createOrUpdateCertificate, deleteCertificate, getCoursesWithCertificates } from "../controllers/certificate.controller.js";
 import { adminAuth } from "../middlewares/authAdmin.js";
 import { Logout } from "../utils/Logout.js";
+import { courseDifficulty, quizPerformance, student_Progress, userData } from "../controllers/adminDashboard.controller.js";
+import { getFeedbackByDate } from "../controllers/feedback.controller.js";
 
 const router = express.Router();
+
+router.get("/user-role-distribution",userData);
+
+router.get("/course-difficulty",courseDifficulty);
+
+router.get("/student-progress",student_Progress);
+
+router.get("/quiz-performance",quizPerformance);
  
 router.post("/addUser",addUser);
 
@@ -71,6 +81,8 @@ router.put("/updateProfile",updateName);
 router.put("/updatePassword",updatePassword);
 
 router.post("/login",AdminLogin);
+
+router.get("/feedback", getFeedbackByDate);
 
 router.get("/check-auth", adminAuth , (req, res) => {
     res.json({ isAuthenticated: true });

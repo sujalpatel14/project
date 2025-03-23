@@ -12,6 +12,7 @@ import ManageChallenges from "./ManageChallenges/ManageChallenges.jsx";
 import MonitorStudentProgress from "./MonitorStudentProgress/MonitorStudentProgress.jsx";
 import AdminCertificate from "./AdminCertificate/AdminCertificate.jsx";
 import AdminProfile from "./AdminProfile/AdminProfile.jsx";
+import AdminFeedback from "./AdminFeedback/AdminFeedback.jsx";
 
 // import Content from "./Content/Content.jsx";
 
@@ -38,6 +39,7 @@ const AdminDashboard = () => {
             <Route path="/student-progress" element={<MonitorStudentProgress />} />
             <Route path="/manage-certificate" element={<AdminCertificate />} />
             <Route path="/profile" element={<AdminProfile />} />
+            <Route path="/feedback" element={<AdminFeedback />} />
           </Routes>
         </div>
         {/* <Content /> */}

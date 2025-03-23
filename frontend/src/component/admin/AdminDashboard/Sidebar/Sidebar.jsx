@@ -14,6 +14,7 @@ const GiProgression = lazy(() => import("react-icons/gi").then(m => ({ default: 
 const BiCategory = lazy(() => import("react-icons/bi").then(m => ({ default: m.BiCategory })));
 const IoIosSettings = lazy(() => import("react-icons/io").then(m => ({ default: m.IoIosSettings })));
 const MdSecurity = lazy(() => import("react-icons/md").then(m => ({ default: m.MdSecurity })));
+const MdFeedback = lazy(() => import("react-icons/md").then(m => ({ default: m.MdFeedback })));
 const IoIosAnalytics = lazy(() => import("react-icons/io").then(m => ({ default: m.IoIosAnalytics })));
 
 // eslint-disable-next-line react/prop-types
@@ -29,7 +30,7 @@ const Sidebar = ({ SlideToggle }) => {
     { to: "/admin/student-progress", icon: <GiProgression />, label: "Monitor Student Progress" },
     { to: "/admin/manage-certificate", icon: <BiCategory />, label: "Manage Certificate" },
     { to: "/admin/profile", icon: <IoIosSettings />, label: "Manage Profile" },
-    // { to: "/admin/security-roles", icon: <MdSecurity />, label: "Security and Roles" },
+    { to: "/admin/feedback", icon: <MdFeedback />, label: "Feedbacks" },
     // { to: "/admin/analytics", icon: <IoIosAnalytics />, label: "View Analytics" },
   ], []);
 

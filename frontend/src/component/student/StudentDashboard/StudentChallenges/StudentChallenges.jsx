@@ -1,16 +1,18 @@
 import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import styles from "./StudentChallenges.module.css";
+import { useNavigate } from "react-router-dom";
 import { API_PORT } from "../../../../../const";
 
 const StudentChallenges = () => {
+  const navigate = useNavigate();
   const [courses, setCourses] = useState([]);
   const [challenges, setChallenges] = useState([]);
   const [selectedChallenge, setSelectedChallenge] = useState(null);
   const [userCode, setUserCode] = useState("");
   const [loading, setLoading] = useState(false);
   const [responseMessage, setResponseMessage] = useState(""); 
-  const [submitting, setSubmitting] = useState(false); // 🚀 Prevent multiple clicks
+  const [submitting, setSubmitting] = useState(false); // Prevent multiple clicks
   const challengeRef = useRef(null);
   const [courseTitle, setCourseTitle] = useState(null);
   const PORT = API_PORT;
@@ -64,7 +66,7 @@ const StudentChallenges = () => {
 
   // Submit code for a challenge
   const handleSubmitCode = async () => {
-    if (submitting) return; // 🚀 Prevent multiple clicks
+    if (submitting) return; // Prevent multiple clicks
 
     setSubmitting(true); // Disable button while submitting
     setResponseMessage(""); // Reset previous message
@@ -95,6 +97,40 @@ const StudentChallenges = () => {
 
     setSubmitting(false); // Re-enable button
   };
+
+  // Prevent Copy & Tab Change Detection
+  useEffect(() => {
+    // Prevent Copy
+    const preventCopy = (e) => {
+      e.preventDefault();
+      window.customAlert("Copying is disabled on this page.");
+    };
+
+    document.addEventListener("copy", preventCopy);
+    document.addEventListener("contextmenu", preventCopy);
+    document.addEventListener("keydown", (e) => {
+      if (e.ctrlKey && (e.key === "c" || e.key === "x" || e.key === "a")) {
+        preventCopy(e);
+      }
+    });
+
+    // Detect Tab Change & Redirect
+    const handleTabChange = () => {
+      if (document.hidden) {
+        window.customAlert("Tab switching is not allowed! Redirecting...");
+        navigate("/challenges");
+      }
+    };
+
+    document.addEventListener("visibilitychange", handleTabChange);
+
+    return () => {
+      document.removeEventListener("copy", preventCopy);
+      document.removeEventListener("contextmenu", preventCopy);
+      document.removeEventListener("keydown", preventCopy);
+      document.removeEventListener("visibilitychange", handleTabChange);
+    };
+  }, []);
 
   return (
     <div className={styles.container}>
@@ -145,7 +181,7 @@ const StudentChallenges = () => {
             <strong>Difficulty:</strong> {selectedChallenge.difficulty}
           </p>
 
-          {/* 📌 Display Test Cases */}
+          {/* Display Test Cases */}
           {selectedChallenge.testCases.length > 0 && (
             <div className={styles.testCasesContainer}>
               <h4>Test Cases:</h4>
@@ -162,7 +198,7 @@ const StudentChallenges = () => {
             </div>
           )}
 
-          {/* 📌 Code Input Textarea */}
+          {/* Code Input Textarea */}
           <textarea
             className={styles.textarea}
             value={userCode}
@@ -171,7 +207,7 @@ const StudentChallenges = () => {
             placeholder="Write your code here..."
           ></textarea>
 
-          {/* 🚀 Prevent multiple clicks with disabled state */}
+          {/* Prevent multiple clicks with disabled state */}
           <button 
             onClick={handleSubmitCode} 
             className={styles.submitButton} 
@@ -180,7 +216,7 @@ const StudentChallenges = () => {
             {submitting ? "Submitting..." : "Submit Code"}
           </button>
 
-          {/* 📌 Show response message */}
+          {/* Show response message */}
           {responseMessage && (
             <p className={styles.responseMessage}>{responseMessage}</p>
           )}
