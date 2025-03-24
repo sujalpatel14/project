@@ -5,6 +5,7 @@ import "chart.js/auto";
 import styles from "./StudentProfile.module.css";
 import { API_PORT } from "../../../../../const";
 import { useNavigate } from "react-router-dom";
+import  Loader  from "../Loader/Loader.jsx";
 
 const StudentProfile = () => {
   const [student, setStudent] = useState(null);
@@ -28,7 +29,7 @@ const StudentProfile = () => {
       });
       setStudent(data);
       setName(data.name);
-      fetchCertificates(); // ✅ Fetch certificates
+      fetchCertificates(); //Fetch certificates
     } catch (error) {
       console.error("Error fetching profile:", error);
       window.customAlert("Failed to load profile. Please try again.");
@@ -309,7 +310,7 @@ const StudentProfile = () => {
           </div>
         </>
       ) : (
-        <p className={styles.loading}>Loading profile...</p>
+        <Loader />
       )}
     </div>
   );

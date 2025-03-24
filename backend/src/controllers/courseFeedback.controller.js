@@ -53,7 +53,7 @@ export const courseReviews = async(req,res)=>{
     })
       .sort({ createdAt: -1 }) // Show latest reviews first
       .limit(5) // Limit to 5 reviews
-      .populate("studentId", "name"); // Fetch student name if needed
+      .populate("studentId", "name profilePic"); // Fetch student name if needed
 
     res.status(200).json(reviews);
   } catch (error) {

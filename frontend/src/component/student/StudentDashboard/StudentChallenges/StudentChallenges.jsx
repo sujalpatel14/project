@@ -3,6 +3,7 @@ import axios from "axios";
 import styles from "./StudentChallenges.module.css";
 import { useNavigate } from "react-router-dom";
 import { API_PORT } from "../../../../../const";
+import Loader from "../Loader/Loader";
 
 const StudentChallenges = () => {
   const navigate = useNavigate();
@@ -98,40 +99,6 @@ const StudentChallenges = () => {
     setSubmitting(false); // Re-enable button
   };
 
-  // Prevent Copy & Tab Change Detection
-  useEffect(() => {
-    // Prevent Copy
-    const preventCopy = (e) => {
-      e.preventDefault();
-      window.customAlert("Copying is disabled on this page.");
-    };
-
-    document.addEventListener("copy", preventCopy);
-    document.addEventListener("contextmenu", preventCopy);
-    document.addEventListener("keydown", (e) => {
-      if (e.ctrlKey && (e.key === "c" || e.key === "x" || e.key === "a")) {
-        preventCopy(e);
-      }
-    });
-
-    // Detect Tab Change & Redirect
-    const handleTabChange = () => {
-      if (document.hidden) {
-        window.customAlert("Tab switching is not allowed! Redirecting...");
-        navigate("/challenges");
-      }
-    };
-
-    document.addEventListener("visibilitychange", handleTabChange);
-
-    return () => {
-      document.removeEventListener("copy", preventCopy);
-      document.removeEventListener("contextmenu", preventCopy);
-      document.removeEventListener("keydown", preventCopy);
-      document.removeEventListener("visibilitychange", handleTabChange);
-    };
-  }, []);
-
   return (
     <div className={styles.container}>
       <h2 className={styles.title}>Student Challenges</h2>
@@ -141,11 +108,7 @@ const StudentChallenges = () => {
         <div className={styles.courseGrid}>
           {courses.length > 0 ? (
             courses.map((course) => (
-              <div
-                key={course._id}
-                className={styles.courseCard}
-                onClick={() => fetchChallenges(course._id, course.title)}
-              >
+              <div key={course._id} className={styles.courseCard}>
                 <img
                   src={course.thumbnail}
                   alt={course.title}
@@ -155,14 +118,19 @@ const StudentChallenges = () => {
                   <h2 className={styles.courseTitle}>{course.title}</h2>
                   <p className={styles.courseDescription}>{course.description}</p>
                 </div>
+                <button
+                  className={styles.viewChallengesButton} 
+                  onClick={() => fetchChallenges(course._id, course.title)}
+                >
+                  View Challenges
+                </button>
               </div>
             ))
           ) : (
-            <p className={styles.loadingText}>Loading courses...</p>
+            <Loader />
           )}
         </div>
       </div>
-      <hr />
 
       {loading && <p className={styles.loading}>Loading...</p>}
 
@@ -223,6 +191,7 @@ const StudentChallenges = () => {
         </div>
       ) : (
         <div>
+          <hr />
           <h3>{courseTitle}</h3>
           <div className={styles.challengeList} ref={challengeRef}>
             {challenges.length > 0 ? (

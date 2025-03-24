@@ -35,7 +35,7 @@ const Navbar = (props) => {
       {/* Logo */}
       <div className={styles.logo}>
         <img src={Logo} alt="" />
-        <Link to="/Student/">CodeVerse</Link>
+        <Link to="/">CodeVerse</Link>
       </div>
 
       {/* Hamburger Menu */}

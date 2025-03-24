@@ -3,30 +3,42 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./MyCourses.module.css"; 
 import { API_PORT } from "../../../../../const";
+import Loader from "../Loader/Loader";
 
 const MyCourses = () => {
   const [enrolledCourses, setEnrolledCourses] = useState([]);
   const [selectedCourse, setSelectedCourse] = useState(null);
   const [lessons, setLessons] = useState([]);
   const [loadingLessons, setLoadingLessons] = useState(false);
+  const [coursesFetched, setCoursesFetched] = useState(false); // Track fetch status
+  const coursesRef = useRef(false); // Prevent multiple API calls
+  const [loading , setLoading ] = useState(false);
   const PORT = API_PORT;
   const navigate = useNavigate();
   const lessonsRef = useRef(null);
 
   useEffect(() => {
+    // Prevent re-fetch if data is already fetched
+    if (coursesRef.current) return;
+
     const fetchEnrolledCourses = async () => {
       try {
+        setLoading(true);
         const response = await axios.get(`${PORT}/api/student/enrolledCourses`, { withCredentials: true });
         setEnrolledCourses(response.data);
+        setCoursesFetched(true);
+        coursesRef.current = true; // Mark data as fetched
       } catch (error) {
         console.error("Error fetching enrolled courses:", error);
+      }finally{
+        setLoading(false);
       }
     };
 
     fetchEnrolledCourses();
   }, []);
 
-  const handleCourseClick = async (courseId) => {
+  const handleFetchLessons = async (courseId) => {
     setSelectedCourse(courseId);
     setLoadingLessons(true);
 
@@ -34,7 +46,7 @@ const MyCourses = () => {
       const lessonResponse = await axios.get(`${PORT}/api/student/${courseId}/lessons`, { withCredentials: true });
       setLessons(lessonResponse.data);
     } catch (error) {
-      console.error("Error fetching course details:", error);
+      console.error("Error fetching lessons:", error);
     } finally {
       setLoadingLessons(false);
     }
@@ -53,14 +65,16 @@ const MyCourses = () => {
   };
 
   const handleExploreCourses = () => {
-    navigate("/courses"); // Adjust the route based on your project setup
+    navigate("/courses");
   };
 
   return (
     <div className={styles.container}>
       <h1>My Courses</h1>
 
-      {enrolledCourses.length === 0 ? (
+      {loading?(<Loader />):null}
+
+      {coursesFetched && enrolledCourses.length === 0 ? (
         <div className={styles.noCourses}>
           <p>You have no enrolled courses.</p>
           <button className={styles.exploreBtn} onClick={handleExploreCourses}>
@@ -70,23 +84,24 @@ const MyCourses = () => {
       ) : (
         <div className={styles.courseGrid}>
           {enrolledCourses.map((course) => (
-            <div 
-              key={course._id} 
-              className={styles.courseCard} 
-              onClick={() => handleCourseClick(course._id)}
-            >
+            <div key={course._id} className={styles.courseCard}>
               <img src={course.thumbnail} alt="Course Thumbnail" />
               <h2>{course.title}</h2>
               <p>{course.description}</p>
+              <button 
+                className={styles.fetchLessonsBtn} 
+                onClick={() => handleFetchLessons(course._id)}
+              >
+                Start Learning
+              </button>
             </div>
           ))}
         </div>
       )}
-      
-      <hr />
 
       {selectedCourse && (
         <div className={styles.courseDetails} ref={lessonsRef}>
+          <hr />
           <h2>Lessons & Quizzes</h2>
 
           {loadingLessons ? (
@@ -115,7 +130,9 @@ const MyCourses = () => {
                         <h4>Quiz: {lesson.quiz.title}</h4>
                         <p>{lesson.quiz.description}</p>
                         {lesson.isUnlocked ? (
-                          <button className={styles.startQuizBtn} onClick={() => handleStartQuiz(lesson.quiz._id)}> Start Quiz</button>
+                          <button className={styles.startQuizBtn} onClick={() => handleStartQuiz(lesson.quiz._id)}>
+                            Start Quiz
+                          </button>
                         ) : (
                           <button className={styles.lockedBtn} disabled>Locked</button>
                         )}

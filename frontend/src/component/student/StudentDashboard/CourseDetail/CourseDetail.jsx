@@ -130,8 +130,8 @@ const CourseDetails = () => {
             feedbackList.map((fb, index) => (
               <div key={index} className={styles.feedbackItem}>
                 <div className={styles.userInfo}>
-                  {fb.profilePic ? (
-                    <img src={fb.profilePic} alt="User" className={styles.profilePic} />
+                  {fb.studentId.profilePic ? (
+                    <img src={fb.studentId.profilePic} alt="User" className={styles.profilePic} />
                   ) : (
                     <span className={styles.defaultProfile}>👤</span>
                   )}

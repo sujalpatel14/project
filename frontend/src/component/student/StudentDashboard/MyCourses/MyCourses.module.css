@@ -58,7 +58,8 @@
 
 /* Course Card Styling */
 .courseCard {
-  width: 100%;
+  /* width: 100%; */
+  width: 300px;
   max-width: 350px;
   background: var(--color-background);
   border-radius: var(--radius-lg);
@@ -67,9 +68,9 @@
   transition: transform var(--transition-fast), box-shadow var(--transition-fast);
   display: flex;
   flex-direction: column;
-  height: 100%; /* Ensure uniform height */
+  /* height: 100%;  */
   /* position: relative; */
-  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle border */
+  border: 1px solid rgba(0, 0, 0, 0.1); /* Subtle border */
   cursor: pointer;
 }
 
@@ -105,6 +106,7 @@
 
 /* Course Description Styling */
 .courseCard p {
+  height: 25%;
   font-size: 0.95rem;
   color: var(--color-text-muted);
   line-height: 1.6;
@@ -113,6 +115,12 @@
   -webkit-line-clamp: 3; /* Limit to 3 lines */
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.courseCard button {
+  width: 50%;
+  background-color: #3A86ff;
+  margin:   10px 10px 20px 20px;
 }
 
 /* Course Details Section */

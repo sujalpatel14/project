@@ -135,6 +135,7 @@
   
 /* Feedback Section */
 .feedbackDisplay {
+  width: 100%;
   margin: 40px 0;
   padding: 20px;
   /* background: #f9f9f9; */
@@ -156,6 +157,7 @@
 }
 
 .feedbackItem {
+  width: 500px;
   background: white;
   padding: 15px;
   border-radius: 8px;
@@ -192,6 +194,7 @@
 }
 
 .feedbackMessage {
+  overflow: hidden;
   margin-top: 10px;
   font-size: 1rem;
   color: #555;
