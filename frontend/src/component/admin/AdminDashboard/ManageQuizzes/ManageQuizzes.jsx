@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import styles from "./ManageQuizzes.module.css";
 import { API_PORT } from "../../../../../const";
+import * as XLSX from "xlsx";
 
 const ManageQuizzes = () => {
   const PORT = API_PORT;
@@ -10,6 +11,7 @@ const ManageQuizzes = () => {
   const [selectedCourse, setSelectedCourse] = useState(""); // Added state for selected course
   const [selectedLesson, setSelectedLesson] = useState("");
   const [quizzes, setQuizzes] = useState([]);
+  const fileInputRef = useRef(null);
   const [quizForm, setQuizForm] = useState({
     lessonId: "",
     questions: [
@@ -100,6 +102,38 @@ const ManageQuizzes = () => {
       });
     }
   };
+
+  // Function to handle Excel upload
+  const handleFileUpload = (e) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const reader = new FileReader();
+    reader.onload = (event) => {
+      const data = new Uint8Array(event.target.result);
+      const workbook = XLSX.read(data, { type: "array" });
+
+      const sheetName = workbook.SheetNames[0];
+      const worksheet = workbook.Sheets[sheetName];
+      const jsonData = XLSX.utils.sheet_to_json(worksheet);
+
+      // Convert JSON data into the quiz structure
+      const formattedData = jsonData.map((row) => ({
+        questionText: row["Question"],
+        options: [row["Option A"], row["Option B"], row["Option C"], row["Option D"]],
+        correctAnswer: row["Correct Answer"],
+      }));
+
+      // Set quiz data to state for display
+      setQuizForm((prev) => ({
+        ...prev,
+        questions: formattedData,
+      }));      
+    };
+
+    reader.readAsArrayBuffer(file);
+  };
+
 
   // Add a question to the form
   const addQuestion = () => {
@@ -224,6 +258,9 @@ const ManageQuizzes = () => {
         </select>
       </div>
 
+      <div className={styles.uploadSection}>
+        <input type="file" accept=".xlsx, .xls" ref={fileInputRef} onChange={handleFileUpload} />
+      </div>
       {/* Quiz Form */}
       <div ref={formRef} className={styles.quizForm}>
         <form onSubmit={handleSubmit}>
