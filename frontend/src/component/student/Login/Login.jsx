@@ -1,8 +1,11 @@
 import { useState } from "react";
+import { FaUser, FaLock } from "react-icons/fa";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 import styles from "./Login.module.css";
 import axios from "axios";
 import { API_PORT } from "../../../../const";
-import { NavLink , useNavigate} from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
+import loginimg from "./loginimg.jpg"
 
 const Login = () => {
   const PORT = API_PORT;
@@ -11,17 +14,17 @@ const Login = () => {
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
   const [loading, setLoading] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
-  // **Login Function**
   const handleLogin = async () => {
     if (!email || !password) {
       return setError("All fields are required.");
     }
-    
+
     try {
       setLoading(true);
       setError("");
-      await axios.post(`${PORT}/api/student/login`, { email, password },{ withCredentials: true });
+      await axios.post(`${PORT}/api/student/login`, { email, password }, { withCredentials: true });
       navigate("/");
     } catch (error) {
       setError(error.response?.data?.message || "Login failed");
@@ -32,9 +35,16 @@ const Login = () => {
 
   return (
     <div className={styles.container}>
-      <img src="https://img.freepik.com/premium-vector/web-developer-wiring-code-program_773186-895.jpg" alt="" />
-        <div className={styles.formBox}>
-          <h2>Login</h2>
+      <img
+        src={loginimg}
+        alt=""
+      />
+      <div className={styles.formBox}>
+        <h2>Login</h2>
+
+        {/* Email Input with Icon */}
+        <div className={styles.inputBox}>
+          <FaUser className={styles.icon} />
           <input
             type="email"
             placeholder="Enter email"
@@ -42,21 +52,33 @@ const Login = () => {
             onChange={(e) => setEmail(e.target.value)}
             className={styles.input}
           />
+        </div>
+
+        {/* Password Input with Eye Toggle and Lock Icon */}
+        <div className={styles.inputBox}>
+          <FaLock className={styles.icon} />
           <input
-            type="password"
+            type={showPassword ? "text" : "password"}
             placeholder="Enter password"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
             className={styles.input}
           />
-          {error && <p className={styles.error}>{error}</p>}
-          <button onClick={handleLogin} className={styles.button} disabled={loading}>
-            {loading ? "Logging in..." : "Login"}
+          <button type="button" className={styles.eyeButton} onClick={() => setShowPassword(!showPassword)}>
+            {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
           </button>
-          <p className={styles.link}><NavLink to="/ForgetPassword">Forgot Password?</NavLink></p>
-          <p className={styles.link}><NavLink to="/Sign-Up">Create An Account?</NavLink></p>
-          <p className={styles.link}><NavLink to="/admin">Admin For Only</NavLink></p>
         </div>
+
+        {error && <p className={styles.error}>{error}</p>}
+
+        <button onClick={handleLogin} className={styles.button} disabled={loading}>
+          {loading ? <div className={styles.loader}></div> : "Login"}
+        </button>
+
+        <p className={styles.link}><NavLink to="/ForgetPassword">Forgot Password?</NavLink></p>
+        <p className={styles.link}><NavLink to="/Sign-Up">Create An Account?</NavLink></p>
+        <p className={styles.link}><NavLink to="/admin">Admin For Only</NavLink></p>
+      </div>
     </div>
   );
 };

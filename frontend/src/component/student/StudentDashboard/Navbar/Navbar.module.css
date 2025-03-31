@@ -1,5 +1,8 @@
 /* Navbar Styles */
 .navbar {
+  width: 100%;
+  z-index: 1000;
+  /* position: fixed; */
   height: 70px;
   display: flex;
   justify-content: space-between;
@@ -24,18 +27,55 @@
 }
 
 .logo a {
-  text-decoration: none;
-  color: #0056d2;
-  transition: color 0.3s ease-in-out;
+  background: linear-gradient(to right, #0056d2, #3498db);
+  -webkit-background-clip: text;
+  background-clip: text;
+  margin-left: 5px;
+  color: transparent;
+  animation: gradientShift 20s ease infinite;
 }
 
-.logo a:hover {
-  color: #f39c12;
+@keyframes gradientShift {
+  0%, 100% {
+    background: linear-gradient(to right, #0056d2, #3498db);
+    -webkit-background-clip: text;
+  }
+  20% {
+    background: linear-gradient(to right, #1a71c8, #28b08d); /* Intermediate colors */
+    -webkit-background-clip: text;
+  }
+  40% {
+    background: linear-gradient(to right, #23b08d, #d15c4d); /* Intermediate colors */
+    -webkit-background-clip: text;
+  }
+  60% {
+    background: linear-gradient(to right, #d15c4d, #8f63c1); /* Intermediate colors */
+    -webkit-background-clip: text;
+  }
+  80% {
+    background: linear-gradient(to right, #8f63c1, #0060d2); /* Intermediate colors */
+    -webkit-background-clip: text;
+  }
 }
 
 .logo img {
-  height: 70px;
-  width: 70px;
+  height: 60px;
+  width: 60px;
+  /* transition: transform 10s linear; */
+  animation-name: rotate;
+  animation-duration: 10s;
+  animation-iteration-count: infinite;
+  animation-timing-function: linear;
+}
+
+
+@keyframes rotate {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 /* Navigation Links */
@@ -61,10 +101,27 @@
   padding: 10px 15px;
   transition: all 0.3s ease-in-out;
   border-radius: 5px;
+  position: relative;
+  background-color: transparent; /* Initial background */
+}
+
+.navLinks a::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background-color: #007bff;
+  transition: width 0.3s ease-in-out;
 }
 
 .navLinks a:hover {
-  color: #0056d2;
+  background-color: rgba(0, 123, 255, 0.1); /* Light background on hover */
+}
+
+.navLinks a:hover::after {
+  width: 100%;
 }
 
 /* Profile Link */
