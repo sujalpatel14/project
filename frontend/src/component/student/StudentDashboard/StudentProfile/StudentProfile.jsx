@@ -5,13 +5,16 @@ import "chart.js/auto";
 import styles from "./StudentProfile.module.css";
 import { API_PORT } from "../../../../../const";
 import { useNavigate } from "react-router-dom";
-import  Loader  from "../Loader/Loader.jsx";
+import Loader from "../Loader/Loader.jsx";
 
 const StudentProfile = () => {
   const [student, setStudent] = useState(null);
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
   const [newProfilePic, setNewProfilePic] = useState(null);
+  const [profilePicError, setProfilePicError] = useState("");
   const [password, setPassword] = useState("");
+  const [passwordError, setPasswordError] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
   const [certificates, setCertificates] = useState([]); //Certificate state
   const PORT = API_PORT;
@@ -47,7 +50,6 @@ const StudentProfile = () => {
     }
   };
 
-
   const handleDownloadCertificate = (courseId) => {
     navigate("/certificate", {
       state: { courseId }, // Pass data
@@ -56,6 +58,13 @@ const StudentProfile = () => {
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
+    // Validation: Ensure name is not empty
+    if (!name.trim()) {
+      setNameError("Name cannot be empty.");
+      return;
+    } else {
+      setNameError(""); // Clear error if input is valid
+    }
     if (isLoading) return;
     setIsLoading(true);
     try {
@@ -76,7 +85,19 @@ const StudentProfile = () => {
 
   const handleProfilePicChange = async (e) => {
     e.preventDefault();
-    if (!newProfilePic || isLoading) return;
+    if (isLoading) return;
+
+    if (!newProfilePic) {
+      setProfilePicError("Please select an image.");
+      return;
+    } else if (!["image/jpeg", "image/png", "image/gif"].includes(newProfilePic.type)) {
+      setProfilePicError("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
+      return;
+    } else if (newProfilePic.size > 2 * 1024 * 1024) { // 2MB limit
+      setProfilePicError("File size exceeds 2MB. Please select a smaller file.");
+      return;
+    } else {
+      setProfilePicError(""); }
     setIsLoading(true);
 
     const formData = new FormData();
@@ -98,11 +119,28 @@ const StudentProfile = () => {
     }
   };
 
+  const isValidPassword = (password) => {
+    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+      password
+    );
+  };
+
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    if (isLoading || password !== confirmPassword) {
-      window.customAlert("Passwords do not match!");
+    // Validation: Ensure passwords are not empty and meet criteria
+    if (!password.trim() || !confirmPassword.trim()) {
+      setPasswordError("Both password fields are required.");
       return;
+    } else if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match.");
+      return;
+    } else if (!isValidPassword(password)) {
+      setPasswordError(
+        "Password must be at least 6 characters long, include a letter, a number, and a special character."
+      );
+      return;
+    } else {
+      setPasswordError(""); // Clear error if valid
     }
     setIsLoading(true);
     try {
@@ -205,6 +243,7 @@ const StudentProfile = () => {
               onChange={(e) => setName(e.target.value)}
               className={styles.input}
             />
+            {nameError && <p className={styles.error}>{nameError}</p>}
             <button
               type="submit"
               className={styles.updateButton}
@@ -222,6 +261,7 @@ const StudentProfile = () => {
               onChange={(e) => setNewProfilePic(e.target.files[0])}
               className={styles.fileInput}
             />
+            {profilePicError && <p className={styles.error}>{profilePicError}</p>}
             <button
               type="submit"
               className={styles.updateButton}
@@ -250,6 +290,7 @@ const StudentProfile = () => {
               className={styles.input}
               required
             />
+            {passwordError && <p className={styles.error}>{passwordError}</p>}
             <button
               type="submit"
               className={styles.updateButton}

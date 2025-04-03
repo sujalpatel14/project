@@ -4,13 +4,14 @@
     justify-content: center;
     align-items: center;
     height: 100vh;
-    background-color: #f4f4f4;
+    /* background-color: #f4f4f4; */
     width: 100%;
+    animation: fadeIn 0.8s ease-in-out;
   }
 
   .container img {
     mix-blend-mode: multiply;
-    /* width: 100%; */
+    width: 50%;
   }
   
   .formWrapper {
@@ -20,6 +21,7 @@
     box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
     width: 100%;
     max-width: 400px;
+    animation: slideIn 0.6s ease-in-out;
   }
   
   .title {
@@ -31,6 +33,11 @@
   
   .formBox {
     width: 30%;
+  }
+
+  .formBox h1{
+    font-family: 'Times New Roman', Times, serif;
+    margin-bottom: 30px;
   }
 
   .inputField {
@@ -45,7 +52,7 @@
   .button {
     display: flex;
     justify-content: center;
-    width: 95%;
+    width: 100%;
     padding: 10px;
     background-color: #007bff;
     color: white;
@@ -54,6 +61,7 @@
     font-size: 1rem;
     cursor: pointer;
     transition: background 0.3s ease;
+    margin: 0;
   }
   
   .button:hover {
@@ -94,6 +102,32 @@
     text-align: center;
     color: red;
   }
+
+  .passwordWrapper {
+    position: relative;
+    width: 100%;
+  }
+  
+  .passwordWrapper input {
+    width: 100%;
+    padding-right: 40px; /* Space for the eye icon */
+  }
+  
+  .eyeIcon {
+    position: absolute;
+    right: 10px;
+    top: 50%;
+    transform: translateY(-50%);
+    cursor: pointer;
+    font-size: 1.2rem;
+    color: #555;
+  }
+  
+  .eyeIcon:hover {
+    color: #007bff;
+  }
+  
+
   /* Responsive */
 @media (max-width: 700px) {
   .container img {
@@ -105,10 +139,10 @@
   }
   .input {
     width: 100%;
-    margin: 5px;
+    /* margin: 5px; */
   }
   .button {
-    width: 50%;
+    /* width: 50%; */
     margin: 10px;
   }
   .formBox { 
@@ -117,7 +151,6 @@
     align-items: center;
     padding: 20px;
     width: 100%;
-    margin-top: -200px;
   }
 }
 
@@ -130,3 +163,26 @@
   }
 }
 
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: scale(0.9);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

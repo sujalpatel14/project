@@ -2,7 +2,9 @@ import { useState, useRef } from "react";
 import styles from "./Registration.module.css";
 import axios from "axios";
 import { API_PORT } from "../../../../const";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import regimg from "./regimg.png";
+import { AiFillEye, AiFillEyeInvisible } from "react-icons/ai";
 
 const Registration = () => {
   const PORT = API_PORT;
@@ -16,6 +18,7 @@ const Registration = () => {
   const [error, setError] = useState("");
   const type = "verify";
   const navigate = useNavigate();
+  const [showPassword, setShowPassword] = useState(false);
 
   // **Email Validation Function**
   const isValidEmail = (email) => {
@@ -99,7 +102,7 @@ const Registration = () => {
 
   return (
     <div className={styles.container}>
-      <img src="https://img.freepik.com/premium-vector/web-developer-wiring-code-program_773186-895.jpg" alt="" />
+      <img src={regimg} alt="" />
       
       {step === 1 && (
         <div className={styles.formBox}>
@@ -117,6 +120,7 @@ const Registration = () => {
           <button onClick={sendOtp} className={styles.button} disabled={loder}>
             {loder ? <Loder /> : "Send OTP"}
           </button>
+          <Link to="/Login">You Have Already Account</Link>
         </div>
       )}
 
@@ -136,21 +140,34 @@ const Registration = () => {
           <button onClick={verifyOtp} className={styles.button} disabled={loder}>
             {loder ? <Loder /> : "Verify OTP"}
           </button>
+          <Link to="/Login">You Have Already Account</Link>
         </div>
       )}
 
       {step === 3 && verified && (
         <div className={styles.formBox}>
           <h1>Registration</h1>
-          <h3>Register</h3>
+          <h3>Register Form</h3>
           <input type="text" placeholder="Full Name" ref={nameRef} className={styles.input} />
           <input type="email" value={email} className={styles.input} disabled />
-          <input type="password" placeholder="Password" ref={passwordRef} className={styles.input} />
+          {/* Password Input with Eye Toggle */}
+          <div className={styles.passwordWrapper}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              ref={passwordRef}
+              className={styles.input}
+            />
+            <span onClick={() => setShowPassword(!showPassword)} className={styles.eyeIcon}>
+              {showPassword ?<AiFillEye /> : <AiFillEyeInvisible /> }
+            </span>
+          </div>
           {error && <p className={styles.error}>{error}</p>}
 
           <button onClick={registerUser} className={styles.button} disabled={loder}>
             {loder ? <Loder /> : "Register"}
           </button>
+          <Link to="/Login">You Have Already Account</Link>
         </div>
       )}
     </div>

@@ -13,7 +13,7 @@ const Footer = () => {
           <ul>
             <li><Link to="/courses">Courses</Link></li>
             <li><Link to="/my-courses">Community</Link></li>
-            <li><Link to="/community">Certifications</Link></li>
+            <li><Link to="/community">community</Link></li>
           </ul>
         </div>
 

@@ -3,7 +3,8 @@ import axios from "axios";
 import styles from "./ForgetPassword.module.css";
 import { API_PORT } from "../../../../const";
 import { FaEye, FaEyeSlash } from "react-icons/fa";
-import { useNavigate } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
+import regimg from "./regimg.png";
 
 const ForgetPassword = () => {
   const PORT = API_PORT;
@@ -20,11 +21,29 @@ const ForgetPassword = () => {
   const type = "forget";
   const navigate = useNavigate();
 
+  // **Email Validation Function**
+  const isValidEmail = (email) => {
+    return /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/.test(email);
+  };
+
+  // **Password Validation Function**
+  const isValidPassword = (password) => {
+    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(password);
+  };
+
+  // **Send OTP**
   const sendOtp = async () => {
+    if (!email) {
+      return setError("Email is required.");
+    }
+    if (!isValidEmail(email)) {
+      return setError("Enter a valid email address.");
+    }
+
     try {
       setLoader(true);
       setError("");
-      await axios.post(`${PORT}/api/student/send-otp`, { email , type });
+      await axios.post(`${PORT}/api/student/send-otp`, { email, type });
       setStep(2);
     } catch (error) {
       setError(error.response?.data?.message || "Error sending OTP");
@@ -33,7 +52,15 @@ const ForgetPassword = () => {
     }
   };
 
+  // **Verify OTP**
   const verifyOtp = async () => {
+    if (!otp) {
+      return setError("Please enter the OTP.");
+    }
+    if (otp.length !== 6 || !/^\d{6}$/.test(otp)) {
+      return setError("OTP must be a 6-digit number.");
+    }
+
     try {
       setLoader(true);
       setError("");
@@ -49,10 +76,13 @@ const ForgetPassword = () => {
     }
   };
 
+  // **Reset Password**
   const resetPassword = async () => {
+    if (!password || !isValidPassword(password)) {
+      return setError("Password must be at least 6 characters and include a number & special character.");
+    }
     if (password !== confirmPassword) {
-      setError("Passwords do not match");
-      return;
+      return setError("Passwords do not match.");
     }
 
     try {
@@ -75,10 +105,8 @@ const ForgetPassword = () => {
 
   return (
     <div className={styles.container}>
-      <img
-        src="https://img.freepik.com/premium-vector/web-developer-wiring-code-program_773186-895.jpg"
-        alt="Forgot Password"
-      />
+      <img src={regimg} alt="Forgot Password" />
+
       {step === 1 && (
         <div className={styles.formBox}>
           <h2>Forgot Password</h2>
@@ -90,9 +118,10 @@ const ForgetPassword = () => {
             className={styles.input}
           />
           {error && <p className={styles.error}>{error}</p>}
-          <button onClick={sendOtp} className={styles.button}>
+          <button onClick={sendOtp} className={styles.button} disabled={loader}>
             {loader ? <Loader /> : "Send OTP"}
           </button>
+          <Link to="/Login">Login</Link>
         </div>
       )}
 
@@ -107,9 +136,10 @@ const ForgetPassword = () => {
             className={styles.input}
           />
           {error && <p className={styles.error}>{error}</p>}
-          <button onClick={verifyOtp} className={styles.button}>
+          <button onClick={verifyOtp} className={styles.button} disabled={loader}>
             {loader ? <Loader /> : "Verify OTP"}
           </button>
+          <Link to="/Login">Login</Link>
         </div>
       )}
 
@@ -124,8 +154,8 @@ const ForgetPassword = () => {
               onChange={(e) => setPassword(e.target.value)}
               className={styles.input}
             />
-            <span onClick={() => setShowPassword(!showPassword)}>
-              {showPassword ? <FaEyeSlash /> : <FaEye />}
+            <span onClick={() => setShowPassword(!showPassword)} className={styles.eyeIcon}>
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
             </span>
           </div>
 
@@ -137,16 +167,17 @@ const ForgetPassword = () => {
               onChange={(e) => setConfirmPassword(e.target.value)}
               className={styles.input}
             />
-            <span onClick={() => setShowConfirmPassword(!showConfirmPassword)}>
-              {showConfirmPassword ? <FaEyeSlash /> : <FaEye />}
+            <span onClick={() => setShowConfirmPassword(!showConfirmPassword)} className={styles.eyeIcon}>
+              {showConfirmPassword ? <FaEye />: <FaEyeSlash /> }
             </span>
           </div>
 
           {error && <p className={styles.error}>{error}</p>}
 
-          <button onClick={resetPassword} className={styles.button}>
+          <button onClick={resetPassword} className={styles.button} disabled={loader}>
             {loader ? <Loader /> : "Reset Password"}
           </button>
+          <Link to="/Login">Login</Link>
         </div>
       )}
     </div>
@@ -155,6 +186,7 @@ const ForgetPassword = () => {
 
 export default ForgetPassword;
 
+// **Loader Component**
 const Loader = () => {
   return <div className={styles.loader}></div>;
 };

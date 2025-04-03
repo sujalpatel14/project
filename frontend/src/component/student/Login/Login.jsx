@@ -65,7 +65,7 @@ const Login = () => {
             className={styles.input}
           />
           <button type="button" className={styles.eyeButton} onClick={() => setShowPassword(!showPassword)}>
-            {showPassword ? <AiFillEyeInvisible /> : <AiFillEye />}
+            {showPassword ? <AiFillEye /> : <AiFillEyeInvisible />}
           </button>
         </div>
 
