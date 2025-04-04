@@ -38,6 +38,7 @@
   flex-direction: column;
 }
 
+
 .input {
   width: 100%;
   padding: 12px;
@@ -65,6 +66,7 @@
   cursor: pointer;
   transition: background 0.3s ease;
   font-weight: 600; /* Add font-weight */
+  margin: 0;
 }
 
 .loginButton:hover {
@@ -76,6 +78,22 @@
   margin-bottom: 10px;
   font-size: 14px; /* Adjust error message size */
 }
+
+.passwordWrapper {
+  position: relative;
+  width: 100%;
+}
+
+.eyeIcon {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  cursor: pointer;
+  color: #555;
+  font-size: 1.2rem;
+}
+
 
 @media (max-width: 768px) {
   .loginContainer {

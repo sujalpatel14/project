@@ -161,29 +161,59 @@ const ManageQuizzes = () => {
   // Handle form submission (Add or Edit quiz)
   const handleSubmit = async (e) => {
     e.preventDefault();
+  
+    // Validate only on Add (not Edit)
+    if (!isEditing) {
+      if (!selectedCourse) {
+        window.customAlert("Please select a course.");
+        return;
+      }
+      if (!selectedLesson) {
+        window.customAlert("Please select a lesson.");
+        return;
+      }
+      if (!quizForm.questions.length) {
+        window.customAlert("Please add at least one question.");
+        return;
+      }
+  
+      for (let i = 0; i < quizForm.questions.length; i++) {
+        const q = quizForm.questions[i];
+        if (!q.questionText.trim()) {
+          window.customAlert(`Question ${i + 1} is missing a question text.`);
+          return;
+        }
+        if (q.options.some((opt) => !opt.trim())) {
+          window.customAlert(`All options must be filled for Question ${i + 1}.`);
+          return;
+        }
+        if (!q.correctAnswer.trim()) {
+          window.customAlert(`Please provide the correct answer for Question ${i + 1}.`);
+          return;
+        }
+      }
+    }
+  
     try {
       if (isEditing) {
-        // Update existing quiz
-        await axios.put(
-          `${PORT}/api/admin/updateQuiz/${editingQuizId}`,
-          quizForm
-        );
+        await axios.put(`${PORT}/api/admin/updateQuiz/${editingQuizId}`, quizForm);
         setQuizzes((prev) =>
           prev.map((quiz) =>
             quiz._id === editingQuizId ? { ...quiz, ...quizForm } : quiz
           )
         );
-        window.customAlert("Quizz updated successfully.");
+        window.customAlert("Quiz updated successfully.");
       } else {
-        // Add new quiz
         const { data } = await axios.post(`${PORT}/api/admin/addQuiz`, {
           ...quizForm,
           lessonId: selectedLesson,
         });
         setQuizzes([...quizzes, data]);
-        window.customAlert("Quizz Added successfully.");
+        window.customAlert("Quiz added successfully.");
         fetchLessons();
       }
+  
+      // Reset form state
       setQuizForm({
         lessonId: "",
         questions: [
@@ -194,8 +224,19 @@ const ManageQuizzes = () => {
       setEditingQuizId(null);
     } catch (err) {
       console.error("Error submitting quiz:", err);
+      window.customAlert("Something went wrong while submitting the quiz.");
     }
   };
+  
+  const cancel = ()=>{
+    setQuizForm({
+      lessonId: "",
+      questions: [
+        { questionText: "", options: ["", "", "", ""], correctAnswer: "" },
+      ],
+    });
+    setIsEditing(false);
+  }
 
   // Edit quiz
   const handleEdit = (quiz) => {
@@ -304,6 +345,7 @@ const ManageQuizzes = () => {
           <button type="submit">
             {isEditing ? "Update Quiz" : "Add Quiz"}
           </button>
+          <button type="button" onClick={cancel}>Cancel</button>
         </form>
       </div>
 

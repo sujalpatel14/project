@@ -20,7 +20,7 @@ const MonitorStudentProgress = () => {
     setLoading(true);
     try {
       const { data } = await axios.get(
-        `${PORT}/api/admin/student-progress?search=${searchTerm}`,
+        `${PORT}/api/admin/student_progress?search=${searchTerm}`,
         { withCredentials: true }
       );
       setStudent(data);

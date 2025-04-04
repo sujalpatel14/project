@@ -64,7 +64,7 @@ router.put("/updateChallenges/:challengeId", updateChallenge);
 
 router.delete("/deleteChallenge/:id", deleteChallenge);
 
-router.get("/student-progress", studentProgress);
+router.get("/student_progress", studentProgress);
 
 router.get("/courses-with-certificates",getCoursesWithCertificates);
 

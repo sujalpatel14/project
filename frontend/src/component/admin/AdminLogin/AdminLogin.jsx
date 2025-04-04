@@ -3,11 +3,13 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import styles from "./AdminLogin.module.css";
 import adminlogin from "../../../assets/adminlogin.svg";
-import { API_PORT } from "../../../../const.js"; // Adjust if needed
+import { API_PORT } from "../../../../const.js";
+import { FaEye, FaEyeSlash } from "react-icons/fa"; // 👈 import icons
 
 const AdminLogin = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [showPassword, setShowPassword] = useState(false); // 👈 for eye toggle
   const [error, setError] = useState("");
   const PORT = API_PORT;
   const navigate = useNavigate();
@@ -54,13 +56,21 @@ const AdminLogin = () => {
             className={styles.input}
           />
 
-          <input
-            type="password"
-            placeholder="Password"
-            value={password}
-            onChange={(e) => setPassword(e.target.value)}
-            className={styles.input}
-          />
+          <div className={styles.passwordWrapper}>
+            <input
+              type={showPassword ? "text" : "password"}
+              placeholder="Password"
+              value={password}
+              onChange={(e) => setPassword(e.target.value)}
+              className={styles.input}
+            />
+            <span
+              className={styles.eyeIcon}
+              onClick={() => setShowPassword(!showPassword)}
+            >
+              {showPassword ? <FaEye /> : <FaEyeSlash />}
+            </span>
+          </div>
 
           <button type="submit" className={styles.loginButton}>
             Login

@@ -262,7 +262,6 @@ export const getStudentProfilePic = async (req, res) => {
 export const studentProgress = async (req, res) => {
   const search = req.query.search;
 
-
   if (!search) {
     return res.status(400).json({ error: "Search term is required." });
   }

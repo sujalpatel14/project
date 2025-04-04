@@ -58,7 +58,7 @@ const StudentProfile = () => {
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
-    // Validation: Ensure name is not empty
+    
     if (!name.trim()) {
       setNameError("Name cannot be empty.");
       return;

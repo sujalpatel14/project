@@ -6,9 +6,12 @@ import styles from "./AdminProfile.module.css";
 const AdminProfile = () => {
   const [admin, setAdmin] = useState(null);
   const [name, setName] = useState("");
+  const [nameError, setNameError] = useState("");
   const [newProfilePic, setNewProfilePic] = useState(null);
+  const [profilePicError, setProfilePicError] = useState("");
   const [password, setPassword] = useState("");
-  const [confirmPassword, setConfirmPassword] = useState(""); // ✅ Corrected variable name
+  const [passwordError, setPasswordError] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const PORT = API_PORT;
   
   useEffect(() => {
@@ -28,6 +31,12 @@ const AdminProfile = () => {
 
   const handleProfileUpdate = async (e) => {
     e.preventDefault();
+    if (!name.trim()) {
+      setNameError("Name cannot be empty.");
+      return;
+    } else {
+      setNameError(""); // Clear error if input is valid
+    }
     try {
       await axios.put(`${API_PORT}/api/admin/updateProfile`, { name }, { withCredentials: true });
       fetchAdminProfile();
@@ -41,9 +50,16 @@ const AdminProfile = () => {
   const handleProfilePicChange = async (e) => {
     e.preventDefault();
     if (!newProfilePic) {
-      window.customAlert("Please select a profile picture.");
+      setProfilePicError("Please select an image.");
       return;
-    }
+    } else if (!["image/jpeg", "image/png", "image/gif"].includes(newProfilePic.type)) {
+      setProfilePicError("Invalid file type. Only JPEG, PNG, and GIF are allowed.");
+      return;
+    } else if (newProfilePic.size > 2 * 1024 * 1024) { // 2MB limit
+      setProfilePicError("File size exceeds 2MB. Please select a smaller file.");
+      return;
+    } else {
+      setProfilePicError(""); }
 
     const formData = new FormData();
     formData.append("profilePic", newProfilePic);
@@ -62,13 +78,29 @@ const AdminProfile = () => {
     }
   };
 
+  const isValidPassword = (password) => {
+    return /^(?=.*[A-Za-z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{6,}$/.test(
+      password
+    );
+  };
+
   const handlePasswordChange = async (e) => {
     e.preventDefault();
-    if (password !== confirmPassword) { // ✅ Use the corrected variable
-      window.customAlert("Passwords do not match!");
+    // Validation: Ensure passwords are not empty and meet criteria
+    if (!password.trim() || !confirmPassword.trim()) {
+      setPasswordError("Both password fields are required.");
       return;
+    } else if (password !== confirmPassword) {
+      setPasswordError("Passwords do not match.");
+      return;
+    } else if (!isValidPassword(password)) {
+      setPasswordError(
+        "Password must be at least 6 characters long, include a letter, a number, and a special character."
+      );
+      return;
+    } else {
+      setPasswordError(""); // Clear error if valid
     }
-
     try {
       await axios.put(`${API_PORT}/api/admin/updatePassword`, { password }, { withCredentials: true });
       setPassword("");
@@ -100,6 +132,7 @@ const AdminProfile = () => {
               onChange={(e) => setName(e.target.value)}
               className={styles.input}
             />
+            {nameError && <p className={styles.error}>{nameError}</p>}
             <button type="submit" className={styles.updateButton}>
               Update Name
             </button>
@@ -113,6 +146,7 @@ const AdminProfile = () => {
               onChange={(e) => setNewProfilePic(e.target.files[0])}
               className={styles.fileInput}
             />
+            {profilePicError && <p className={styles.error}>{profilePicError}</p>}
             <button type="submit" className={styles.updateButton}>
               Update Profile Picture
             </button>
@@ -137,6 +171,7 @@ const AdminProfile = () => {
               className={styles.input}
               required
             />
+            {passwordError && <p className={styles.error}>{passwordError}</p>}
             <button type="submit" className={styles.updateButton}>
               Update Password
             </button>
