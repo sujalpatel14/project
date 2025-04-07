@@ -16,7 +16,7 @@ const AdminFeedback = () => {
 
   const fetchFeedback = async (date) => {
     try {
-      const response = await axios.get(`${PORT}/api/admin/feedback?date=${date}`);
+      const response = await axios.get(`${PORT}/api/admin/feedback?date=${date}`, { withCredentials: true });
       setFeedbacks(response.data);
     } catch (error) {
       console.error("Error fetching feedback:", error);

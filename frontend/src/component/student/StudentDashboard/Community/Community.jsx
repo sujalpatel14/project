@@ -20,7 +20,7 @@ const Community = () => {
 
   const fetchPosts = async () => {
     try {
-      const { data } = await axios.get(`${PORT}/api/student/posts`);
+      const { data } = await axios.get(`${PORT}/api/student/posts`,{ withCredentials: true });
       setPosts(data);
     } catch (error) {
       console.error("Error fetching posts:", error);
@@ -61,6 +61,7 @@ const Community = () => {
       <div className={styles.posts}>
         {posts.map((post) => (
           <div key={post._id} className={styles.post}>
+            <img src={post.userId.profilePic} alt="" />
             <div className={styles.postContentWrapper}>
               <h3 className={styles.postTitle}>{post.title}</h3>
               <p className={styles.postContent}>{post.content}</p>

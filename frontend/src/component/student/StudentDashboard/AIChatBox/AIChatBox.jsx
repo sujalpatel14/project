@@ -25,7 +25,7 @@ const AIChatBox = () => {
     try {
       const response = await axios.post(`${PORT}/api/student/aiAsist`, {
         query: input,
-      });
+      },{ withCredentials: true });
       const aiMessage = { sender: "ai", text: response.data.solution };
       setMessages((prevMessages) => [...prevMessages, aiMessage]);
     } catch (error) {

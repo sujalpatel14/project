@@ -42,8 +42,36 @@ export const sendOTP = async (req, res) => {
     const otpEntry = new OTP({ email, otp, createdAt: new Date() });
     await otpEntry.save();
 
+    let html = null;
+
+    if (type === "verify") {
+      html = `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #4CAF50;">Welcome to Our Platform!</h2>
+          <p>Thank you for signing up. To complete your registration, please use the OTP below:</p>
+          <h1 style="color: #000;">${otp}</h1>
+          <p>This OTP is valid for the next 5 minutes. Please do not share it with anyone.</p>
+          <p>If you did not request this, please ignore this email.</p>
+          <br/>
+          <p>Best regards,<br/>The Team</p>
+        </div>
+      `;
+    } else if (type === "forget") {
+      html = `
+        <div style="font-family: Arial, sans-serif; padding: 20px;">
+          <h2 style="color: #FF5722;">Reset Your Password</h2>
+          <p>We received a request to reset your password. Use the OTP below to proceed:</p>
+          <h1 style="color: #000;">${otp}</h1>
+          <p>This OTP is valid for the next 5 minutes. If you did not request this password reset, you can safely ignore this email.</p>
+          <br/>
+          <p>Need help? Reach out to our support team anytime.</p>
+          <br/>
+          <p>Regards,<br/>The Support Team</p>
+        </div>
+      `;
+    }
     // Send OTP via email
-    await sendOTPEmail(email, otp);
+    await sendOTPEmail(email, html);
 
     res.json({ success: true, message: "OTP sent successfully" });
   } catch (error) {
@@ -89,6 +117,25 @@ export const registerUser = async (req, res) => {
 
     const newUser = new User({ email, name, password, role });
     await newUser.save();
+
+    const html = `
+    <div style="font-family: Arial, sans-serif; padding: 20px; color: #333;">
+      <h2 style="color: #4CAF50;">👋 Welcome, ${name}!</h2>
+      <p>We're thrilled to have you join the <strong>CodeVerse</strong> community 🌟.</p>
+      <p>Here’s what you can expect:</p>
+      <ul>
+        <li>📚 Access to top-tier courses</li>
+        <li>🎯 Personalized learning experiences</li>
+        <li>💬 Community support</li>
+      </ul>
+      <p style="margin-top: 20px;">Let’s get started on your journey!</p>
+      <p>Best wishes,</p>
+      <p>✨ The CodeVerse Team</p>
+    </div>
+  `;
+
+    // Send email
+    await sendOTPEmail(email, html);
 
     res.status(201).json({ success: true, message: "Registration successful" });
   } catch (error) {
@@ -139,7 +186,9 @@ export const loginStudent = async (req, res) => {
     }
 
     if (student.role == "Admin") {
-      return res.status(403).json({ message: "Admins are not allowed to log in here." });
+      return res
+        .status(403)
+        .json({ message: "Admins are not allowed to log in here." });
     }
 
     // Compare passwords
@@ -267,7 +316,7 @@ export const studentProgress = async (req, res) => {
   }
 
   try {
-    const student = await User.findOne({email:search});
+    const student = await User.findOne({ email: search });
 
     if (!student) {
       return res.status(404).json({ error: "Student not found." });
@@ -276,17 +325,19 @@ export const studentProgress = async (req, res) => {
     // If student is found, then populate progress.courseId
     const studentWithProgress = await User.findOne({
       _id: student._id,
-    }).populate({
-      path: "progress.courseId",
-      select: "title description lessons", // Include lessons field from Course
-      populate: {
-        path: "lessons",
-        select: "title", // Get only lesson titles
-      },
-    }).populate({
-      path: "progress.completedLessons", // Populate completedLessons inside progress
-      select: "title", // Get only lesson titles instead of IDs
-    });
+    })
+      .populate({
+        path: "progress.courseId",
+        select: "title description lessons", // Include lessons field from Course
+        populate: {
+          path: "lessons",
+          select: "title", // Get only lesson titles
+        },
+      })
+      .populate({
+        path: "progress.completedLessons", // Populate completedLessons inside progress
+        select: "title", // Get only lesson titles instead of IDs
+      });
     res.json(studentWithProgress);
   } catch (error) {
     console.error("Error fetching student progress:", error);

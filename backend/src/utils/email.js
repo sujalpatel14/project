@@ -1,7 +1,7 @@
 import nodemailer from "nodemailer";
 
 
-export const sendOTPEmail = async (email, otp) => {
+export const sendOTPEmail = async (email, html ) => {
   try {
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -12,10 +12,11 @@ export const sendOTPEmail = async (email, otp) => {
     });
 
     const mailOptions = {
-      from: "sujalpatel4510@gmail.com", 
+      from: `"CodeVerse Support" <codeverse025@gmail.com>`, 
       to: email,
       subject: "Your OTP Code",
-      text: `Your OTP is: ${otp}. It will expire in 5 minutes.`,
+      text: `CodeVerse`,
+      html: html,
     };
 
     const info = await transporter.sendMail(mailOptions);

@@ -28,7 +28,7 @@ router.post("/resetPassword", resetPassword);
 
 router.post("/login",loginStudent);
 
-router.post("/logout",Logout);
+router.post("/logout",authMiddleware,Logout);
 
 router.get("/auth-check", authMiddleware, authCheck);
 
@@ -36,52 +36,52 @@ router.get("/getCourses",authMiddleware,getCourses);
 
 router.get("/enrolledCourses",authMiddleware,getEnrolledCourses);
 
-router.post("/enroll", enrollCourse); 
+router.post("/enroll", authMiddleware, enrollCourse); 
 
 router.get("/:courseId/lessons", authMiddleware, getLessonsWithQuizzes);
 
-router.get("/course/:courseId",getCourseById)
+router.get("/course/:courseId",authMiddleware,getCourseById)
 
-router.post("/run",run);
+router.post("/run",authMiddleware,run);
 
-router.get("/lesson/:lessonId",getLessonById);
+router.get("/lesson/:lessonId",authMiddleware,getLessonById);
 
 router.post("/submitFeedback",submitFeedback);
 
-router.post("/submitCourseFeedback",submitCouersFeedback)
+router.post("/submitCourseFeedback",authMiddleware,submitCouersFeedback);
 
 router.get("/getFeedback", getFeedback);
 
-router.post("/aiAsist",aiAssist);
+router.post("/aiAsist",authMiddleware,aiAssist);
 
-router.get("/courseReviews/:courseId",courseReviews);
+router.get("/courseReviews/:courseId",authMiddleware,courseReviews);
 
-router.get("/quiz/:quizId", getQuizById);
+router.get("/quiz/:quizId",authMiddleware, getQuizById);
 
-router.post("/submitQuiz", submitQuiz);
+router.post("/submitQuiz",authMiddleware, submitQuiz);
 
-router.get("/posts",getPosts);
+router.get("/posts",authMiddleware,getPosts);
 
-router.post("/create",createPost);
+router.post("/create",authMiddleware,createPost);
 
-router.post("/like/:postId",likePost);
+router.post("/like/:postId",authMiddleware,likePost);
 
-router.get("/profile",profile);
+router.get("/profile",authMiddleware,profile);
 
 router.put("/updateProfilePic", upload.single("profilePic"), updateProfilePic);
 
-router.get("/profilePic", getStudentProfilePic);
+router.get("/profilePic",authMiddleware, getStudentProfilePic);
 
-router.get("/challenges", getChallenges);
+router.get("/challenges",authMiddleware, getChallenges);
 
-router.post("/submit-challenge/:id", submitChallenge);
+router.post("/submit-challenge/:id", authMiddleware,submitChallenge);
 
-router.put("/updateProfile",updateName);
+router.put("/updateProfile",authMiddleware,updateName);
 
-router.put("/updatePassword",updatePassword);
+router.put("/updatePassword",authMiddleware,updatePassword);
 
-router.get("/certificates",getStudentCertificates);
+router.get("/certificates",authMiddleware,getStudentCertificates);
 
-router.get("/download-certificate/:courseId", downloadCertificate);
+router.get("/download-certificate/:courseId",authMiddleware, downloadCertificate);
 
 export default router;

@@ -14,80 +14,80 @@ import { getFeedbackByDate } from "../controllers/feedback.controller.js";
 
 const router = express.Router();
 
-router.get("/user-role-distribution",userData);
+router.get("/user-role-distribution",adminAuth,userData);
 
-router.get("/course-difficulty",courseDifficulty);
+router.get("/course-difficulty",adminAuth,courseDifficulty);
 
-router.get("/student-progress",student_Progress);
+router.get("/student-progress",adminAuth,student_Progress);
 
-router.get("/quiz-performance",quizPerformance);
+router.get("/quiz-performance",adminAuth,quizPerformance);
  
-router.post("/addUser",addUser);
+router.post("/addUser",adminAuth,addUser);
 
-router.get("/getUsers",getUsers);
+router.get("/getUsers",adminAuth,getUsers);
 
-router.delete("/deleteUser/:id",deleteUser);
+router.delete("/deleteUser/:id",adminAuth,deleteUser);
 
-router.put("/updateUser/:id",editUser);
+router.put("/updateUser/:id",adminAuth,editUser);
 
-router.post("/addCourse", upload.single("image"), addCourse);
+router.post("/addCourse",adminAuth, upload.single("image"), addCourse);
 
-router.get("/getCourses",getCourses);
+router.get("/getCourses",adminAuth,getCourses);
 
-router.delete("/deleteCourse/:courseId",deleteCourse);
+router.delete("/deleteCourse/:courseId",adminAuth,deleteCourse);
 
-router.put("/updateCourse/:courseId", upload.single("image"), updateCourse);
+router.put("/updateCourse/:courseId",adminAuth, upload.single("image"), updateCourse);
 
-router.post("/addLesson",addLesson);
+router.post("/addLesson",adminAuth,addLesson);
 
-router.get("/getLessons/:courseId", getLesson);
+router.get("/getLessons/:courseId",adminAuth, getLesson);
 
-router.put("/lessons/:id", updateLesson); 
+router.put("/lessons/:id",adminAuth, updateLesson); 
 
-router.delete("/lessons/:id", deleteLesson);
+router.delete("/lessons/:id",adminAuth, deleteLesson);
 
-router.get('/getLessonsWithoutQuizzes/:courseId', getLessonsWithoutQuizzes);
+router.get('/getLessonsWithoutQuizzes/:courseId',adminAuth, getLessonsWithoutQuizzes);
 
-router.post('/addQuiz',addQuiz);
+router.post('/addQuiz',adminAuth,addQuiz);
 
-router.get('/getQuizzes/:courseId',getQuizzesByCourse);
+router.get('/getQuizzes/:courseId',adminAuth,getQuizzesByCourse);
 
-router.put("/updateQuiz/:quizId", updateQuiz);
+router.put("/updateQuiz/:quizId",adminAuth, updateQuiz);
 
-router.delete("/deleteQuiz/:quizId", deleteQuiz);
+router.delete("/deleteQuiz/:quizId",adminAuth, deleteQuiz);
 
-router.post("/challenges", addChallenge);
+router.post("/challenges",adminAuth, addChallenge);
 
-router.get("/getChallenges/:courseId", getChallengesByCourse);
+router.get("/getChallenges/:courseId",adminAuth, getChallengesByCourse);
 
-router.put("/updateChallenges/:challengeId", updateChallenge);
+router.put("/updateChallenges/:challengeId", adminAuth,updateChallenge);
 
-router.delete("/deleteChallenge/:id", deleteChallenge);
+router.delete("/deleteChallenge/:id",adminAuth, deleteChallenge);
 
-router.get("/student_progress", studentProgress);
+router.get("/student_progress",adminAuth, studentProgress);
 
-router.get("/courses-with-certificates",getCoursesWithCertificates);
+router.get("/courses-with-certificates",adminAuth,getCoursesWithCertificates);
 
-router.post("/create-certificate",createOrUpdateCertificate);
+router.post("/create-certificate",adminAuth,createOrUpdateCertificate);
 
-router.delete("/delete-certificate/:id",deleteCertificate);
+router.delete("/delete-certificate/:id",adminAuth,deleteCertificate);
 
-router.get("/profile",profile);
+router.get("/profile",adminAuth,profile);
 
-router.put("/updateProfilePic", upload.single("profilePic"), updateProfilePic);
+router.put("/updateProfilePic",adminAuth, upload.single("profilePic"), updateProfilePic);
 
-router.put("/updateProfile",updateName);
+router.put("/updateProfile",adminAuth,updateName);
 
-router.put("/updatePassword",updatePassword);
+router.put("/updatePassword",adminAuth,updatePassword);
 
 router.post("/login",AdminLogin);
 
-router.get("/feedback", getFeedbackByDate);
+router.get("/feedback", adminAuth,getFeedbackByDate);
 
 router.get("/check-auth", adminAuth , (req, res) => {
     res.json({ isAuthenticated: true });
   });
 
-router.post("/logout",Logout);
+router.post("/logout",adminAuth,Logout);
 
 export default router;

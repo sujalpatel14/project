@@ -23,7 +23,7 @@ const ManageChallenges = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const coursesResponse = await axios.get(`${PORT}/api/admin/getCourses`);
+        const coursesResponse = await axios.get(`${PORT}/api/admin/getCourses`, { withCredentials: true });
         setCourses(coursesResponse.data);
       } catch (error) {
         console.error("Error fetching data", error);
@@ -44,7 +44,7 @@ const ManageChallenges = () => {
   const fetchChallenges = async () => {
     try {
       const response = await axios.get(
-        `${PORT}/api/admin/getChallenges/${formData.courseId}`
+        `${PORT}/api/admin/getChallenges/${formData.courseId}`, { withCredentials: true }
       );
       setChallenges(response.data);
     } catch (error) {
@@ -105,10 +105,10 @@ const ManageChallenges = () => {
 
     try {
       if (editingId) {
-        await axios.put(`${PORT}/api/admin/updateChallenges/${editingId}`, formData);
+        await axios.put(`${PORT}/api/admin/updateChallenges/${editingId}`, formData, { withCredentials: true });
         window.customAlert("Challenge updated successfully!");
       } else {
-        await axios.post(`${PORT}/api/admin/challenges`, formData);
+        await axios.post(`${PORT}/api/admin/challenges`, formData, { withCredentials: true });
         window.customAlert("Challenge added successfully!");
       }
 

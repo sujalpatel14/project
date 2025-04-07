@@ -44,15 +44,15 @@ const DashboardHome = () => {
     const fetchChartData = async () => {
       try {
         // Fetch User Role Distribution Data
-        const userRoleRes = await axios.get(`${PORT}/api/admin/user-role-distribution`);
+        const userRoleRes = await axios.get(`${PORT}/api/admin/user-role-distribution`, { withCredentials: true });
         setUserRoleData(userRoleRes.data);
 
         // Fetch Course Difficulty Data
-        const courseDifficultyRes = await axios.get(`${PORT}/api/admin/course-difficulty`);
+        const courseDifficultyRes = await axios.get(`${PORT}/api/admin/course-difficulty`, { withCredentials: true });
         setCourseDifficultyData(courseDifficultyRes.data);
 
         // Fetch Quiz Performance Data
-        const quizPerformanceRes = await axios.get(`${PORT}/api/admin/quiz-performance`);
+        const quizPerformanceRes = await axios.get(`${PORT}/api/admin/quiz-performance`, { withCredentials: true });
 
         if (!quizPerformanceRes.data?.lessonNames || !quizPerformanceRes.data?.quizData) {
           console.error("Invalid Quiz Performance Data:", quizPerformanceRes.data);
@@ -85,7 +85,7 @@ const DashboardHome = () => {
         }
 
         // Fetch Student Progress Data
-        const studentProgressRes = await axios.get(`${PORT}/api/admin/student-progress`);
+        const studentProgressRes = await axios.get(`${PORT}/api/admin/student-progress`, { withCredentials: true });
         setStudentProgressData(studentProgressRes.data);
       } catch (error) {
         console.error("Error fetching dashboard data", error);

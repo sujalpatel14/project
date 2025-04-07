@@ -16,7 +16,7 @@ export const aiAssist = async (req, res) => {
         const genAI = new GoogleGenerativeAI(apiKey);
         const model = genAI.getGenerativeModel({ model: "gemini-2.0-flash" });
 
-        const result = await model.generateContent(query);
+        const result = await model.generateContent(`${query} if the question is realted coding then provide solution otherwise return sorry question is not related coding`);
         const response = await result.response;
         let text = response.text().trim();
 

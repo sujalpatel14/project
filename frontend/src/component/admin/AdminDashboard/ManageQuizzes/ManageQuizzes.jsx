@@ -30,7 +30,7 @@ const ManageQuizzes = () => {
   useEffect(() => {
     const fetchCourses = async () => {
       try {
-        const coursesRes = await axios.get(`${PORT}/api/admin/getCourses`);
+        const coursesRes = await axios.get(`${PORT}/api/admin/getCourses`, { withCredentials: true });
         setCourses(coursesRes.data);
       } catch (err) {
         console.error("Error fetching courses:", err);
@@ -50,7 +50,7 @@ const ManageQuizzes = () => {
     if (selectedCourse) {
       try {
         const lessonsRes = await axios.get(
-          `${PORT}/api/admin/getLessonsWithoutQuizzes/${selectedCourse}`
+          `${PORT}/api/admin/getLessonsWithoutQuizzes/${selectedCourse}`, { withCredentials: true }
         );
         setLessons(lessonsRes.data);
       } catch (err) {
@@ -64,7 +64,7 @@ const ManageQuizzes = () => {
   const fetchQuizzes = async () => {
     try {
       const quizzesRes = await axios.get(
-        `${PORT}/api/admin/getQuizzes/${selectedCourse}`
+        `${PORT}/api/admin/getQuizzes/${selectedCourse}`, { withCredentials: true }
       );
       setQuizzes(quizzesRes.data);
     } catch (err) {
@@ -196,7 +196,7 @@ const ManageQuizzes = () => {
   
     try {
       if (isEditing) {
-        await axios.put(`${PORT}/api/admin/updateQuiz/${editingQuizId}`, quizForm);
+        await axios.put(`${PORT}/api/admin/updateQuiz/${editingQuizId}`, quizForm, { withCredentials: true });
         setQuizzes((prev) =>
           prev.map((quiz) =>
             quiz._id === editingQuizId ? { ...quiz, ...quizForm } : quiz
@@ -207,7 +207,7 @@ const ManageQuizzes = () => {
         const { data } = await axios.post(`${PORT}/api/admin/addQuiz`, {
           ...quizForm,
           lessonId: selectedLesson,
-        });
+        }, { withCredentials: true });
         setQuizzes([...quizzes, data]);
         window.customAlert("Quiz added successfully.");
         fetchLessons();

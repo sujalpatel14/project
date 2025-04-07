@@ -104,7 +104,7 @@ const AdminProfile = () => {
     try {
       await axios.put(`${API_PORT}/api/admin/updatePassword`, { password }, { withCredentials: true });
       setPassword("");
-      setConfirmPassword(""); // ✅ Use the corrected variable
+      setConfirmPassword(""); //Use the corrected variable
       window.customAlert("Password updated successfully!");
     } catch (error) {
       console.error("Error updating password:", error);

@@ -1,8 +1,7 @@
 import axios from "axios";
 
 const JUDGE0_API_URL = "https://judge0-ce.p.rapidapi.com/submissions";
-const JUDGE0_API_KEY = "dffd3c9d16mshd02f7b0e637a52ap11b5a8jsn556fcf93fe77"; // Replace with your actual API key
-
+const JUDGE0_API_KEY = "fd20e669a0msh9eb5d8da275dfbdp16614ejsn19b4898c71f0";
 const languageMapping = {
   javascript: 63, // Node.js
   python: 71, // Python 3

@@ -11,10 +11,10 @@ const ManageCourses = () => {
     description: "",
     difficulty: "",
     category: "",
-    image: null, // ✅ Added image field
+    image: null, //Added image field
   });
   const [editingCourse, setEditingCourse] = useState(null);
-  const [loading, setLoading] = useState(false); // ✅ Prevent multiple clicks
+  const [loading, setLoading] = useState(false); // Prevent multiple clicks
   const fileInputRef = useRef(null);
 
   useEffect(() => {
@@ -47,7 +47,7 @@ const ManageCourses = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    if (loading) return; // ✅ Prevent multiple clicks
+    if (loading) return; //Prevent multiple clicks
     setLoading(true);
 
     const formData = new FormData();
@@ -106,7 +106,7 @@ const ManageCourses = () => {
       description: course.description,
       difficulty: course.difficulty,
       category: course.category,
-      image: null, // ✅ Reset image for update
+      image: null, //Reset image for update
     });
   };
 
